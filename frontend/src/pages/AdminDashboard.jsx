@@ -181,7 +181,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get('http://localhost:5000/api/admin/check', { withCredentials: true });
+        await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/check`, { withCredentials: true });
         setIsAuthenticated(true);
       } catch (error) {
         navigate('/admin/login');
@@ -204,7 +204,7 @@ const AdminDashboard = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/orders', { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders`, { withCredentials: true });
       setOrders(response.data);
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -213,7 +213,7 @@ const AdminDashboard = () => {
 
   const fetchSubscribers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/newsletter/subscribers', { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/newsletter/subscribers`, { withCredentials: true });
       setSubscribers(response.data);
     } catch (error) {
       console.error('Error fetching subscribers:', error);
@@ -223,7 +223,7 @@ const AdminDashboard = () => {
   const handleDeleteSubscriber = async (id) => {
     if (window.confirm('Are you sure you want to remove this subscriber?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/newsletter/subscribers/${id}`, { withCredentials: true });
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/newsletter/subscribers/${id}`, { withCredentials: true });
         setSubscribers(subscribers.filter(sub => sub._id !== id));
       } catch (error) {
         console.error('Error deleting subscriber:', error);
@@ -233,7 +233,7 @@ const AdminDashboard = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/status`, { status: newStatus }, { withCredentials: true });
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}/status`, { status: newStatus }, { withCredentials: true });
       // Update local state to reflect change instantly
       setOrders(orders.map(order => 
         order._id === orderId ? { ...order, status: newStatus } : order
@@ -246,7 +246,7 @@ const AdminDashboard = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/reviews', { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`, { withCredentials: true });
       setReviews(response.data);
     } catch (error) {
       console.error('Error fetching reviews:', error);
@@ -255,7 +255,7 @@ const AdminDashboard = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/products');
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`);
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -264,7 +264,7 @@ const AdminDashboard = () => {
 
   const fetchIngredients = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/ingredients');
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ingredients`);
       setIngredients(response.data);
     } catch (error) {
       console.error('Error fetching ingredients:', error);
@@ -273,7 +273,7 @@ const AdminDashboard = () => {
 
   const fetchAnalytics = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/analytics', { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/analytics`, { withCredentials: true });
       setAnalytics(response.data);
     } catch (error) {
       console.error('Error fetching analytics:', error);
@@ -288,7 +288,7 @@ const AdminDashboard = () => {
   const handleDeleteReview = async (id) => {
     if (window.confirm('Are you sure you want to delete this review?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/reviews/${id}`, { withCredentials: true });
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/${id}`, { withCredentials: true });
         fetchReviews();
       } catch (error) {
         console.error('Error deleting review:', error);
@@ -298,7 +298,7 @@ const AdminDashboard = () => {
 
   const handleReplySubmit = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/reviews/${id}/reply`, { adminReply: replyContent }, { withCredentials: true });
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/${id}/reply`, { adminReply: replyContent }, { withCredentials: true });
       setReplyingTo(null);
       setReplyContent('');
       fetchReviews();
@@ -362,9 +362,9 @@ const AdminDashboard = () => {
       };
       
       if (editingProduct) {
-        await axios.put(`http://localhost:5000/api/products/${editingProduct}`, payload, { withCredentials: true });
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products/${editingProduct}`, payload, { withCredentials: true });
       } else {
-        await axios.post('http://localhost:5000/api/products', payload, { withCredentials: true });
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`, payload, { withCredentials: true });
       }
       setIsAddModalOpen(false);
       fetchProducts();
@@ -377,7 +377,7 @@ const AdminDashboard = () => {
   const handleDeleteProduct = async (id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/products/${id}`, { withCredentials: true });
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products/${id}`, { withCredentials: true });
         fetchProducts();
       } catch (error) {
         console.error('Error deleting product:', error);
@@ -404,7 +404,7 @@ const AdminDashboard = () => {
       const formData = new FormData();
       formData.append('image', file);
 
-      const response = await axios.post('http://localhost:5000/api/upload', formData, { 
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/upload`, formData, { 
         withCredentials: true,
         headers: { 'Content-Type': 'multipart/form-data' }
       });
@@ -431,7 +431,7 @@ const AdminDashboard = () => {
       setIngredientForm({ ...ingredientForm, image: 'Uploading...' });
       const formData = new FormData();
       formData.append('image', file);
-      const response = await axios.post('http://localhost:5000/api/upload', formData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/upload`, formData, {
         withCredentials: true,
         headers: { 'Content-Type': 'multipart/form-data' }
       });
@@ -452,9 +452,9 @@ const AdminDashboard = () => {
     }
     try {
       if (editingIngredient) {
-        await axios.put(`http://localhost:5000/api/ingredients/${editingIngredient}`, ingredientForm, { withCredentials: true });
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ingredients/${editingIngredient}`, ingredientForm, { withCredentials: true });
       } else {
-        await axios.post('http://localhost:5000/api/ingredients', ingredientForm, { withCredentials: true });
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ingredients`, ingredientForm, { withCredentials: true });
       }
       setIsIngredientModalOpen(false);
       setEditingIngredient(null);
@@ -469,7 +469,7 @@ const AdminDashboard = () => {
   const handleDeleteIngredient = async (id) => {
     if (!window.confirm('Are you sure you want to delete this ingredient?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/ingredients/${id}`, { withCredentials: true });
+      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ingredients/${id}`, { withCredentials: true });
       fetchIngredients();
     } catch (error) {
       console.error('Error deleting ingredient:', error);

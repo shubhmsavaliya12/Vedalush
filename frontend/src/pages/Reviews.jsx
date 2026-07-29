@@ -32,7 +32,7 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/reviews', { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`, { withCredentials: true });
       setReviews(response.data);
     } catch (error) {
       console.error('Error fetching reviews:', error);
@@ -58,7 +58,7 @@ const Reviews = () => {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/reviews',
+        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`,
         { rating, content },
         { withCredentials: true }
       );
@@ -81,7 +81,7 @@ const Reviews = () => {
     setReviewError('');
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
       const response = await axios.put(`${API_URL}/api/reviews/${editingReview._id}`, reviewForm, {
         withCredentials: true
       });

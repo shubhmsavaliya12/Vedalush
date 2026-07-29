@@ -87,7 +87,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchMyReviews = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/reviews/me', { withCredentials: true });
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/me`, { withCredentials: true });
         setReviews(response.data);
       } catch (error) {
         console.error('Error fetching personal reviews:', error);
@@ -172,7 +172,7 @@ const Profile = () => {
     setReviewError('');
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
       const response = await axios.put(`${API_URL}/api/reviews/${editingReview._id}`, reviewForm, {
         withCredentials: true
       });
@@ -218,7 +218,7 @@ const Profile = () => {
         newAddrs[0].isDefault = true;
       }
 
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
       const response = await axios.put(`${API_URL}/api/auth/profile`, { addresses: newAddrs }, {
         withCredentials: true
       });
@@ -250,7 +250,7 @@ const Profile = () => {
         currentAddrs[0].isDefault = true;
       }
 
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
       const response = await axios.put(`${API_URL}/api/auth/profile`, { addresses: currentAddrs }, {
         withCredentials: true
       });
@@ -270,7 +270,7 @@ const Profile = () => {
         isDefault: i === indexToDefault
       }));
 
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
       const response = await axios.put(`${API_URL}/api/auth/profile`, { addresses: currentAddrs }, {
         withCredentials: true
       });

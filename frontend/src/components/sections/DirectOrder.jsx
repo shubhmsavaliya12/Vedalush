@@ -41,7 +41,7 @@ const DirectOrder = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/products');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`);
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -75,7 +75,7 @@ const DirectOrder = () => {
         quantity: totalQty
       };
 
-      await axios.post('http://localhost:5000/api/orders', payload, {
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders`, payload, {
         withCredentials: true // Extremely important to send auth cookies
       });
       setShowSuccessModal(true);

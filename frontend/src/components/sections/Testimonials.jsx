@@ -31,7 +31,7 @@ const Testimonials = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
         const response = await axios.get(`${API_URL}/api/reviews`, { withCredentials: true });
         setReviews(response.data);
       } catch (error) {

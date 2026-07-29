@@ -16,7 +16,7 @@ const useVisitorTracking = () => {
         // Send a ping to record a unique visit for the month
         // In development, the proxy is not configured, so we use full URL or relative if proxied
         // Based on other fetch calls, the base URL is http://localhost:5000 in dev
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const apiUrl = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
         await axios.post(`${apiUrl}/api/analytics/visit`);
         
         // Mark as visited in localStorage
