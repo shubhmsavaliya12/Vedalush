@@ -56,7 +56,7 @@ const CookieConsent = () => {
               <button
                 type="button"
                 onClick={handleAccept}
-                className="w-full py-2.5 px-4 bg-[#5D4E42] text-[#FDFBF7] rounded-xl font-medium text-sm hover:bg-[#4A3E34] active:scale-[0.99] transition-all shadow-sm cursor-pointer"
+                className="w-full py-2.5 px-4 bg-[#5D4E42] text-[#FDFBF7] rounded-xl font-medium text-sm hover:bg-[#4A3E34] active:scale-[0.99] transition-all shadow-sm cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
               >
                 Accept
               </button>
@@ -64,7 +64,7 @@ const CookieConsent = () => {
               <button
                 type="button"
                 onClick={handleDecline}
-                className="w-full py-2.5 px-4 bg-transparent border border-[#E6DED2] text-[#5D4E42] rounded-xl font-medium text-sm hover:bg-[#F8F4EC] active:scale-[0.99] transition-all cursor-pointer"
+                className="w-full py-2.5 px-4 bg-transparent border border-[#E6DED2] text-[#5D4E42] rounded-xl font-medium text-sm hover:bg-[#F8F4EC] active:scale-[0.99] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
               >
                 Decline
               </button>

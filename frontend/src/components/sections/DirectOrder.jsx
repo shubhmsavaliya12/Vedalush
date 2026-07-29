@@ -118,7 +118,7 @@ const DirectOrder = () => {
                 src="/images/direct_order_soaps.png" 
                 alt="Beautiful Soaps" 
                 className="w-full h-full object-cover"
-              />
+              loading="lazy" decoding="async" />
             </div>
           </motion.div>
 
@@ -136,7 +136,7 @@ const DirectOrder = () => {
                   <label className="block text-sm text-[#5D4E42] mb-2 font-serif font-bold">Full Name</label>
                   <input 
                     {...register("name", { required: true })} 
-                    className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250"
+                    className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
                     placeholder="Jane Doe"
                   />
                   {errors.name && <span className="text-red-500 text-xs mt-1 block">Name is required</span>}
@@ -146,7 +146,7 @@ const DirectOrder = () => {
                   <input 
                     type="email"
                     {...register("email", { required: true })} 
-                    className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250"
+                    className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
                     placeholder="jane@example.com"
                   />
                   {errors.email && <span className="text-red-500 text-xs mt-1 block">Email is required</span>}
@@ -158,7 +158,7 @@ const DirectOrder = () => {
                   <label className="block text-sm text-[#5D4E42] mb-2 font-serif font-bold">Phone</label>
                   <input 
                     {...register("phone", { required: true })} 
-                    className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250"
+                    className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
                     placeholder="+1 234 567 8900"
                   />
                   {errors.phone && <span className="text-red-500 text-xs mt-1 block">Phone is required</span>}
@@ -167,7 +167,7 @@ const DirectOrder = () => {
                   <label className="block text-sm text-[#5D4E42] mb-2 font-serif font-bold">Country</label>
                   <input 
                     {...register("country", { required: true })} 
-                    className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250"
+                    className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
                     placeholder="United States"
                   />
                 </div>
@@ -199,7 +199,7 @@ const DirectOrder = () => {
                 </div>
                 <input 
                   {...register("address", { required: true })} 
-                  className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250"
+                  className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
                   placeholder="123 Botanica St, City, State, Zip"
                 />
               </div>
@@ -244,7 +244,7 @@ const DirectOrder = () => {
                                 }}
                                 className="px-3 py-2 hover:bg-[#F8F4EC] cursor-pointer text-[#5D4E42] transition-colors flex items-center gap-2.5 border-b border-[#E6DED2]/40 last:border-0 text-sm"
                               >
-                                {p.images?.[0] && <img src={p.images[0]} alt={p.name} className="w-8 h-8 rounded-lg object-cover shadow-sm flex-shrink-0" />}
+                                {p.images?.[0] && <img src={p.images[0]} alt={p.name} className="w-8 h-8 rounded-lg object-cover shadow-sm flex-shrink-0" loading="lazy" decoding="async" />}
                                 <span className="font-medium truncate">{p.name}</span>
                               </div>
                             ))}
@@ -320,7 +320,7 @@ const DirectOrder = () => {
                 <textarea 
                   {...register("message")} 
                   rows="3"
-                  className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250"
+                  className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
                   placeholder="Any special requests?"
                 ></textarea>
               </div>
@@ -328,7 +328,7 @@ const DirectOrder = () => {
               <button 
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 bg-[#B88A5A] text-white rounded-xl font-semibold hover:bg-[#9F7348] transition-all duration-250 shadow-soft disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
+                className="w-full py-4 bg-[#B88A5A] text-white rounded-xl font-semibold hover:bg-[#9F7348] transition-all duration-250 shadow-soft disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
               >
                 {isSubmitting ? (
                   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

@@ -69,7 +69,7 @@ const Ingredients = () => {
                     src={item.image}
                     alt={item.name}
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
+                  loading="lazy" decoding="async" />
                 </div>
               </div>
 

@@ -42,7 +42,7 @@ const Footer = () => {
           {/* Brand Col */}
           <div className="space-y-6">
             <Link to="/" className="inline-block transition-transform duration-300 hover:scale-105">
-              <img src="/vedalus.png" alt="Vedalush Logo" className="h-14 sm:h-16 md:h-20 w-auto object-contain brightness-0 invert" />
+              <img src="/vedalus.png" alt="Vedalush Logo" className="h-14 sm:h-16 md:h-20 w-auto object-contain brightness-0 invert" loading="lazy" decoding="async" />
             </Link>
             <p className="text-[#E6DED2] font-normal text-sm leading-relaxed max-w-xs">
               Luxurious, organic, handcrafted soaps tailored for radiant skin. Experience the purity of nature in every lather.
@@ -150,7 +150,7 @@ const Footer = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="bg-[#B88A5A] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#9F7348] shadow-soft transition-all duration-250 disabled:opacity-60 whitespace-nowrap shrink-0"
+                  className="bg-[#B88A5A] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#9F7348] shadow-soft transition-all duration-250 disabled:opacity-60 whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
                 >
                   {loading ? '...' : 'Subscribe'}
                 </button>

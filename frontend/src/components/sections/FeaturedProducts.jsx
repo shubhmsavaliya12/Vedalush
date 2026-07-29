@@ -112,7 +112,7 @@ const FeaturedProducts = () => {
                             src={img} 
                             alt={`${product.name} - image ${i + 1}`} 
                             className="w-full h-full object-cover"
-                          />
+                          loading="lazy" decoding="async" />
                         </SwiperSlide>
                       ))}
                     </Swiper>
@@ -121,7 +121,7 @@ const FeaturedProducts = () => {
                       src={product.images && product.images[0] ? product.images[0] : '/placeholder.jpg'} 
                       alt={product.name} 
                       className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
+                    loading="lazy" decoding="async" />
                   )}
                   {product.images?.length === 1 && (
                     <div className="absolute inset-0 bg-[#5D4E42]/10 group-hover:bg-transparent transition-colors duration-300 pointer-events-none"></div>

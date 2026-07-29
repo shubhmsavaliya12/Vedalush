@@ -241,7 +241,7 @@ const Login = () => {
               src="/vedalus.png" 
               alt="Vedalush Logo" 
               className="h-12 sm:h-16 w-auto mx-auto object-contain mb-4" 
-            />
+            loading="lazy" decoding="async" />
             <p className="text-nature-600 font-light">
               {step === 'auth' && (isLogin ? 'Welcome back to pure nature.' : 'Join the journey to radiant skin.')}
               {step === 'signup_otp' && 'Verify your email address to get started.'}
@@ -353,7 +353,7 @@ const Login = () => {
               <button 
                 type="submit"
                 disabled={loading || (!isLogin && !agreed)}
-                className="w-full bg-nature-900 hover:bg-nature-800 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors shadow-soft"
+                className="w-full bg-nature-900 hover:bg-nature-800 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
               >
                 {loading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}
               </button>
@@ -381,7 +381,7 @@ const Login = () => {
               <button 
                 type="submit"
                 disabled={loading || otp.length !== 6}
-                className="w-full bg-nature-900 hover:bg-nature-800 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors shadow-soft"
+                className="w-full bg-nature-900 hover:bg-nature-800 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
               >
                 {loading ? 'Verifying...' : 'Verify & Create Account'}
               </button>
@@ -398,7 +398,7 @@ const Login = () => {
                   type="button"
                   onClick={handleResendSignupOtp}
                   disabled={loading}
-                  className="text-nature-900 font-medium hover:underline disabled:opacity-50"
+                  className="text-nature-900 font-medium hover:underline disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
                 >
                   Resend Code
                 </button>
@@ -424,7 +424,7 @@ const Login = () => {
               <button 
                 type="submit"
                 disabled={loading || !email}
-                className="w-full bg-nature-900 hover:bg-nature-800 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors shadow-soft"
+                className="w-full bg-nature-900 hover:bg-nature-800 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
               >
                 {loading ? 'Sending Code...' : 'Send Verification Code'}
               </button>
@@ -462,7 +462,7 @@ const Login = () => {
               <button 
                 type="submit"
                 disabled={loading || otp.length !== 6}
-                className="w-full bg-nature-900 hover:bg-nature-800 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors shadow-soft"
+                className="w-full bg-nature-900 hover:bg-nature-800 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
               >
                 {loading ? 'Verifying...' : 'Verify Code'}
               </button>
@@ -479,7 +479,7 @@ const Login = () => {
                   type="button"
                   onClick={handleForgotEmailSubmit}
                   disabled={loading}
-                  className="text-nature-900 font-medium hover:underline disabled:opacity-50"
+                  className="text-nature-900 font-medium hover:underline disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
                 >
                   Resend Code
                 </button>
@@ -519,7 +519,7 @@ const Login = () => {
               <button 
                 type="submit"
                 disabled={loading || !newPassword || !confirmPassword}
-                className="w-full bg-nature-900 hover:bg-nature-800 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors shadow-soft"
+                className="w-full bg-nature-900 hover:bg-nature-800 disabled:opacity-70 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
               >
                 {loading ? 'Updating Password...' : 'Save New Password'}
               </button>

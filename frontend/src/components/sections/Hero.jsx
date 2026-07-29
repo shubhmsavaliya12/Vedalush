@@ -10,7 +10,7 @@ const Hero = () => {
           src="/images/IMG_20260727_235144.png"
           alt="Vedalush Background"
           className="w-full h-auto lg:h-full object-contain lg:object-cover object-center block"
-        />
+        loading="lazy" decoding="async" />
         <div className="absolute inset-0 bg-[#2E2721]/65"></div>
 
         {/* Decorative Soft Warm Atmosphere */}

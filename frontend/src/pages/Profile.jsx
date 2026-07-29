@@ -334,7 +334,7 @@ const Profile = () => {
               </button>
               <button
                 onClick={handleLogout}
-                className="bg-red-500/15 hover:bg-red-500/25 backdrop-blur-md border border-red-400/30 text-red-300 hover:text-red-200 px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all flex items-center justify-center space-x-2 shadow-sm flex-1 sm:flex-none"
+                className="bg-red-500/15 hover:bg-red-500/25 backdrop-blur-md border border-red-400/30 text-red-300 hover:text-red-200 px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all flex items-center justify-center space-x-2 shadow-sm flex-1 sm:flex-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
               >
                 <HiOutlineLogout className="text-base" />
                 <span>Log Out</span>
@@ -643,7 +643,7 @@ const Profile = () => {
                         type="email"
                         value={user.email}
                         disabled
-                        className="w-full bg-gray-100 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-600 text-sm font-mono cursor-not-allowed select-none"
+                        className="w-full bg-gray-100 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-600 text-sm font-mono cursor-not-allowed select-none text-base md:text-sm"
                       />
                       <HiOutlineMail className="absolute right-3.5 top-3 text-gray-400 text-base" />
                     </div>
@@ -753,7 +753,7 @@ const Profile = () => {
                     <button
                       type="submit"
                       disabled={updating}
-                      className="px-6 py-2.5 rounded-xl bg-nature-900 hover:bg-nature-800 disabled:opacity-70 text-white font-medium text-sm shadow-soft transition-colors flex items-center space-x-2"
+                      className="px-6 py-2.5 rounded-xl bg-nature-900 hover:bg-nature-800 disabled:opacity-70 text-white font-medium text-sm shadow-soft transition-colors flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
                     >
                       {updating ? (
                         <>
@@ -851,7 +851,7 @@ const Profile = () => {
                     <button
                       type="submit"
                       disabled={updatingReview}
-                      className="px-6 py-2.5 rounded-xl bg-nature-900 hover:bg-nature-800 disabled:opacity-70 text-white font-medium text-sm shadow-soft transition-colors flex items-center space-x-2"
+                      className="px-6 py-2.5 rounded-xl bg-nature-900 hover:bg-nature-800 disabled:opacity-70 text-white font-medium text-sm shadow-soft transition-colors flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
                     >
                       {updatingReview ? (
                         <>
@@ -1025,7 +1025,7 @@ const Profile = () => {
                     <button
                       type="submit"
                       disabled={savingAddress}
-                      className="px-6 py-2.5 rounded-xl bg-nature-900 hover:bg-nature-800 disabled:opacity-70 text-white font-medium text-sm shadow-soft transition-colors flex items-center space-x-2"
+                      className="px-6 py-2.5 rounded-xl bg-nature-900 hover:bg-nature-800 disabled:opacity-70 text-white font-medium text-sm shadow-soft transition-colors flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
                     >
                       {savingAddress ? (
                         <>

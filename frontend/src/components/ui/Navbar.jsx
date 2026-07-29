@@ -196,7 +196,7 @@ const Navbar = () => {
             {/* Mobile Left: Menu Toggle */}
             <div className="flex lg:hidden items-center justify-start flex-1">
               <button
-                className="z-50 text-[#5D4E42] p-1.5 focus:outline-none hover:text-[#B88A5A] transition-colors duration-250"
+                className="z-50 text-[#5D4E42] p-1.5 focus:outline-none hover:text-[#B88A5A] transition-colors duration-250 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle Navigation Menu"
               >
@@ -211,7 +211,7 @@ const Navbar = () => {
                   src="/vedalus.png" 
                   alt="Vedalush Logo" 
                   className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-transform duration-500 group-hover:scale-105" 
-                />
+                loading="lazy" decoding="async" />
               </Link>
             </div>
 

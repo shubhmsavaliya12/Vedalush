@@ -208,7 +208,7 @@ const SkinTypeGuide = () => {
               initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
               className="relative w-full h-64 sm:h-96 md:h-[500px] rounded-3xl overflow-hidden shadow-2xl bg-nature-800 flex items-center justify-center border-4 border-white group cursor-pointer"
             >
-              <img src="/images/hero_soap.png" alt="Video Placeholder" className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay group-hover:opacity-70 transition-opacity" />
+              <img src="/images/hero_soap.png" alt="Video Placeholder" className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay group-hover:opacity-70 transition-opacity" loading="lazy" decoding="async" />
               <div className="z-10 w-20 h-20 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white group-hover:bg-white/50 transition-colors">
                 <FaPlay size={32} className="ml-2" />
               </div>
@@ -422,11 +422,11 @@ const SkinTypeGuide = () => {
                     <p className="text-nature-700 font-light mb-8 max-w-md mx-auto">
                       Based on your answers, your skin shows characteristics of {quizResult.toLowerCase()} skin. Scroll down to see our recommended soaps for you!
                     </p>
-                    <button onClick={resetQuiz} className="px-6 py-2 border border-nature-300 text-nature-700 rounded-full hover:bg-nature-50 transition-colors text-sm mb-6">
+                    <button onClick={resetQuiz} className="px-6 py-2 border border-nature-300 text-nature-700 rounded-full hover:bg-nature-50 transition-colors text-sm mb-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2">
                       Retake Quiz
                     </button>
                     <div>
-                      <button onClick={scrollToRecommendations} className="inline-flex flex-col items-center gap-2 text-nature-600 hover:text-nature-900 font-medium transition-colors mt-2">
+                      <button onClick={scrollToRecommendations} className="inline-flex flex-col items-center gap-2 text-nature-600 hover:text-nature-900 font-medium transition-colors mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2">
                         <span>See Recommendations</span>
                         <FaChevronDown className="animate-bounce" />
                       </button>
@@ -483,7 +483,7 @@ const SkinTypeGuide = () => {
                                     src={img} 
                                     alt={`${product.name} - image ${i + 1}`} 
                                     className="w-full h-full object-cover"
-                                  />
+                                  loading="lazy" decoding="async" />
                                 </SwiperSlide>
                               ))}
                             </Swiper>
@@ -492,7 +492,7 @@ const SkinTypeGuide = () => {
                               src={product.images && product.images[0] ? product.images[0] : '/placeholder.jpg'} 
                               alt={product.name} 
                               className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                            />
+                            loading="lazy" decoding="async" />
                           )}
                           {product.images?.length === 1 && (
                             <div className="absolute inset-0 bg-[#5D4E42]/10 group-hover:bg-transparent transition-colors duration-300 pointer-events-none"></div>

@@ -186,7 +186,7 @@ const Reviews = () => {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="px-8 py-3 bg-nature-900 text-white rounded-full font-medium hover:bg-nature-700 transition-colors shadow-soft"
+                    className="px-8 py-3 bg-nature-900 text-white rounded-full font-medium hover:bg-nature-700 transition-colors shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
                   >
                     Submit Review
                   </button>
@@ -354,7 +354,7 @@ const Reviews = () => {
                   <button
                     type="submit"
                     disabled={updatingReview}
-                    className="px-6 py-2.5 rounded-xl bg-nature-900 hover:bg-nature-800 disabled:opacity-70 text-white font-medium text-sm shadow-soft transition-colors flex items-center space-x-2"
+                    className="px-6 py-2.5 rounded-xl bg-nature-900 hover:bg-nature-800 disabled:opacity-70 text-white font-medium text-sm shadow-soft transition-colors flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
                   >
                     {updatingReview ? (
                       <>

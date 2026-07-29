@@ -580,7 +580,7 @@ const AdminDashboard = () => {
         <h2 className="text-2xl font-serif font-bold text-[#5D4E42]">Manage Products</h2>
         <button 
           onClick={openAddModal}
-          className="flex items-center space-x-2 bg-[#B88A5A] hover:bg-[#9F7348] text-white px-4 py-2.5 rounded-full font-semibold transition-all duration-250 shadow-soft"
+          className="flex items-center space-x-2 bg-[#B88A5A] hover:bg-[#9F7348] text-white px-4 py-2.5 rounded-full font-semibold transition-all duration-250 shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
         >
           <HiPlus /> <span>Add Product</span>
         </button>
@@ -603,7 +603,7 @@ const AdminDashboard = () => {
                 <td className="p-4">
                   <div className="w-12 h-12 rounded-lg overflow-hidden bg-[#F8F4EC]">
                     {product.images && product.images[0] && (
-                      <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
+                      <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                     )}
                   </div>
                 </td>
@@ -640,7 +640,7 @@ const AdminDashboard = () => {
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-lg overflow-hidden bg-[#F8F4EC] shrink-0">
                 {product.images && product.images[0] && (
-                  <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
+                  <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                 )}
               </div>
               <div className="flex-1 min-w-0">
@@ -1012,7 +1012,7 @@ const AdminDashboard = () => {
           <tbody>
             {subscribers.map((sub) => (
               <tr key={sub._id} className="border-b border-[#E6DED2]/60 hover:bg-[#F8F4EC] transition-colors">
-                <td className="p-4 text-[#5D4E42] font-mono font-bold">{sub.email}</td>
+                <td className="p-4 text-[#5D4E42] font-mono font-bold break-all max-w-[150px] sm:max-w-none">{sub.email}</td>
                 <td className="p-4 text-[#6F6A65]">
                   {new Date(sub.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                 </td>
@@ -1099,7 +1099,7 @@ const AdminDashboard = () => {
                 src={item.image} 
                 alt={item.name} 
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
+              loading="lazy" decoding="async" />
               <div className="absolute top-3 right-3 flex space-x-1">
                 <button
                   onClick={() => {
@@ -1151,7 +1151,7 @@ const AdminDashboard = () => {
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between p-4 bg-[#FFFFFF] border-b border-[#E6DED2] sticky top-0 z-30 shadow-soft">
         <Link to="/" className="inline-block">
-          <img src="/vedalus.png" alt="Vedalush Logo" className="h-10 w-auto object-contain" />
+          <img src="/vedalus.png" alt="Vedalush Logo" className="h-10 w-auto object-contain" loading="lazy" decoding="async" />
         </Link>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-[#5D4E42] p-2">
           {isMobileMenuOpen ? <HiX size={24} /> : <HiMenu size={24} />}
@@ -1171,7 +1171,7 @@ const AdminDashboard = () => {
         <div className="w-full">
           <div className="px-6 mb-12 hidden md:block">
              <Link to="/" className="inline-block mb-1">
-               <img src="/vedalus.png" alt="Vedalush Logo" className="h-15 w-auto object-contain" />
+               <img src="/vedalus.png" alt="Vedalush Logo" className="h-15 w-auto object-contain" loading="lazy" decoding="async" />
              </Link>
              <p className="text-[#8E7A65] text-xs font-semibold mt-1 uppercase tracking-widest">Admin Portal</p>
           </div>
@@ -1218,7 +1218,7 @@ const AdminDashboard = () => {
         
         <button 
           onClick={handleLogout}
-          className="w-full flex items-center space-x-3 px-6 py-3.5 text-red-600 hover:text-red-800 hover:bg-red-50 font-medium transition-colors cursor-pointer"
+          className="w-full flex items-center space-x-3 px-6 py-3.5 text-red-600 hover:text-red-800 hover:bg-red-50 font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
         >
           <HiOutlineLogout size={20} /> <span>Logout</span>
         </button>
@@ -1349,7 +1349,7 @@ const AdminDashboard = () => {
                 <div className="p-6 border border-[#E6DED2] rounded-xl bg-[#FDFBF7]">
                   <div className="flex justify-between items-center mb-4">
                     <label className="block text-sm font-semibold text-[#5D4E42]">Product Images (Cloudinary URLs) *</label>
-                    <button type="button" onClick={addImageField} className="text-xs flex items-center space-x-1 bg-[#B88A5A] hover:bg-[#9F7348] px-3.5 py-1.5 rounded-lg text-white font-semibold shadow-soft cursor-pointer">
+                    <button type="button" onClick={addImageField} className="text-xs flex items-center space-x-1 bg-[#B88A5A] hover:bg-[#9F7348] px-3.5 py-1.5 rounded-lg text-white font-semibold shadow-soft cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2">
                       <HiPlus /> <span>Add Image</span>
                     </button>
                   </div>
@@ -1360,7 +1360,7 @@ const AdminDashboard = () => {
                         <div className="flex space-x-3 items-center w-full md:w-auto">
                           {url && url !== 'Uploading...' && url.startsWith('http') && (
                              <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-[#E6DED2]">
-                               <img src={url} alt="Preview" className="w-full h-full object-cover" />
+                               <img src={url} alt="Preview" className="w-full h-full object-cover" loading="lazy" decoding="async" />
                              </div>
                           )}
                           <input 
@@ -1404,7 +1404,7 @@ const AdminDashboard = () => {
 
                 <div className="flex justify-end space-x-4 pt-6 mt-8 border-t border-[#E6DED2]">
                   <button type="button" onClick={() => setIsAddModalOpen(false)} className="px-5 py-2.5 text-[#8E7A65] hover:text-[#5D4E42] font-semibold transition-colors cursor-pointer">Cancel</button>
-                  <button type="submit" className="px-8 py-3 bg-[#B88A5A] hover:bg-[#9F7348] text-white rounded-full transition-all duration-250 font-semibold shadow-soft cursor-pointer">
+                  <button type="submit" className="px-8 py-3 bg-[#B88A5A] hover:bg-[#9F7348] text-white rounded-full transition-all duration-250 font-semibold shadow-soft cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2">
                     {editingProduct ? 'Update Product' : 'Save Product'}
                   </button>
                 </div>
@@ -1592,7 +1592,7 @@ const AdminDashboard = () => {
                     </div>
                     {ingredientForm.image && ingredientForm.image !== 'Uploading...' && (
                       <div className="w-24 h-24 rounded-xl overflow-hidden border border-[#E6DED2] bg-[#F8F4EC] relative group shadow-soft">
-                        <img src={ingredientForm.image} alt="Preview" className="w-full h-full object-cover" />
+                        <img src={ingredientForm.image} alt="Preview" className="w-full h-full object-cover" loading="lazy" decoding="async" />
                       </div>
                     )}
                   </div>
@@ -1609,7 +1609,7 @@ const AdminDashboard = () => {
                   <button 
                     type="submit" 
                     disabled={ingredientForm.image === 'Uploading...'}
-                    className="bg-[#B88A5A] hover:bg-[#9F7348] disabled:opacity-50 text-white px-6 py-2.5 rounded-full transition-all duration-250 shadow-soft text-sm font-semibold cursor-pointer"
+                    className="bg-[#B88A5A] hover:bg-[#9F7348] disabled:opacity-50 text-white px-6 py-2.5 rounded-full transition-all duration-250 shadow-soft text-sm font-semibold cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
                   >
                     {editingIngredient ? 'Update Ingredient' : 'Create Ingredient'}
                   </button>

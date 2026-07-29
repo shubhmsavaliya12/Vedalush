@@ -69,7 +69,7 @@ You have the right to request access to or deletion of your personal data by con
         >
           <button 
             onClick={onClose}
-            className="absolute top-6 right-6 text-[#9D948B] hover:text-[#5D4E42] transition-colors"
+            className="absolute top-6 right-6 text-[#9D948B] hover:text-[#5D4E42] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
           >
             <HiX size={24} />
           </button>
@@ -83,7 +83,7 @@ You have the right to request access to or deletion of your personal data by con
           <div className="mt-8 pt-6 border-t border-[#E6DED2] flex justify-end">
             <button 
               onClick={onClose}
-              className="px-6 py-2 bg-[#B88A5A] text-white rounded-full font-semibold hover:bg-[#9F7348] transition-all duration-250 shadow-soft"
+              className="px-6 py-2 bg-[#B88A5A] text-white rounded-full font-semibold hover:bg-[#9F7348] transition-all duration-250 shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
             >
               Close
             </button>

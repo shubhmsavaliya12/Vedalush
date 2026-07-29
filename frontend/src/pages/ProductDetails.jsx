@@ -141,7 +141,7 @@ const ProductDetails = () => {
                       className={`w-16 h-16 sm:w-20 sm:h-20 md:w-full md:aspect-square flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-300 cursor-pointer ${activeIndex === i ? 'border-nature-700 opacity-100 shadow-md scale-95' : 'border-transparent opacity-60 hover:opacity-100'
                         }`}
                     >
-                      <img src={img} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
+                      <img src={img} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                     </button>
                   ))}
                 </div>
@@ -177,7 +177,7 @@ const ProductDetails = () => {
                   <SlideCounter total={product.images.length} />
                   {product.images.map((img, i) => (
                     <SwiperSlide key={i}>
-                      <img src={img} alt={`${product.name} view ${i + 1}`} className="w-full h-full object-cover" />
+                      <img src={img} alt={`${product.name} view ${i + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                     </SwiperSlide>
                   ))}
                 </Swiper>
@@ -186,7 +186,7 @@ const ProductDetails = () => {
                   src={product.images?.[0] || '/placeholder.jpg'}
                   alt={product.name}
                   className="w-full h-full object-cover"
-                />
+                loading="lazy" decoding="async" />
               )}
             </div>
           </motion.div>
@@ -266,7 +266,7 @@ const ProductDetails = () => {
                 </a>
               )}
               {!product.amazonLink && !product.flipkartLink && (
-                <button disabled className="flex items-center justify-center w-full bg-nature-200 text-nature-500 py-4 rounded-xl cursor-not-allowed font-medium text-lg">
+                <button disabled className="flex items-center justify-center w-full bg-nature-200 text-nature-500 py-4 rounded-xl cursor-not-allowed font-medium text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2">
                   Currently Out of Stock Online
                 </button>
               )}
