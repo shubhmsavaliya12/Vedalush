@@ -220,9 +220,11 @@ When delivering the project, send a professional congratulatory email with this 
 **Answer:** Because there is no public signup form, use your terminal or Postman to send a one-time seed command to your live cloud URL:
 ```bash
 curl -X POST https://vedalush-backend.onrender.com/api/admin/seed \
-  -H "x-seed-secret: your_secret_admin_seed_string"
+  -H "Content-Type: application/json" \
+  -H "x-seed-secret: your_secret_admin_seed_string" \
+  -d '{"username": "admin", "password": "SuperSecureAdminPassword2026"}'
 ```
-You will receive a JSON response: `{"message": "Admin user created successfully"}`. You can now log into your live domain at `/admin/login`!
+You will receive a JSON response: `{"message": "Admin created successfully"}`. You can now log into your live domain at `/admin/login`!
 
 ### Q4: My free Render backend takes 40 seconds to respond on the very first request of the day. Why?
 **Answer:** Free web services on Render go to "sleep" after 15 minutes of inactivity to conserve cloud resources. When a user visits after inactivity, Render takes ~30-40 seconds to wake up the server.
