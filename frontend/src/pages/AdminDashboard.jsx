@@ -5,6 +5,7 @@ import { HiOutlineLogout, HiOutlineViewGrid, HiOutlineCube, HiOutlineShoppingCar
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaStar, FaWhatsapp } from 'react-icons/fa';
+import { useAuth } from '../context/AuthContext';
 
 
 const CustomStatusDropdown = ({ value, options, onChange, type = "filter" }) => {
@@ -142,12 +143,13 @@ const CustomStatusDropdown = ({ value, options, onChange, type = "filter" }) => 
 };
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
-  const navigate = useNavigate();
 
   const [reviews, setReviews] = useState([]);
   const [replyingTo, setReplyingTo] = useState(null);
@@ -278,9 +280,9 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleLogout = () => {
-    // Implement logout logic here
-    navigate('/');
+  const handleLogout = async () => {
+    await logout();
+    navigate('/admin/login');
   };
 
   const handleDeleteReview = async (id) => {
