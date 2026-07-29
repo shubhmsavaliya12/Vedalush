@@ -79,7 +79,7 @@ const FeaturedProducts = () => {
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-10">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-2 lg:gap-3">
           {products.map((product, index) => {
             const priceData = formatPrice(product.price, product.discountPrice, product.internationalPrices);
             return (
