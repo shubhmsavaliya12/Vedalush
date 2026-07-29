@@ -2,9 +2,18 @@ import express from 'express';
 import Admin from '../models/Admin.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
 import { verifyAdminAuth } from '../utils/auth.js';
 
 const router = express.Router();
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Limit each IP to 5 requests per windowMs
+  message: 'Too many authentication attempts from this IP, please try again after 15 minutes',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 router.get('/check', (req, res) => {
   const authResult = verifyAdminAuth(req);
@@ -17,20 +26,33 @@ router.get('/check', (req, res) => {
 router.post('/seed', async (req, res) => {
   // Basic security to prevent accidental execution in production
   if (process.env.NODE_ENV === 'production' && req.headers['x-seed-secret'] !== process.env.SEED_SECRET) {
-     return res.status(403).json({ message: 'Forbidden' });
+    return res.status(403).json({ message: 'Forbidden' });
   }
 
   try {
-    const existingAdmin = await Admin.findOne({ username: 'admin' });
+    const { username, password } = req.body;
+    const seedUsername = username || 'admin';
+    const seedPassword = password || 'admin123';
+
+    const existingAdmin = await Admin.findOne();
     if (existingAdmin) {
-      return res.status(400).json({ message: 'Admin user already exists' });
+      if (req.headers['x-seed-secret'] === process.env.SEED_SECRET) {
+         // Update existing admin (Password Reset)
+         existingAdmin.username = seedUsername;
+         const salt = await bcrypt.genSalt(10);
+         existingAdmin.password = await bcrypt.hash(seedPassword, salt);
+         await existingAdmin.save();
+         return res.status(200).json({ message: 'Admin credentials updated successfully' });
+      } else {
+         return res.status(400).json({ message: 'Admin user already exists' });
+      }
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash('admin123', salt);
+    const hashedPassword = await bcrypt.hash(seedPassword, salt);
 
     const newAdmin = new Admin({
-      username: 'admin',
+      username: seedUsername,
       password: hashedPassword,
       role: 'admin'
     });
@@ -44,10 +66,10 @@ router.post('/seed', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', authLimiter, async (req, res) => {
   try {
     const { username, password } = req.body;
-    
+
     if (!username || !password) {
       return res.status(400).json({ message: 'Please provide all required fields' });
     }
@@ -62,9 +84,10 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
+    if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET is missing');
     const token = jwt.sign(
       { id: admin._id, role: admin.role },
-      process.env.JWT_SECRET || 'fallback_secret_do_not_use_in_prod',
+      process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
 

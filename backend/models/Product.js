@@ -62,6 +62,10 @@ const ProductSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
+// Performance Indexes for high-traffic scalability
+ProductSchema.index({ createdAt: -1 }); // Optimize sorting for latest products
+ProductSchema.index({ name: 'text', shortDesc: 'text' }); // Optimize text search
+
 const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema);
 
 export default Product;

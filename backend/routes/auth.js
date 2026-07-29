@@ -3,10 +3,19 @@ import User from '../models/User.js';
 import Otp from '../models/Otp.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
 import { verifyUserAuth } from '../utils/auth.js';
 import { sendOtpEmail } from '../utils/email.js';
 
 const router = express.Router();
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Limit each IP to 5 requests per windowMs
+  message: 'Too many authentication attempts from this IP, please try again after 15 minutes',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 const formatUserData = (user) => {
   let addrs = user.addresses ? [...user.addresses] : [];
@@ -52,12 +61,21 @@ const formatUserData = (user) => {
   };
 };
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', authLimiter, async (req, res) => {
   try {
     const { name, email, password } = req.body;
     
     if (!name || !email || !password) {
       return res.status(400).json({ message: 'Please provide all required fields' });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Please provide a valid email address' });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({ message: 'Password must be at least 8 characters long' });
     }
 
     const existingUser = await User.findOne({ email });
@@ -76,9 +94,10 @@ router.post('/signup', async (req, res) => {
 
     await newUser.save();
     
+    if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET is missing');
     const token = jwt.sign(
       { id: newUser._id, name: newUser.name, email: newUser.email },
-      process.env.JWT_SECRET || 'fallback_secret_do_not_use_in_prod',
+      process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
 
@@ -96,12 +115,17 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', authLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
     
     if (!email || !password) {
       return res.status(400).json({ message: 'Please provide all required fields' });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Please provide a valid email address' });
     }
 
     const user = await User.findOne({ email });
@@ -114,9 +138,10 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
+    if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET is missing');
     const token = jwt.sign(
       { id: user._id, name: user.name, email: user.email },
-      process.env.JWT_SECRET || 'fallback_secret_do_not_use_in_prod',
+      process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
 

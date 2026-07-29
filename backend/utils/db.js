@@ -13,6 +13,9 @@ export const connectToDatabase = async () => {
   try {
     const db = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/soap_db', {
       dbName: 'soap_db',
+      maxPoolSize: 50, // Optimize for high concurrency
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
     });
     
     isConnected = db.connections[0].readyState;

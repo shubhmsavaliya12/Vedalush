@@ -5,7 +5,17 @@ import cloudinary from '../utils/cloudinary.js';
 import { verifyAdminAuth } from '../utils/auth.js';
 
 const router = express.Router();
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/webp') {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only JPEG, PNG and WEBP are allowed.'), false);
+    }
+  }
+});
 
 router.post('/', upload.single('image'), async (req, res) => {
   const authResult = verifyAdminAuth(req);
