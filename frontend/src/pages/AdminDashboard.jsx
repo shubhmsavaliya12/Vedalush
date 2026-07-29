@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiOutlineLogout, HiOutlineViewGrid, HiOutlineCube, HiOutlineShoppingCart, HiOutlineChat, HiOutlineSparkles, HiPlus, HiPencil, HiTrash, HiReply, HiX, HiMenu, HiEye, HiChevronDown, HiOutlineMail } from 'react-icons/hi';
+import { HiOutlineLogout, HiOutlineViewGrid, HiOutlineCube, HiOutlineShoppingCart, HiOutlineChat, HiOutlineSparkles, HiPlus, HiPencil, HiTrash, HiReply, HiX, HiMenu, HiEye, HiChevronDown, HiOutlineMail, HiOutlineUsers } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaStar, FaWhatsapp } from 'react-icons/fa';
@@ -990,8 +990,9 @@ const AdminDashboard = () => {
           <h2 className="text-2xl font-serif font-bold text-[#5D4E42]">Newsletter Subscribers</h2>
           <p className="text-sm text-[#6F6A65]">Manage all users subscribed to the Vedalush newsletter</p>
         </div>
-        <span className="bg-[#B88A5A] text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-soft">
-          {subscribers.length} {subscribers.length === 1 ? 'Subscriber' : 'Subscribers'}
+        <span className="flex items-center gap-1.5 bg-[#B88A5A] text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-soft whitespace-nowrap shrink-0">
+          <HiOutlineUsers size={14} />
+          {subscribers.length}
         </span>
       </div>
 
