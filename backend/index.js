@@ -23,10 +23,14 @@ dotenv.config();
 
 const app = express();
 
+const getOrigin = () => {
+  if (process.env.NODE_ENV !== 'production') return ['http://localhost:5173', 'http://localhost:5174'];
+  const url = process.env.FRONTEND_URL || '';
+  return url.startsWith('http') ? url : `https://${url}`;
+};
+
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.FRONTEND_URL 
-    : ['http://localhost:5173', 'http://localhost:5174'],
+  origin: getOrigin(),
   credentials: true,
 };
 
