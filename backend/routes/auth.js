@@ -101,9 +101,9 @@ router.post('/signup', authLimiter, async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    res.cookie('user_token', token, getCookieOptions());
+    // Removed res.cookie
 
-    res.status(201).json({ message: 'User created successfully', user: { name: newUser.name, email: newUser.email } });
+    res.status(201).json({ message: 'User created successfully', user: { name: newUser.name, email: newUser.email }, token });
   } catch (error) {
     console.error('Signup error:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -140,7 +140,7 @@ router.post('/login', authLimiter, async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    res.cookie('user_token', token, getCookieOptions());
+    // Removed res.cookie
 
     let modified = false;
     if ((!user.addresses || user.addresses.length === 0) && (user.address || user.city || user.state || user.pincode || user.phone)) {
@@ -170,7 +170,7 @@ router.post('/login', authLimiter, async (req, res) => {
     }
     if (modified) await user.save();
 
-    res.status(200).json({ message: 'Login successful', user: formatUserData(user) });
+    res.status(200).json({ message: 'Login successful', user: formatUserData(user), token });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -280,7 +280,7 @@ router.put('/profile', verifyUserAuth, async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  res.clearCookie('user_token', getCookieOptions());
+  // Removed res.clearCookie
   res.status(200).json({ message: 'Logged out successfully' });
 });
 
@@ -363,9 +363,9 @@ router.post('/signup-verify', async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    res.cookie('user_token', token, getCookieOptions());
+    // Removed res.cookie
 
-    res.status(201).json({ message: 'Account verified and created successfully', user: formatUserData(newUser) });
+    res.status(201).json({ message: 'Account verified and created successfully', user: formatUserData(newUser), token });
   } catch (error) {
     console.error('Signup verify error:', error);
     res.status(500).json({ message: 'Internal server error during account creation' });

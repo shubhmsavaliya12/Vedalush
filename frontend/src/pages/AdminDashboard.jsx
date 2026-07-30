@@ -181,7 +181,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/check`, { withCredentials: true });
+        await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/check`, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
         setIsAuthenticated(true);
       } catch (error) {
         navigate('/admin/login');
@@ -204,7 +204,7 @@ const AdminDashboard = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders`, { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders`, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       setOrders(response.data);
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -213,7 +213,7 @@ const AdminDashboard = () => {
 
   const fetchSubscribers = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/newsletter/subscribers`, { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/newsletter/subscribers`, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       setSubscribers(response.data);
     } catch (error) {
       console.error('Error fetching subscribers:', error);
@@ -223,7 +223,7 @@ const AdminDashboard = () => {
   const handleDeleteSubscriber = async (id) => {
     if (window.confirm('Are you sure you want to remove this subscriber?')) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/newsletter/subscribers/${id}`, { withCredentials: true });
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/newsletter/subscribers/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
         setSubscribers(subscribers.filter(sub => sub._id !== id));
       } catch (error) {
         console.error('Error deleting subscriber:', error);
@@ -233,7 +233,7 @@ const AdminDashboard = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}/status`, { status: newStatus }, { withCredentials: true });
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}/status`, { status: newStatus }, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       // Update local state to reflect change instantly
       setOrders(orders.map(order => 
         order._id === orderId ? { ...order, status: newStatus } : order
@@ -246,7 +246,7 @@ const AdminDashboard = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`, { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       setReviews(response.data);
     } catch (error) {
       console.error('Error fetching reviews:', error);
@@ -273,7 +273,7 @@ const AdminDashboard = () => {
 
   const fetchAnalytics = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/analytics`, { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/analytics`, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       setAnalytics(response.data);
     } catch (error) {
       console.error('Error fetching analytics:', error);
@@ -288,7 +288,7 @@ const AdminDashboard = () => {
   const handleDeleteReview = async (id) => {
     if (window.confirm('Are you sure you want to delete this review?')) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/${id}`, { withCredentials: true });
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
         fetchReviews();
       } catch (error) {
         console.error('Error deleting review:', error);
@@ -298,7 +298,7 @@ const AdminDashboard = () => {
 
   const handleReplySubmit = async (id) => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/${id}/reply`, { adminReply: replyContent }, { withCredentials: true });
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/${id}/reply`, { adminReply: replyContent }, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       setReplyingTo(null);
       setReplyContent('');
       fetchReviews();
@@ -362,9 +362,9 @@ const AdminDashboard = () => {
       };
       
       if (editingProduct) {
-        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products/${editingProduct}`, payload, { withCredentials: true });
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products/${editingProduct}`, payload, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`, payload, { withCredentials: true });
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`, payload, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       }
       setIsAddModalOpen(false);
       fetchProducts();
@@ -377,7 +377,7 @@ const AdminDashboard = () => {
   const handleDeleteProduct = async (id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products/${id}`, { withCredentials: true });
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
         fetchProducts();
       } catch (error) {
         console.error('Error deleting product:', error);
@@ -405,8 +405,7 @@ const AdminDashboard = () => {
       formData.append('image', file);
 
       const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/upload`, formData, { 
-        withCredentials: true,
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}`, 'Content-Type': 'multipart/form-data' }
       });
       
       handleImageChange(index, response.data.secure_url);
@@ -432,8 +431,7 @@ const AdminDashboard = () => {
       const formData = new FormData();
       formData.append('image', file);
       const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/upload`, formData, {
-        withCredentials: true,
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}`, 'Content-Type': 'multipart/form-data' }
       });
       setIngredientForm(prev => ({ ...prev, image: response.data.secure_url }));
     } catch (error) {
@@ -452,9 +450,9 @@ const AdminDashboard = () => {
     }
     try {
       if (editingIngredient) {
-        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ingredients/${editingIngredient}`, ingredientForm, { withCredentials: true });
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ingredients/${editingIngredient}`, ingredientForm, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ingredients`, ingredientForm, { withCredentials: true });
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ingredients`, ingredientForm, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       }
       setIsIngredientModalOpen(false);
       setEditingIngredient(null);
@@ -469,7 +467,7 @@ const AdminDashboard = () => {
   const handleDeleteIngredient = async (id) => {
     if (!window.confirm('Are you sure you want to delete this ingredient?')) return;
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ingredients/${id}`, { withCredentials: true });
+      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ingredients/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       fetchIngredients();
     } catch (error) {
       console.error('Error deleting ingredient:', error);

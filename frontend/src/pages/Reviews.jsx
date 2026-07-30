@@ -33,7 +33,7 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`, { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
       setReviews(response.data);
     } catch (error) {
       console.error('Error fetching reviews:', error);
@@ -61,7 +61,7 @@ const Reviews = () => {
       await axios.post(
         `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`,
         { rating, content },
-        { withCredentials: true }
+        { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } }
       );
       
       setSubmitSuccess(true);
@@ -83,9 +83,7 @@ const Reviews = () => {
 
     try {
       const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
-      const response = await axios.put(`${API_URL}/api/reviews/${editingReview._id}`, reviewForm, {
-        withCredentials: true
-      });
+      const response = await axios.put(`${API_URL}/api/reviews/${editingReview._id}`, reviewForm, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
 
       if (response.status === 200) {
         setReviews(reviews.map((r) => r._id === editingReview._id ? response.data : r));

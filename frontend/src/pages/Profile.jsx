@@ -88,7 +88,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchMyReviews = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/me`, { withCredentials: true });
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/me`, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
         setReviews(response.data);
       } catch (error) {
         console.error('Error fetching personal reviews:', error);
@@ -146,9 +146,7 @@ const Profile = () => {
       const response = await axios.put(`${API_URL}/api/auth/profile`, {
         ...editForm,
         addresses: newAddrs
-      }, {
-        withCredentials: true
-      });
+      }, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
 
       if (response.status === 200) {
         setUser(response.data.user);
@@ -174,9 +172,7 @@ const Profile = () => {
 
     try {
       const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
-      const response = await axios.put(`${API_URL}/api/reviews/${editingReview._id}`, reviewForm, {
-        withCredentials: true
-      });
+      const response = await axios.put(`${API_URL}/api/reviews/${editingReview._id}`, reviewForm, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
 
       if (response.status === 200) {
         setReviews(reviews.map((r) => r._id === editingReview._id ? response.data : r));
@@ -220,9 +216,7 @@ const Profile = () => {
       }
 
       const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
-      const response = await axios.put(`${API_URL}/api/auth/profile`, { addresses: newAddrs }, {
-        withCredentials: true
-      });
+      const response = await axios.put(`${API_URL}/api/auth/profile`, { addresses: newAddrs }, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
 
       if (response.status === 200) {
         setUser(response.data.user);
@@ -252,9 +246,7 @@ const Profile = () => {
       }
 
       const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
-      const response = await axios.put(`${API_URL}/api/auth/profile`, { addresses: currentAddrs }, {
-        withCredentials: true
-      });
+      const response = await axios.put(`${API_URL}/api/auth/profile`, { addresses: currentAddrs }, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
 
       if (response.status === 200) {
         setUser(response.data.user);
@@ -272,9 +264,7 @@ const Profile = () => {
       }));
 
       const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
-      const response = await axios.put(`${API_URL}/api/auth/profile`, { addresses: currentAddrs }, {
-        withCredentials: true
-      });
+      const response = await axios.put(`${API_URL}/api/auth/profile`, { addresses: currentAddrs }, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
 
       if (response.status === 200) {
         setUser(response.data.user);

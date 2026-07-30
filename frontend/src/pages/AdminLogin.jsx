@@ -25,6 +25,7 @@ const AdminLogin = () => {
       const data = await response.json();
       
       if (response.ok) {
+        if (data.token) localStorage.setItem('admin_token', data.token);
         navigate('/admin/dashboard');
       } else {
         setError(data.message || 'Login failed. Invalid credentials.');

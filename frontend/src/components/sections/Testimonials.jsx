@@ -32,7 +32,7 @@ const Testimonials = () => {
     const fetchReviews = async () => {
       try {
         const API_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`;
-        const response = await axios.get(`${API_URL}/api/reviews`, { withCredentials: true });
+        const response = await axios.get(`${API_URL}/api/reviews`, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
         setReviews(response.data);
       } catch (error) {
         console.error('Error fetching reviews:', error);

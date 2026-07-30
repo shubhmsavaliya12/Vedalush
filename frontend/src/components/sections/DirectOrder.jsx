@@ -76,7 +76,7 @@ const DirectOrder = () => {
       };
 
       await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders`, payload, {
-        withCredentials: true // Extremely important to send auth cookies
+        headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } // Send auth headers instead of cookies
       });
       setShowSuccessModal(true);
       reset();

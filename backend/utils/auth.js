@@ -10,7 +10,11 @@ export const getCookieOptions = () => {
   };
 };
 export const verifyAdminAuth = (req) => {
-  const token = req.cookies?.admin_token;
+  let token = req.cookies?.admin_token;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+  
   if (!token) return { authenticated: false, error: 'No token provided' };
   if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET missing');
   try {
@@ -23,7 +27,11 @@ export const verifyAdminAuth = (req) => {
 };
 
 export const verifyUserAuth = (req, res, next) => {
-  const token = req.cookies?.user_token;
+  let token = req.cookies?.user_token;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+  
   if (!token) return res.status(401).json({ message: 'Unauthorized' });
   if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET missing');
   try {

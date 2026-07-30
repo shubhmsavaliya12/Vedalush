@@ -91,9 +91,8 @@ router.post('/login', authLimiter, async (req, res) => {
       { expiresIn: '1d' }
     );
 
-    res.cookie('admin_token', token, getCookieOptions());
-
-    res.status(200).json({ message: 'Login successful' });
+    // Removed res.cookie
+    res.status(200).json({ message: 'Login successful', token });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -101,7 +100,7 @@ router.post('/login', authLimiter, async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  res.clearCookie('admin_token', getCookieOptions());
+  // Removed res.clearCookie
   res.status(200).json({ message: 'Logged out successfully' });
 });
 

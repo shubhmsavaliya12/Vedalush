@@ -9,9 +9,17 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        const token = localStorage.getItem('user_token');
+        if (!token) {
+          setLoading(false);
+          return;
+        }
+
         const API_URL = import.meta.env.VITE_API_URL || '';
         const response = await fetch(`${API_URL}/api/auth/me`, {
-          credentials: 'include'
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
         });
         
         if (response.ok) {
@@ -19,6 +27,7 @@ export const AuthProvider = ({ children }) => {
           setUser(data.user);
         } else {
           setUser(null);
+          localStorage.removeItem('user_token');
         }
       } catch (error) {
         setUser(null);
@@ -33,13 +42,18 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const API_URL = import.meta.env.VITE_API_URL || '';
+      const token = localStorage.getItem('user_token');
       await fetch(`${API_URL}/api/auth/logout`, {
         method: 'POST',
-        credentials: 'include'
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
-      setUser(null);
     } catch (error) {
       console.error('Logout error', error);
+    } finally {
+      localStorage.removeItem('user_token');
+      setUser(null);
     }
   };
 

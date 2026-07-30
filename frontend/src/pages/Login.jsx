@@ -60,6 +60,7 @@ const Login = () => {
       const data = await response.json();
       if (response.ok) {
         if (isLogin) {
+          if (data.token) localStorage.setItem('user_token', data.token);
           setUser(data.user);
           if (data.user.preferredCurrency) changeCurrency(data.user.preferredCurrency);
           navigate('/');
@@ -94,6 +95,7 @@ const Login = () => {
       });
       const data = await response.json();
       if (response.ok) {
+        if (data.token) localStorage.setItem('user_token', data.token);
         setUser(data.user);
         if (data.user.preferredCurrency) changeCurrency(data.user.preferredCurrency);
         navigate('/');
