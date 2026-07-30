@@ -3,7 +3,7 @@ import Admin from '../models/Admin.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import rateLimit from 'express-rate-limit';
-import { verifyAdminAuth } from '../utils/auth.js';
+import { verifyAdminAuth, getCookieOptions } from '../utils/auth.js';
 
 const router = express.Router();
 
@@ -91,12 +91,7 @@ router.post('/login', authLimiter, async (req, res) => {
       { expiresIn: '1d' }
     );
 
-    res.cookie('admin_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-      maxAge: 60 * 60 * 24 * 1000 // 1 day in ms
-    });
+    res.cookie('admin_token', token, getCookieOptions());
 
     res.status(200).json({ message: 'Login successful' });
   } catch (error) {
@@ -106,11 +101,7 @@ router.post('/login', authLimiter, async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  res.clearCookie('admin_token', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict'
-  });
+  res.clearCookie('admin_token', getCookieOptions());
   res.status(200).json({ message: 'Logged out successfully' });
 });
 

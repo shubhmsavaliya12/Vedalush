@@ -4,7 +4,7 @@ import Otp from '../models/Otp.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import rateLimit from 'express-rate-limit';
-import { verifyUserAuth } from '../utils/auth.js';
+import { verifyUserAuth, getCookieOptions } from '../utils/auth.js';
 import { sendOtpEmail } from '../utils/email.js';
 
 const router = express.Router();
@@ -101,12 +101,7 @@ router.post('/signup', authLimiter, async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    res.cookie('user_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-      maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days
-    });
+    res.cookie('user_token', token, getCookieOptions());
 
     res.status(201).json({ message: 'User created successfully', user: { name: newUser.name, email: newUser.email } });
   } catch (error) {
@@ -145,12 +140,7 @@ router.post('/login', authLimiter, async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    res.cookie('user_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-      maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days
-    });
+    res.cookie('user_token', token, getCookieOptions());
 
     let modified = false;
     if ((!user.addresses || user.addresses.length === 0) && (user.address || user.city || user.state || user.pincode || user.phone)) {
@@ -290,11 +280,7 @@ router.put('/profile', verifyUserAuth, async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  res.clearCookie('user_token', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict'
-  });
+  res.clearCookie('user_token', getCookieOptions());
   res.status(200).json({ message: 'Logged out successfully' });
 });
 
@@ -377,12 +363,7 @@ router.post('/signup-verify', async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    res.cookie('user_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-      maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days
-    });
+    res.cookie('user_token', token, getCookieOptions());
 
     res.status(201).json({ message: 'Account verified and created successfully', user: formatUserData(newUser) });
   } catch (error) {
