@@ -172,9 +172,9 @@ const buildReceiptHtml = (orderData, isAdmin = false) => {
             <div style="font-size: 14px; font-weight: bold; color: #5D4E42; margin-bottom: 6px;">Vedalush Private Limited</div>
             <div style="font-size: 12px; color: #9D948B; margin-bottom: 16px;">In case of query or feedback, please contact Vedalush Private Limited</div>
             <div style="font-size: 13px;">
-              <a href="mailto:support@vedalush.com" style="color: #B88A5A; text-decoration: none; font-weight: bold;">Email</a>
+              <a href="mailto:shubhm.savaliya@gmail.com" style="color: #B88A5A; text-decoration: none; font-weight: bold;">Email</a>
               <span style="color: #E6DED2; margin: 0 12px;">|</span>
-              <a href="http://localhost:5173" style="color: #B88A5A; text-decoration: none; font-weight: bold;">Visit Our Website</a>
+              <a href="https://www.vedalush.com" style="color: #B88A5A; text-decoration: none; font-weight: bold;">Visit Our Website</a>
             </div>
           </td>
         </tr>
