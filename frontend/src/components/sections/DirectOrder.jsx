@@ -213,12 +213,12 @@ const DirectOrder = () => {
                 {selectedItems.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-3 relative transition-all hover:border-[#8E7A65]">
                     {/* Product Dropdown */}
-                    <div className="relative flex-1">
+                    <div className="relative flex-1 min-w-0">
                       <div 
                         onClick={() => setActiveDropdownIndex(activeDropdownIndex === idx ? null : idx)}
                         className="w-full bg-white border border-[#E6DED2] rounded-xl px-3.5 py-2.5 flex justify-between items-center cursor-pointer hover:bg-[#F8F4EC] transition-colors text-sm"
                       >
-                        <span className={item.product ? "text-[#5D4E42] font-medium truncate" : "text-[#9D948B]"}>
+                        <span className={`flex-1 min-w-0 mr-2 ${item.product ? "text-[#5D4E42] font-medium truncate" : "text-[#9D948B] truncate"}`}>
                           {item.product || "Select a product..."}
                         </span>
                         <FaChevronDown className={`text-[#9D948B] text-xs transition-transform duration-300 ${activeDropdownIndex === idx ? 'rotate-180' : ''}`} />
