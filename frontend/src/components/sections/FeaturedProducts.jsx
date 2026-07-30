@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useCurrency } from '../../context/CurrencyContext';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
+import { ProductCardSkeleton } from '../ui/Skeletons';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
@@ -47,8 +48,18 @@ const FeaturedProducts = () => {
 
   if (loading) {
     return (
-      <section id="products" className="py-24 bg-[#FDFBF7] flex justify-center items-center">
-        <div className="w-12 h-12 border-4 border-[#E6DED2] border-t-[#8E7A65] rounded-full animate-spin"></div>
+      <section id="products" className="py-15 bg-[#FDFBF7]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16 space-y-4">
+            <div className="h-4 bg-[#E6DED2] rounded w-32 mx-auto animate-pulse"></div>
+            <div className="h-10 bg-[#E6DED2] rounded w-64 mx-auto animate-pulse"></div>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-2 lg:gap-3">
+            {[...Array(6)].map((_, i) => (
+              <ProductCardSkeleton key={i} />
+            ))}
+          </div>
+        </div>
       </section>
     );
   }

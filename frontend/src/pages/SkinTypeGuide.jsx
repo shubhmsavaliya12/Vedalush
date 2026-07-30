@@ -10,6 +10,7 @@ import {
 import { HiOutlineShieldCheck, HiOutlineSparkles, HiOutlineHeart } from 'react-icons/hi';
 import Navbar from '../components/ui/Navbar';
 import Footer from '../components/ui/Footer';
+import { ProductCardSkeleton } from '../components/ui/Skeletons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useCurrency } from '../context/CurrencyContext';
@@ -450,8 +451,10 @@ const SkinTypeGuide = () => {
               </div>
               
               {loadingProducts ? (
-                <div className="flex justify-center py-20">
-                  <div className="w-12 h-12 border-4 border-[#E6DED2] border-t-[#8E7A65] rounded-full animate-spin"></div>
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-10 justify-center">
+                  {[...Array(3)].map((_, i) => (
+                    <ProductCardSkeleton key={i} />
+                  ))}
                 </div>
               ) : recommendedDynamicProducts.length > 0 ? (
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-10 justify-center">

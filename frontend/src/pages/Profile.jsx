@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../context/AuthContext';
+import { ReviewCardSkeleton } from '../components/ui/Skeletons';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
@@ -519,8 +520,10 @@ const Profile = () => {
                 </div>
 
               {loadingReviews ? (
-                <div className="flex justify-center py-16 bg-white rounded border border-nature-200/60 shadow-sm">
-                  <div className="w-10 h-10 border-4 border-nature-200 border-t-nature-600 rounded-full animate-spin"></div>
+                <div className="space-y-4">
+                  {[...Array(2)].map((_, i) => (
+                    <ReviewCardSkeleton key={i} />
+                  ))}
                 </div>
               ) : reviews.length === 0 ? (
                 <div className="py-10 text-center text-nature-600 flex flex-col items-center">

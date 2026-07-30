@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { FaAmazon, FaShoppingCart, FaArrowLeft, FaCheckCircle, FaLeaf, FaBalanceScale, FaChevronLeft, FaChevronRight, FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
+import { ProductDetailsSkeleton } from '../components/ui/Skeletons';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
@@ -60,8 +61,8 @@ const ProductDetails = () => {
     return (
       <div className="min-h-screen bg-nature-50 flex flex-col">
         <Navbar />
-        <div className="flex-grow flex items-center justify-center">
-          <div className="w-12 h-12 border-4 border-nature-200 border-t-nature-600 rounded-full animate-spin"></div>
+        <div className="flex-grow max-w-7xl mx-auto px-6 lg:px-8 py-12 w-full">
+          <ProductDetailsSkeleton />
         </div>
         <Footer />
       </div>

@@ -5,6 +5,8 @@ import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
+import { HiOutlinePencilAlt } from 'react-router-dom'; // Wait, let's just insert it here
+import { ReviewCardSkeleton } from '../components/ui/Skeletons';
 import { HiOutlinePencilAlt, HiOutlineX, HiOutlineCheckCircle } from 'react-icons/hi';
 import Navbar from '../components/ui/Navbar';
 import Footer from '../components/ui/Footer';
@@ -202,8 +204,10 @@ const Reviews = () => {
             </h3>
 
             {loading ? (
-              <div className="flex justify-center py-10">
-                <div className="w-8 h-8 border-4 border-nature-200 border-t-nature-600 rounded-full animate-spin"></div>
+              <div className="space-y-6">
+                {[...Array(4)].map((_, i) => (
+                  <ReviewCardSkeleton key={i} />
+                ))}
               </div>
             ) : reviews.length === 0 ? (
               <p className="text-nature-600 py-6 text-center text-lg">No reviews have been posted yet.</p>
