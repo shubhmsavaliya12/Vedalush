@@ -77,6 +77,22 @@ const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+// Self-ping to keep Render free tier awake (ping every 10 minutes)
+import https from 'https';
+setInterval(() => {
+  const backendUrl = 'https://vedalush-backend.onrender.com/health';
+  https.get(backendUrl, (res) => {
+    if (res.statusCode === 200) {
+      console.log('Self-ping successful. Server kept awake.');
+    } else {
+      console.log(`Self-ping failed with status code: ${res.statusCode}`);
+    }
+  }).on('error', (err) => {
+    console.error('Self-ping error:', err.message);
+  });
+}, 10 * 60 * 1000);
+
+
 // Graceful Shutdown for Render deployments
 process.on('SIGTERM', () => {
   console.log('SIGTERM received. Shutting down gracefully...');
