@@ -5,7 +5,6 @@ import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
-import { HiOutlinePencilAlt } from 'react-router-dom'; // Wait, let's just insert it here
 import { ReviewCardSkeleton } from '../components/ui/Skeletons';
 import { HiOutlinePencilAlt, HiOutlineX, HiOutlineCheckCircle } from 'react-icons/hi';
 import Navbar from '../components/ui/Navbar';
