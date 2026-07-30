@@ -25,8 +25,16 @@ const app = express();
 
 const getOrigin = () => {
   if (process.env.NODE_ENV !== 'production') return ['http://localhost:5173', 'http://localhost:5174'];
+  
   const url = process.env.FRONTEND_URL || '';
-  return url.startsWith('http') ? url : `https://${url}`;
+  const baseOrigin = url.startsWith('http') ? url : `https://${url}`;
+  
+  // If the base origin doesn't have www, add a www version as well
+  if (baseOrigin.includes('://www.')) {
+    return [baseOrigin, baseOrigin.replace('://www.', '://')];
+  } else {
+    return [baseOrigin, baseOrigin.replace('://', '://www.')];
+  }
 };
 
 const corsOptions = {
