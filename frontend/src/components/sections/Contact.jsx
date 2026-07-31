@@ -27,7 +27,7 @@ const Contact = () => {
 
             <div className="space-y-6 pt-4">
               <div className="flex items-center space-x-4 text-[#5D4E42]">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2]">
+                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2]">
                   <HiOutlinePhone className="w-5 h-5 text-[#8E7A65]" />
                 </div>
                 <div>
@@ -37,7 +37,7 @@ const Contact = () => {
               </div>
 
               <div className="flex items-center space-x-4 text-[#5D4E42]">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2]">
+                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2]">
                   <FaWhatsapp className="w-5 h-5 text-[#8E7A65]" />
                 </div>
                 <div>
@@ -47,7 +47,7 @@ const Contact = () => {
               </div>
 
               <div className="flex items-center space-x-4 text-[#5D4E42]">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2]">
+                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2]">
                   <HiOutlineMail className="w-5 h-5 text-[#8E7A65]" />
                 </div>
                 <div>
@@ -57,12 +57,12 @@ const Contact = () => {
               </div>
 
               <a
-                href="https://maps.app.goo.gl/UVMmWmdc2MtJXTGD7"
+                href="https://www.google.com/maps?q=23.0328009,72.4256979+(VILLA-184,+Manipur+Saptak,+Ghuma,+Manipur,+Gujarat+382115)&z=16&output=embed"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Click to open location in Google Maps"
                 className="flex items-center space-x-4 text-[#5D4E42] hover:text-[#8E7A65] transition-colors duration-250 group cursor-pointer">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2] group-hover:scale-110 transition-transform duration-250">
+                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2] group-hover:scale-110 transition-transform duration-250">
                   <HiOutlineLocationMarker className="w-5 h-5 text-[#8E7A65] group-hover:text-[#B88A5A] transition-colors duration-250" />
                 </div>
                 <div>
