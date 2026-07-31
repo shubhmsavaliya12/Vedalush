@@ -6,13 +6,10 @@ const CurrencyContext = createContext();
 export const SUPPORTED_CURRENCIES = [
   { code: 'INR', symbol: '₹', name: 'Indian Rupee', flag: '🇮🇳', locale: 'en-IN' },
   { code: 'USD', symbol: '$', name: 'US Dollar', flag: '🇺🇸', locale: 'en-US' },
-  { code: 'EUR', symbol: '€', name: 'Euro', flag: '🇪🇺', locale: 'en-IE' },
   { code: 'GBP', symbol: '£', name: 'British Pound', flag: '🇬🇧', locale: 'en-GB' },
   { code: 'AUD', symbol: 'A$', name: 'Australian Dollar', flag: '🇦🇺', locale: 'en-AU' },
   { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar', flag: '🇨🇦', locale: 'en-CA' },
 ];
-
-const EU_COUNTRIES = ['DE', 'FR', 'IT', 'ES', 'NL', 'BE', 'AT', 'IE', 'FI', 'PT', 'GR', 'LU', 'CY', 'MT', 'SK', 'SI', 'EE', 'LV', 'LT'];
 
 export const CurrencyProvider = ({ children }) => {
   const [currency, setCurrency] = useState(() => {
@@ -22,7 +19,6 @@ export const CurrencyProvider = ({ children }) => {
   const [rates, setRates] = useState({
     INR: 1,
     USD: 0.012,
-    EUR: 0.011,
     GBP: 0.0094,
     AUD: 0.018,
     CAD: 0.016,
@@ -60,7 +56,6 @@ export const CurrencyProvider = ({ children }) => {
           else if (code === 'GB' || code === 'UK') detected = 'GBP';
           else if (code === 'AU') detected = 'AUD';
           else if (code === 'CA') detected = 'CAD';
-          else if (EU_COUNTRIES.includes(code)) detected = 'EUR';
           else if (code === 'IN') detected = 'INR';
 
           setCurrency(detected);

@@ -1275,10 +1275,10 @@ const AdminDashboard = () => {
                 {/* Optional International Pricing */}
                 <div className="bg-[#F8F4EC] p-4 rounded-xl border border-[#E6DED2] my-4">
                   <h4 className="text-sm font-semibold text-[#5D4E42] mb-3">Optional International Pricing Overrides (Leave blank for automatic exchange rate conversion)</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {['USD', 'EUR', 'GBP'].map(curr => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {['USD', 'GBP', 'AUD', 'CAD'].map(curr => (
                       <div key={curr} className="p-3 bg-[#FFFFFF] rounded-xl border border-[#E6DED2] shadow-soft">
-                        <label className="block text-xs font-bold text-[#8E7A65] mb-2">{curr} Override ($/€/£)</label>
+                        <label className="block text-xs font-bold text-[#8E7A65] mb-2">{curr} Override</label>
                         <div className="space-y-2">
                           <input 
                             type="number" 
