@@ -698,12 +698,15 @@ const AdminDashboard = () => {
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <h2 className="text-2xl font-serif font-bold text-[#5D4E42]">Direct Orders</h2>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 w-full md:w-auto">
             <input 
-              type="date"
+              type={dateFilter ? "date" : "text"}
+              placeholder="Filter by date..."
+              onFocus={(e) => (e.target.type = "date")}
+              onBlur={(e) => { if(!e.target.value) e.target.type = "text" }}
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
-              className="bg-[#FFFFFF] border border-[#E6DED2] text-[#5D4E42] px-4 py-2 rounded-xl focus:outline-none focus:border-[#B88A5A] shadow-soft"
+              className="flex-1 w-full min-w-0 bg-[#FFFFFF] border border-[#E6DED2] text-[#5D4E42] px-4 py-2 rounded-xl focus:outline-none focus:border-[#B88A5A] shadow-soft"
             />
             <CustomStatusDropdown 
               value={orderFilter}
