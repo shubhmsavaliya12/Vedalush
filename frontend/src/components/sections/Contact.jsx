@@ -26,35 +26,35 @@ const Contact = () => {
             </p>
 
             <div className="space-y-6 pt-4">
-              <div className="flex items-center space-x-4 text-[#5D4E42]">
-                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2]">
-                  <HiOutlinePhone className="w-5 h-5 text-[#8E7A65]" />
+              <a href="tel:+919904765058" className="flex items-center space-x-4 text-[#5D4E42] hover:text-[#8E7A65] transition-colors duration-250 group cursor-pointer">
+                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2] group-hover:scale-110 transition-transform duration-250">
+                  <HiOutlinePhone className="w-5 h-5 text-[#8E7A65] group-hover:text-[#B88A5A] transition-colors duration-250" />
                 </div>
                 <div>
                   <p className="font-serif font-bold">Phone</p>
-                  <p className="font-normal text-[#6F6A65]">+1 (555) 123-4567</p>
+                  <p className="font-normal text-[#6F6A65] group-hover:underline">+91 9904765058</p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-center space-x-4 text-[#5D4E42]">
-                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2]">
-                  <FaWhatsapp className="w-5 h-5 text-[#8E7A65]" />
+              <a href="https://wa.me/919904765058" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-[#5D4E42] hover:text-[#8E7A65] transition-colors duration-250 group cursor-pointer">
+                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2] group-hover:scale-110 transition-transform duration-250">
+                  <FaWhatsapp className="w-5 h-5 text-[#8E7A65] group-hover:text-[#B88A5A] transition-colors duration-250" />
                 </div>
                 <div>
                   <p className="font-serif font-bold">WhatsApp</p>
-                  <p className="font-normal text-[#6F6A65]">+1 (555) 987-6543</p>
+                  <p className="font-normal text-[#6F6A65] group-hover:underline">+91 9904765058</p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-center space-x-4 text-[#5D4E42]">
-                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2]">
-                  <HiOutlineMail className="w-5 h-5 text-[#8E7A65]" />
+              <a href="mailto:Hello@vedalush.com" className="flex items-center space-x-4 text-[#5D4E42] hover:text-[#8E7A65] transition-colors duration-250 group cursor-pointer">
+                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2] group-hover:scale-110 transition-transform duration-250">
+                  <HiOutlineMail className="w-5 h-5 text-[#8E7A65] group-hover:text-[#B88A5A] transition-colors duration-250" />
                 </div>
                 <div>
                   <p className="font-serif font-bold">Email</p>
-                  <p className="font-normal text-[#6F6A65]">shubhm.savaliya@gmail.com</p>
+                  <p className="font-normal text-[#6F6A65] group-hover:underline">Hello@vedalush.com</p>
                 </div>
-              </div>
+              </a>
 
               <a
                 href="https://www.google.com/maps?q=23.0328009,72.4256979+(VILLA-184,+Manipur+Saptak,+Ghuma,+Manipur,+Gujarat+382115)&z=16&output=embed"
