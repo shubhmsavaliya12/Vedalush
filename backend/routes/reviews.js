@@ -7,8 +7,13 @@ const router = express.Router();
 // GET all reviews (Public)
 router.get('/', async (req, res) => {
   try {
-    const reviews = await Review.find()
+    const filter = {};
+    if (req.query.product) {
+      filter.product = req.query.product;
+    }
+    const reviews = await Review.find(filter)
       .populate('user', 'name') // Only fetch the user's name
+      .populate('product', 'name') // Fetch product name
       .sort({ createdAt: -1 });
     res.json(reviews);
   } catch (error) {
@@ -21,6 +26,7 @@ router.get('/me', verifyUserAuth, async (req, res) => {
   try {
     const reviews = await Review.find({ user: req.user.id })
       .populate('user', 'name')
+      .populate('product', 'name')
       .sort({ createdAt: -1 });
     res.json(reviews);
   } catch (error) {
@@ -31,7 +37,7 @@ router.get('/me', verifyUserAuth, async (req, res) => {
 // POST a new review (Protected by user auth)
 router.post('/', verifyUserAuth, async (req, res) => {
   try {
-    const { rating, content } = req.body;
+    const { rating, content, product } = req.body;
     
     if (!rating || !content) {
       return res.status(400).json({ message: 'Rating and content are required' });
@@ -41,6 +47,7 @@ router.post('/', verifyUserAuth, async (req, res) => {
       user: req.user.id,
       rating,
       content,
+      product: product || undefined
     });
 
     await review.save();
@@ -111,6 +118,9 @@ router.delete('/:id', async (req, res) => {
     const review = await Review.findByIdAndDelete(req.params.id);
     if (!review) {
       return res.status(404).json({ message: 'Review not found' });
+    }
+    if (review.product) {
+      await Review.getAverageRating(review.product);
     }
     res.json({ message: 'Review deleted successfully' });
   } catch (error) {

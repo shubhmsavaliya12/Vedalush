@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useCurrency } from '../../context/CurrencyContext';
@@ -144,6 +144,18 @@ const FeaturedProducts = () => {
                   <div>
                     <h3 className="text-sm sm:text-xl lg:text-2xl font-serif text-[#5D4E42] font-bold leading-snug group-hover:text-[#8E7A65] transition-colors duration-250">{product.name}</h3>
                     <p className="text-[#6F6A65] font-normal text-[11px] sm:text-sm leading-snug line-clamp-2 mt-1 sm:mt-2">{product.shortDesc}</p>
+                    {product.rating > 0 && (
+                      <div className="flex items-center gap-1 mt-2">
+                        <div className="flex items-center text-[#B88A5A]">
+                          {[...Array(5)].map((_, i) => (
+                            <FaStar key={i} className={i < Math.round(product.rating) ? 'text-[#B88A5A]' : 'text-gray-200'} size={12} />
+                          ))}
+                        </div>
+                        <span className="text-[10px] sm:text-xs text-[#8E7A65] font-medium">
+                          {product.rating} ({product.ratingCount})
+                        </span>
+                      </div>
+                    )}
                   </div>
                   
                   <div className="flex items-center justify-center gap-1.5 sm:gap-2 pt-2 sm:pt-4 border-t border-[#E6DED2]/40 text-center flex-wrap">
