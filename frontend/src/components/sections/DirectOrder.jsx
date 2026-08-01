@@ -48,7 +48,7 @@ const DirectOrder = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -106,10 +106,10 @@ const DirectOrder = () => {
   return (
     <section id="order" className="py-24 bg-white relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -128,15 +128,15 @@ const DirectOrder = () => {
               Prefer to order directly from us? Fill out the form, and our team will get back to you with payment details and shipping confirmation within 24 hours.
             </p>
             <div className="hidden lg:block relative h-64 rounded-2xl overflow-hidden shadow-soft border border-[#E6DED2]">
-              <img 
-                src="/images/direct_order_soaps.png" 
-                alt="Beautiful Soaps" 
+              <img
+                src="/images/direct_order_soaps.png"
+                alt="Beautiful Soaps"
                 className="w-full h-full object-cover"
-              loading="lazy" decoding="async" />
+                loading="lazy" decoding="async" />
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -144,12 +144,12 @@ const DirectOrder = () => {
             className="bg-[#FDFBF7] p-8 md:p-12 rounded-3xl shadow-soft border border-[#E6DED2]"
           >
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm text-[#5D4E42] mb-2 font-serif font-bold">Full Name</label>
-                  <input 
-                    {...register("name", { required: true })} 
+                  <input
+                    {...register("name", { required: true })}
                     className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
                     placeholder="Jane Doe"
                   />
@@ -157,9 +157,9 @@ const DirectOrder = () => {
                 </div>
                 <div>
                   <label className="block text-sm text-[#5D4E42] mb-2 font-serif font-bold">Email</label>
-                  <input 
+                  <input
                     type="email"
-                    {...register("email", { required: true })} 
+                    {...register("email", { required: true })}
                     className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
                     placeholder="jane@example.com"
                   />
@@ -183,11 +183,11 @@ const DirectOrder = () => {
                         />
                       )}
                     />
-                    <input 
-                      {...register("phoneNumber", { 
+                    <input
+                      {...register("phoneNumber", {
                         required: "Phone number is required",
                         validate: (value, formValues) => validatePhoneNumber(formValues.countryCode, value)
-                      })} 
+                      })}
                       className="flex-1 min-w-0 bg-white border border-[#E6DED2] rounded-r-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] focus:ring-1 focus:ring-[#B88A5A] focus:z-10 transition-colors duration-250 text-base md:text-sm"
                       placeholder="9876543210"
                     />
@@ -198,8 +198,8 @@ const DirectOrder = () => {
                 </div>
                 <div>
                   <label className="block text-sm text-[#5D4E42] mb-2 font-serif font-bold">Country</label>
-                  <input 
-                    {...register("country", { required: true })} 
+                  <input
+                    {...register("country", { required: true })}
                     className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
                     placeholder="United States"
                   />
@@ -234,8 +234,8 @@ const DirectOrder = () => {
                     </div>
                   )}
                 </div>
-                <input 
-                  {...register("address", { required: true })} 
+                <input
+                  {...register("address", { required: true })}
                   className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
                   placeholder="123 Botanica St, City, State, Zip"
                 />
@@ -251,7 +251,7 @@ const DirectOrder = () => {
                   <div key={idx} className="flex items-center gap-3 relative transition-all hover:border-[#8E7A65]">
                     {/* Product Dropdown */}
                     <div className="relative flex-1 min-w-0">
-                      <div 
+                      <div
                         onClick={() => setActiveDropdownIndex(activeDropdownIndex === idx ? null : idx)}
                         className="w-full bg-white border border-[#E6DED2] rounded-xl px-3.5 py-2.5 flex justify-between items-center cursor-pointer hover:bg-[#F8F4EC] transition-colors text-sm"
                       >
@@ -263,7 +263,7 @@ const DirectOrder = () => {
 
                       <AnimatePresence>
                         {activeDropdownIndex === idx && (
-                          <motion.div 
+                          <motion.div
                             initial={{ opacity: 0, y: -5 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -5 }}
@@ -271,7 +271,7 @@ const DirectOrder = () => {
                             className="absolute z-30 left-0 right-0 mt-1 bg-white border border-[#E6DED2] rounded-xl shadow-xl overflow-hidden max-h-52 overflow-y-auto custom-scrollbar"
                           >
                             {products.map((p) => (
-                              <div 
+                              <div
                                 key={p._id}
                                 onClick={() => {
                                   const updated = [...selectedItems];
@@ -295,7 +295,7 @@ const DirectOrder = () => {
 
                     {/* Quantity Selector */}
                     <div className="w-20 flex-shrink-0">
-                      <input 
+                      <input
                         type="number"
                         min="1"
                         value={item.quantity}
@@ -354,15 +354,15 @@ const DirectOrder = () => {
 
               <div>
                 <label className="block text-sm text-[#5D4E42] mb-2 font-serif font-bold">Additional Message (Optional)</label>
-                <textarea 
-                  {...register("message")} 
+                <textarea
+                  {...register("message")}
                   rows="3"
                   className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
                   placeholder="Any special requests?"
                 ></textarea>
               </div>
 
-              <button 
+              <button
                 type="submit"
                 disabled={isSubmitting}
                 className="w-full py-4 bg-[#B88A5A] text-white rounded-xl font-semibold hover:bg-[#9F7348] transition-all duration-250 shadow-soft disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A5A] focus-visible:ring-offset-2"
@@ -383,19 +383,19 @@ const DirectOrder = () => {
       <AnimatePresence>
         {showSuccessModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               className="bg-white rounded-3xl p-8 md:p-12 shadow-soft-lg border border-[#E6DED2] max-w-md w-full relative overflow-hidden"
             >
-              <button 
+              <button
                 onClick={() => setShowSuccessModal(false)}
                 className="absolute top-6 right-6 text-[#9D948B] hover:text-[#5D4E42] transition-colors"
               >
                 <FaTimes size={24} />
               </button>
-              
+
               <div className="flex flex-col items-center text-center space-y-6 relative z-10">
                 <div className="w-20 h-20 bg-[#F8F4EC] rounded-full flex items-center justify-center mb-2 shadow-soft border border-[#E6DED2]">
                   <FaCheckCircle className="text-[#C19A6B] text-5xl" />
@@ -404,14 +404,14 @@ const DirectOrder = () => {
                 <p className="text-[#6F6A65] font-normal leading-relaxed">
                   Your direct order request has been securely received. Our team will review the details and contact you shortly.
                 </p>
-                <button 
+                <button
                   onClick={() => setShowSuccessModal(false)}
                   className="w-full mt-4 py-4 bg-[#B88A5A] text-white rounded-xl font-semibold hover:bg-[#9F7348] transition-all duration-250 shadow-soft"
                 >
                   Continue Browsing
                 </button>
               </div>
-              
+
               {/* Decorative elements */}
               <div className="absolute -bottom-16 -right-16 w-48 h-48 bg-[#F8F4EC] rounded-full opacity-50 z-0 pointer-events-none"></div>
               <div className="absolute -top-16 -left-16 w-32 h-32 bg-[#F8F4EC] rounded-full opacity-50 z-0 pointer-events-none"></div>

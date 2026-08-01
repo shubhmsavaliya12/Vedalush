@@ -6,15 +6,15 @@ import { ReviewCardSkeleton } from '../components/ui/Skeletons';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
-import { 
-  HiOutlineUser, 
-  HiOutlineMail, 
-  HiOutlineLogout, 
-  HiOutlinePencilAlt, 
-  HiOutlinePhone, 
-  HiOutlineLocationMarker, 
-  HiOutlineCheckCircle, 
-  HiOutlineX 
+import {
+  HiOutlineUser,
+  HiOutlineMail,
+  HiOutlineLogout,
+  HiOutlinePencilAlt,
+  HiOutlinePhone,
+  HiOutlineLocationMarker,
+  HiOutlineCheckCircle,
+  HiOutlineX
 } from 'react-icons/hi';
 import Navbar from '../components/ui/Navbar';
 import Footer from '../components/ui/Footer';
@@ -276,7 +276,7 @@ const Profile = () => {
       const currentAddrs = [...(user.addresses || [])];
       const wasDefault = currentAddrs[indexToDelete].isDefault;
       currentAddrs.splice(indexToDelete, 1);
-      
+
       if (wasDefault && currentAddrs.length > 0) {
         currentAddrs[0].isDefault = true;
       }
@@ -323,7 +323,7 @@ const Profile = () => {
       <Helmet>
         <title>My Profile | Vedalush</title>
       </Helmet>
-      
+
       <div className="bg-nature-50 min-h-screen flex flex-col">
         <Navbar />
 
@@ -335,7 +335,7 @@ const Profile = () => {
             className="bg-nature-900 rounded p-6 sm:p-8 text-white shadow-xl mb-8 relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6 border border-nature-800/80"
           >
             <div className="absolute top-0 right-0 w-80 h-80 bg-nature-500/10 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
-            
+
             <div className="z-10 flex flex-col sm:flex-row items-center text-center sm:text-left gap-4 sm:gap-6">
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center shadow-md border-4 border-nature-700/50 text-nature-900 font-serif font-bold text-2xl sm:text-3xl shrink-0">
                 {user.name?.charAt(0)?.toUpperCase() || 'U'}
@@ -371,7 +371,7 @@ const Profile = () => {
 
           {/* Full Width Column: Addresses & Reviews */}
           <div className="w-full space-y-8">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="w-full space-y-8"
@@ -385,7 +385,7 @@ const Profile = () => {
                       <span>Saved Delivery Addresses</span>
                     </h3>
                   </div>
-                  <button 
+                  <button
                     onClick={() => {
                       setEditingAddressIndex(-1);
                       setAddressForm({
@@ -409,8 +409,8 @@ const Profile = () => {
                 {user.addresses && user.addresses.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {user.addresses.map((addr, idx) => (
-                      <div 
-                        key={idx} 
+                      <div
+                        key={idx}
                         className={`p-5 rounded border transition-all flex flex-col justify-between relative ${addr.isDefault ? 'bg-nature-50/60 border-nature-500 shadow-md ring-1 ring-nature-400/50' : 'bg-white border-nature-200/80 hover:border-nature-300 hover:shadow-sm'}`}
                       >
                         <div>
@@ -550,79 +550,79 @@ const Profile = () => {
                   </div>
                 </div>
 
-              {loadingReviews ? (
-                <div className="space-y-4">
-                  {[...Array(2)].map((_, i) => (
-                    <ReviewCardSkeleton key={i} />
-                  ))}
-                </div>
-              ) : reviews.length === 0 ? (
-                <div className="py-10 text-center text-nature-600 flex flex-col items-center">
-                  <div className="w-16 h-16 bg-nature-100 rounded-full flex items-center justify-center text-nature-500 mb-4 text-2xl">
-                    ★
+                {loadingReviews ? (
+                  <div className="space-y-4">
+                    {[...Array(2)].map((_, i) => (
+                      <ReviewCardSkeleton key={i} />
+                    ))}
                   </div>
-                  <h4 className="text-lg font-serif font-bold text-nature-900 mb-2">No Reviews Yet</h4>
-                  <p className="text-sm max-w-sm mx-auto text-nature-600 mb-6">
-                    You haven't shared your experience with any Vedalush products yet. Your feedback helps our organic community thrive!
-                  </p>
-                  <a
-                    href="/reviews"
-                    className="bg-nature-900 text-white text-xs font-medium px-6 py-3 rounded-xl hover:bg-nature-800 transition-colors shadow-soft"
-                  >
-                    Write a Review
-                  </a>
-                </div>
-              ) : (
-                <div className="divide-y divide-nature-200/60">
-                  {reviews.map((review) => (
-                    <div key={review._id} className="py-6 first:pt-2 last:pb-2">
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="flex space-x-1">
-                          {[...Array(5)].map((_, i) => (
-                            <FaStar 
-                              key={i} 
-                              className={`text-sm ${i < review.rating ? 'text-amber-400' : 'text-gray-200'}`} 
-                            />
-                          ))}
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <button
-                            onClick={() => {
-                              setEditingReview(review);
-                              setReviewForm({ rating: review.rating, content: review.content });
-                              setIsReviewModalOpen(true);
-                              setReviewMsg('');
-                              setReviewError('');
-                            }}
-                            className="flex items-center space-x-1 text-xs font-medium bg-nature-50 hover:bg-nature-200 text-nature-700 hover:text-nature-950 px-3 py-1.5 rounded-lg border border-nature-200/80 transition-all shadow-2xs"
-                            title="Edit Review"
-                          >
-                            <HiOutlinePencilAlt size={15} />
-                            <span>Edit</span>
-                          </button>
-                          <span className="text-xs text-nature-500 font-mono bg-nature-50 px-2.5 py-1 rounded-md border border-nature-100">
-                            {new Date(review.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
-                          </span>
-                        </div>
-                      </div>
-                      
-                      <p className="text-nature-800 leading-relaxed whitespace-pre-wrap text-sm">
-                        "{review.content}"
-                      </p>
-
-                      {review.adminReply && (
-                        <div className="mt-5 ml-4 pl-4 border-l-4 border-nature-400 bg-nature-50/80 p-4 rounded-r-2xl">
-                          <div className="flex items-center space-x-2 mb-1.5">
-                            <span className="bg-nature-900 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Official Reply</span>
-                            <span className="text-xs font-bold text-nature-900">Vedalush Care Team</span>
-                          </div>
-                          <p className="text-xs text-nature-700 italic leading-relaxed">"{review.adminReply}"</p>
-                        </div>
-                      )}
+                ) : reviews.length === 0 ? (
+                  <div className="py-10 text-center text-nature-600 flex flex-col items-center">
+                    <div className="w-16 h-16 bg-nature-100 rounded-full flex items-center justify-center text-nature-500 mb-4 text-2xl">
+                      ★
                     </div>
-                  ))}
-                </div>
-              )}
+                    <h4 className="text-lg font-serif font-bold text-nature-900 mb-2">No Reviews Yet</h4>
+                    <p className="text-sm max-w-sm mx-auto text-nature-600 mb-6">
+                      You haven't shared your experience with any Vedalush products yet. Your feedback helps our organic community thrive!
+                    </p>
+                    <a
+                      href="/reviews"
+                      className="bg-nature-900 text-white text-xs font-medium px-6 py-3 rounded-xl hover:bg-nature-800 transition-colors shadow-soft"
+                    >
+                      Write a Review
+                    </a>
+                  </div>
+                ) : (
+                  <div className="divide-y divide-nature-200/60">
+                    {reviews.map((review) => (
+                      <div key={review._id} className="py-6 first:pt-2 last:pb-2">
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="flex space-x-1">
+                            {[...Array(5)].map((_, i) => (
+                              <FaStar
+                                key={i}
+                                className={`text-sm ${i < review.rating ? 'text-amber-400' : 'text-gray-200'}`}
+                              />
+                            ))}
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <button
+                              onClick={() => {
+                                setEditingReview(review);
+                                setReviewForm({ rating: review.rating, content: review.content });
+                                setIsReviewModalOpen(true);
+                                setReviewMsg('');
+                                setReviewError('');
+                              }}
+                              className="flex items-center space-x-1 text-xs font-medium bg-nature-50 hover:bg-nature-200 text-nature-700 hover:text-nature-950 px-3 py-1.5 rounded-lg border border-nature-200/80 transition-all shadow-2xs"
+                              title="Edit Review"
+                            >
+                              <HiOutlinePencilAlt size={15} />
+                              <span>Edit</span>
+                            </button>
+                            <span className="text-xs text-nature-500 font-mono bg-nature-50 px-2.5 py-1 rounded-md border border-nature-100">
+                              {new Date(review.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                            </span>
+                          </div>
+                        </div>
+
+                        <p className="text-nature-800 leading-relaxed whitespace-pre-wrap text-sm">
+                          "{review.content}"
+                        </p>
+
+                        {review.adminReply && (
+                          <div className="mt-5 ml-4 pl-4 border-l-4 border-nature-400 bg-nature-50/80 p-4 rounded-r-2xl">
+                            <div className="flex items-center space-x-2 mb-1.5">
+                              <span className="bg-nature-900 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Official Reply</span>
+                              <span className="text-xs font-bold text-nature-900">Vedalush Care Team</span>
+                            </div>
+                            <p className="text-xs text-nature-700 italic leading-relaxed">"{review.adminReply}"</p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>

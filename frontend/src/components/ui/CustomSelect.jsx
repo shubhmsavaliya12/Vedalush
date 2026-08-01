@@ -46,11 +46,10 @@ const CustomSelect = ({ value, onChange, options, placeholder = "Select...", cla
                     onChange(option.value);
                     setIsOpen(false);
                   }}
-                  className={`px-4 py-2 text-sm cursor-pointer transition-colors mx-1 rounded-lg ${
-                    value === option.value
+                  className={`px-4 py-2 text-sm cursor-pointer transition-colors mx-1 rounded-lg ${value === option.value
                       ? 'bg-nature-900 text-white font-medium shadow-sm'
                       : 'text-nature-700 hover:bg-nature-50 hover:text-nature-900'
-                  }`}
+                    }`}
                 >
                   {option.label}
                 </div>
