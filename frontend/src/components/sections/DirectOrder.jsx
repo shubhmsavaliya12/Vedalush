@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { HiOutlineArrowRight, HiOutlineX } from 'react-icons/hi';
 import { FaChevronDown, FaCheckCircle, FaTimes } from 'react-icons/fa';
-import { PHONE_CODES, validatePhoneNumber } from '../../utils/phoneCodes';
+import { PHONE_CODES, validatePhoneNumber, splitPhoneData } from '../../utils/phoneCodes';
 import { useAuth } from '../../context/AuthContext';
 import CustomSelect from '../ui/CustomSelect';
 
@@ -25,7 +25,11 @@ const DirectOrder = () => {
     if (user) {
       if (user.name) setValue("name", user.name);
       if (user.email) setValue("email", user.email);
-      if (user.phone) setValue("phone", user.phone);
+      if (user.phone) {
+        const { code, number } = splitPhoneData(user.phone);
+        setValue("countryCode", code);
+        setValue("phoneNumber", number);
+      }
       if (user.country) setValue("country", user.country);
       if (user.address || user.city || user.state || user.pincode) {
         const fullAddr = [user.address, user.city, user.state, user.pincode].filter(Boolean).join(', ');
@@ -213,7 +217,11 @@ const DirectOrder = () => {
                           key={idx}
                           type="button"
                           onClick={() => {
-                            if (addr.phone) setValue("phone", addr.phone);
+                            if (addr.phone) {
+                              const { code, number } = splitPhoneData(addr.phone);
+                              setValue("countryCode", code);
+                              setValue("phoneNumber", number);
+                            }
                             if (addr.country) setValue("country", addr.country || "India");
                             const formatted = [addr.address, addr.city, addr.state, addr.pincode].filter(Boolean).join(', ');
                             setValue("address", formatted);
