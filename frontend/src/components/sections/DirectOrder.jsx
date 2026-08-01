@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { HiOutlineArrowRight, HiOutlineX } from 'react-icons/hi';
 import { FaChevronDown, FaCheckCircle, FaTimes } from 'react-icons/fa';
 import { PHONE_CODES, validatePhoneNumber } from '../../utils/phoneCodes';
 import { useAuth } from '../../context/AuthContext';
+import CustomSelect from '../ui/CustomSelect';
 
 const DirectOrder = () => {
-  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset, setValue, watch, control } = useForm({
+    defaultValues: {
+      countryCode: "+91"
+    }
+  });
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
   const [selectedItems, setSelectedItems] = useState([{ product: '', quantity: 1 }]);
@@ -162,15 +167,18 @@ const DirectOrder = () => {
                 <div>
                   <label className="block text-sm text-[#5D4E42] mb-2 font-serif font-bold">Phone</label>
                   <div className="flex rounded-xl">
-                    <select
-                      {...register("countryCode")}
-                      defaultValue="+91"
-                      className="w-[60px] bg-white border border-[#E6DED2] border-r-0 rounded-l-xl px-2 py-3 text-[#5D4E42] focus:outline-none focus:border-[#B88A5A] focus:ring-1 focus:ring-[#B88A5A] focus:z-10 transition-colors duration-250 text-base md:text-sm cursor-pointer"
-                    >
-                      {PHONE_CODES.map(c => (
-                        <option key={c.code} value={c.code}>{c.code}</option>
-                      ))}
-                    </select>
+                    <Controller
+                      name="countryCode"
+                      control={control}
+                      render={({ field }) => (
+                        <CustomSelect
+                          value={field.value}
+                          onChange={field.onChange}
+                          options={PHONE_CODES.map(c => ({ value: c.code, label: c.code }))}
+                          className="w-[75px] bg-white border border-[#E6DED2] border-r-0 rounded-l-xl rounded-r-none px-2 py-3 shadow-none z-10"
+                        />
+                      )}
+                    />
                     <input 
                       {...register("phoneNumber", { 
                         required: "Phone number is required",

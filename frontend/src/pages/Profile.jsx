@@ -18,7 +18,17 @@ import {
 } from 'react-icons/hi';
 import Navbar from '../components/ui/Navbar';
 import Footer from '../components/ui/Footer';
+import CustomSelect from '../components/ui/CustomSelect';
 import { PHONE_CODES, validatePhoneNumber, splitPhoneData } from '../utils/phoneCodes';
+
+const COUNTRY_OPTIONS = [
+  { value: 'India', label: 'India' },
+  { value: 'United States', label: 'United States' },
+  { value: 'United Kingdom', label: 'United Kingdom' },
+  { value: 'United Arab Emirates', label: 'United Arab Emirates (Dubai)' },
+  { value: 'Australia', label: 'Australia' },
+  { value: 'Canada', label: 'Canada' },
+];
 
 const Profile = () => {
   const { user, setUser, logout, loading: authLoading } = useAuth();
@@ -695,15 +705,12 @@ const Profile = () => {
                       <div>
                         <label className="block text-xs font-medium text-nature-700 mb-1">Phone Number</label>
                         <div className="flex shadow-sm rounded-xl">
-                          <select
+                          <CustomSelect
                             value={editForm.phoneCode}
-                            onChange={(e) => setEditForm({ ...editForm, phoneCode: e.target.value })}
-                            className="w-[60px] bg-nature-50/60 border border-nature-200 border-r-0 rounded-l-xl px-2 py-2.5 text-nature-900 text-sm focus:outline-none focus:ring-1 focus:ring-nature-500 focus:z-10 transition-shadow cursor-pointer"
-                          >
-                            {PHONE_CODES.map(c => (
-                              <option key={c.code} value={c.code}>{c.code}</option>
-                            ))}
-                          </select>
+                            onChange={(val) => setEditForm({ ...editForm, phoneCode: val })}
+                            options={PHONE_CODES.map(c => ({ value: c.code, label: c.code }))}
+                            className="w-[75px] bg-nature-50/60 border-r-0 rounded-r-none shadow-none px-2 py-2.5 z-10"
+                          />
                           <input
                             type="tel"
                             value={editForm.phoneNumber}
@@ -715,18 +722,11 @@ const Profile = () => {
                       </div>
                       <div>
                         <label className="block text-xs font-medium text-nature-700 mb-1">Country</label>
-                        <select
+                        <CustomSelect
                           value={editForm.country}
-                          onChange={(e) => setEditForm({ ...editForm, country: e.target.value })}
-                          className="w-full bg-nature-50/60 border border-nature-200 rounded-xl px-3.5 py-2.5 text-nature-900 text-sm focus:outline-none focus:ring-2 focus:ring-nature-500 transition-shadow cursor-pointer"
-                        >
-                          <option value="India">India</option>
-                          <option value="United States">United States</option>
-                          <option value="United Kingdom">United Kingdom</option>
-                          <option value="United Arab Emirates">United Arab Emirates (Dubai)</option>
-                          <option value="Australia">Australia</option>
-                          <option value="Canada">Canada</option>
-                        </select>
+                          onChange={(val) => setEditForm({ ...editForm, country: val })}
+                          options={COUNTRY_OPTIONS}
+                        />
                       </div>
                     </div>
 
@@ -961,15 +961,12 @@ const Profile = () => {
                         Phone Number <span className="text-red-500">*</span>
                       </label>
                       <div className="flex shadow-sm rounded-xl">
-                        <select
+                        <CustomSelect
                           value={addressForm.phoneCode}
-                          onChange={(e) => setAddressForm({ ...addressForm, phoneCode: e.target.value })}
-                          className="w-[90px] bg-nature-50/60 border border-nature-200 border-r-0 rounded-l-xl px-2 py-2.5 text-nature-900 text-sm focus:outline-none focus:ring-1 focus:ring-nature-500 focus:z-10 transition-shadow cursor-pointer"
-                        >
-                          {PHONE_CODES.map(c => (
-                            <option key={c.code} value={c.code}>{c.code}</option>
-                          ))}
-                        </select>
+                          onChange={(val) => setAddressForm({ ...addressForm, phoneCode: val })}
+                          options={PHONE_CODES.map(c => ({ value: c.code, label: c.code }))}
+                          className="w-[75px] bg-nature-50/60 border-r-0 rounded-r-none shadow-none px-2 py-2.5 z-10"
+                        />
                         <input
                           type="tel"
                           value={addressForm.phoneNumber}
