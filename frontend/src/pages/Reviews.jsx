@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ReviewCardSkeleton } from '../components/ui/Skeletons';
 import { HiOutlinePencilAlt, HiOutlineX, HiOutlineCheckCircle } from 'react-icons/hi';
 import Navbar from '../components/ui/Navbar';
@@ -13,6 +13,9 @@ import Footer from '../components/ui/Footer';
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const productId = searchParams.get('product');
   
   // Form State
   const [rating, setRating] = useState(5);
@@ -33,7 +36,10 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
+      const url = productId 
+        ? `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews?product=${productId}`
+        : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`;
+      const response = await axios.get(url, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
       setReviews(response.data);
     } catch (error) {
       console.error('Error fetching reviews:', error);
@@ -45,7 +51,7 @@ const Reviews = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchReviews();
-  }, []);
+  }, [productId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -119,11 +125,22 @@ const Reviews = () => {
             className="text-center mb-12 space-y-4"
           >
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-nature-900">
-              Customer Reviews
+              {productId && reviews.length > 0 && reviews[0].product 
+                ? `Reviews for ${reviews[0].product.name}` 
+                : 'Customer Reviews'}
             </h1>
             <p className="text-nature-600 max-w-2xl mx-auto">
-              Real experiences from our community. We pride ourselves on creating the best organic skincare.
+              {productId 
+                ? 'Read what our community has to say about this product.' 
+                : 'Real experiences from our community. We pride ourselves on creating the best organic skincare.'}
             </p>
+            {productId && (
+              <div className="mt-6">
+                <Link to="/reviews" className="inline-block px-6 py-2 border border-nature-300 text-nature-700 rounded-full hover:bg-nature-50 transition-colors">
+                  Clear Filter
+                </Link>
+              </div>
+            )}
           </motion.div>
 
           {/* Review Submission Section */}
@@ -149,7 +166,7 @@ const Reviews = () => {
                         onClick={() => setRating(star)}
                         onMouseEnter={() => setHoverRating(star)}
                         onMouseLeave={() => setHoverRating(0)}
-                        className={`transition-colors ${(hoverRating || rating) >= star ? 'text-yellow-400' : 'text-gray-200'}`}
+                        className={`transition-colors ${(hoverRating || rating) >= star ? 'text-[#B88A5A]' : 'text-gray-200'}`}
                       />
                     ))}
                   </div>
@@ -220,11 +237,16 @@ const Reviews = () => {
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <h4 className="font-medium text-nature-900">{review.user?.name || 'Anonymous User'}</h4>
+                        {review.product && (
+                          <div className="text-xs text-[#B88A5A] mt-0.5">
+                            Reviewed: {review.product.name}
+                          </div>
+                        )}
                         <div className="flex space-x-1 mt-1">
                           {[...Array(5)].map((_, i) => (
                             <FaStar 
                               key={i} 
-                              className={`text-sm ${i < review.rating ? 'text-yellow-400' : 'text-gray-200'}`} 
+                              className={`text-sm ${i < review.rating ? 'text-[#B88A5A]' : 'text-gray-200'}`} 
                             />
                           ))}
                         </div>

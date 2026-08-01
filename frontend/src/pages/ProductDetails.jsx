@@ -3,8 +3,10 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useCurrency } from '../context/CurrencyContext';
 import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
-import { FaAmazon, FaShoppingCart, FaArrowLeft, FaCheckCircle, FaLeaf, FaBalanceScale, FaChevronLeft, FaChevronRight, FaChevronUp, FaChevronDown } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaAmazon, FaShoppingCart, FaArrowLeft, FaCheckCircle, FaLeaf, FaBalanceScale, FaChevronLeft, FaChevronRight, FaChevronUp, FaChevronDown, FaStar, FaRegStar } from 'react-icons/fa';
+import { HiOutlineX } from 'react-icons/hi';
+import { useAuth } from '../context/AuthContext';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import { ProductDetailsSkeleton } from '../components/ui/Skeletons';
@@ -36,26 +38,93 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [productReviews, setProductReviews] = useState([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+  const { user } = useAuth();
+  
+  // Review Modal State
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [reviewRating, setReviewRating] = useState(5);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [reviewContent, setReviewContent] = useState('');
+  const [reviewSubmitting, setReviewSubmitting] = useState(false);
+  const [reviewError, setReviewError] = useState('');
+  const [reviewSuccess, setReviewSuccess] = useState(false);
+  
   const [swiperInstance, setSwiperInstance] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const thumbnailsRef = useRef(null);
   const { formatPrice } = useCurrency();
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    window.scrollTo(0, 0);
+    const fetchProductAndReviews = async () => {
       setLoading(true);
+      setReviewsLoading(true);
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products/${id}`);
         setProduct(response.data);
+
+        // Fetch reviews
+        const reviewsRes = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews?product=${id}`);
+        setProductReviews(reviewsRes.data);
       } catch (err) {
-        console.error('Error fetching product:', err);
+        console.error('Error fetching product or reviews:', err);
         setError('Failed to load product details.');
       } finally {
         setLoading(false);
+        setReviewsLoading(false);
       }
     };
-    fetchProduct();
+    fetchProductAndReviews();
   }, [id]);
+
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    setReviewError('');
+    setReviewSuccess(false);
+
+    if (!user) {
+      setReviewError('You must be logged in to write a review.');
+      return;
+    }
+    if (reviewContent.trim().length < 10) {
+      setReviewError('Review must be at least 10 characters long.');
+      return;
+    }
+
+    setReviewSubmitting(true);
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`,
+        { rating: reviewRating, content: reviewContent, product: product._id },
+        { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } }
+      );
+      
+      setReviewSuccess(true);
+      setReviewContent('');
+      setReviewRating(5);
+      
+      // Update local product rating to reflect visually
+      const newCount = (product.ratingCount || 0) + 1;
+      const newRating = ((product.rating || 0) * (product.ratingCount || 0) + reviewRating) / newCount;
+      setProduct({ ...product, rating: newRating, ratingCount: newCount });
+
+      // Refresh reviews
+      const reviewsRes = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews?product=${product._id}`);
+      setProductReviews(reviewsRes.data);
+
+      setTimeout(() => {
+        setIsReviewModalOpen(false);
+        setReviewSuccess(false);
+      }, 2000);
+    } catch (err) {
+      setReviewError(err.response?.data?.message || 'Failed to submit review');
+    } finally {
+      setReviewSubmitting(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -201,7 +270,19 @@ const ProductDetails = () => {
               <span className="inline-block px-3 py-1 bg-nature-100 text-nature-800 text-xs font-medium tracking-widest uppercase rounded-full mb-4">
                 Vedalush Artisan Soap
               </span>
-              <h1 className="text-4xl md:text-5xl font-serif text-nature-900 mb-4">{product.name}</h1>
+              <h1 className="text-4xl md:text-5xl font-serif text-nature-900 mb-2">{product.name}</h1>
+              {product.rating > 0 && (
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center text-[#B88A5A]">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} className={i < Math.round(product.rating) ? 'text-[#B88A5A]' : 'text-nature-200'} size={14} />
+                    ))}
+                  </div>
+                  <span className="text-sm text-[#8E7A65] font-medium">
+                    {product.rating.toFixed(1)} ({product.ratingCount})
+                  </span>
+                </div>
+              )}
               <div className="flex items-center gap-4 mb-6">
                 {priceData && priceData.discountFormatted ? (
                   <>
@@ -281,7 +362,161 @@ const ProductDetails = () => {
         </div>
       </main>
 
+      {/* Reviews Section */}
+      <section className="max-w-6xl mx-auto px-6 w-full pb-20">
+        <div className="flex justify-between items-center border-b border-nature-200 pb-4 mb-8">
+          <h3 className="text-2xl font-serif text-nature-900">
+            Customer Reviews ({productReviews.length})
+          </h3>
+          <button 
+            onClick={() => setIsReviewModalOpen(true)}
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#B88A5A] text-white rounded-full hover:bg-[#A0784E] transition-all shadow-md hover:shadow-lg font-medium text-sm md:text-base active:scale-95 group"
+          >
+            <span className="text-xl font-light leading-none group-hover:rotate-90 transition-transform duration-300">+</span>
+          </button>
+        </div>
+        {reviewsLoading ? (
+          <div className="space-y-4">
+             <div className="animate-pulse bg-white border border-nature-100 h-32 rounded-2xl w-full"></div>
+             <div className="animate-pulse bg-white border border-nature-100 h-32 rounded-2xl w-full"></div>
+          </div>
+        ) : productReviews.length === 0 ? (
+          <p className="text-nature-600 text-center py-8">Be the first to review this product!</p>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {productReviews.slice(0, 4).map((review) => (
+                <div key={review._id} className="bg-white p-6 rounded-2xl shadow-sm border border-nature-100 flex flex-col">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h4 className="font-medium text-nature-900">{review.user?.name || 'Anonymous User'}</h4>
+                      <div className="flex space-x-1 mt-1">
+                        {[...Array(5)].map((_, i) => (
+                          <FaStar 
+                            key={i} 
+                            className={`text-sm ${i < review.rating ? 'text-[#B88A5A]' : 'text-gray-200'}`} 
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <span className="text-xs text-nature-500">
+                      {new Date(review.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <p className="text-nature-700 font-light leading-relaxed whitespace-pre-wrap">{review.content}</p>
+                  {review.adminReply && (
+                    <div className="mt-4 p-4 bg-nature-50 rounded-xl border border-nature-200">
+                      <h5 className="text-xs font-bold text-nature-800 uppercase tracking-wider mb-2">Vedalush Reply</h5>
+                      <p className="text-sm text-nature-700">{review.adminReply}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            {productReviews.length > 4 && (
+              <div className="text-center">
+                <Link 
+                  to={`/reviews?product=${product._id}`}
+                  className="inline-block px-8 py-3 bg-white border border-[#B88A5A] text-[#B88A5A] font-medium rounded-xl hover:bg-nature-50 transition-colors shadow-sm"
+                >
+                  See All {productReviews.length} Reviews
+                </Link>
+              </div>
+            )}
+          </>
+        )}
+      </section>
+
       <Footer />
+
+      {/* Review Modal */}
+      <AnimatePresence>
+        {isReviewModalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]"
+            >
+              <div className="px-6 py-4 border-b border-nature-100 flex justify-between items-center bg-nature-50/50 sticky top-0 z-10">
+                <h3 className="font-serif text-xl text-nature-900 font-bold">Write a Review</h3>
+                <button
+                  onClick={() => setIsReviewModalOpen(false)}
+                  className="p-2 text-nature-400 hover:text-nature-900 hover:bg-white rounded-full transition-colors"
+                >
+                  <HiOutlineX size={20} />
+                </button>
+              </div>
+
+              <div className="p-6 overflow-y-auto">
+                {!user ? (
+                  <div className="text-center py-8">
+                    <p className="text-nature-600 mb-4">Please log in to write a review.</p>
+                    <Link to="/login" className="bg-[#B88A5A] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#8E7A65] transition-colors">
+                      Log In
+                    </Link>
+                  </div>
+                ) : (
+                  <form onSubmit={handleReviewSubmit} className="space-y-4">
+                    {reviewSuccess && (
+                      <div className="p-3 bg-green-50 text-green-700 text-sm rounded-lg mb-4 text-center font-medium">
+                        Thank you! Your review has been submitted.
+                      </div>
+                    )}
+                    {reviewError && (
+                      <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg mb-4 text-center font-medium">
+                        {reviewError}
+                      </div>
+                    )}
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-nature-800 mb-2">Rating</label>
+                      <div className="flex gap-2">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            type="button"
+                            onMouseEnter={() => setHoverRating(star)}
+                            onMouseLeave={() => setHoverRating(0)}
+                            onClick={() => setReviewRating(star)}
+                            className="focus:outline-none transition-transform hover:scale-110 active:scale-95"
+                          >
+                            {star <= (hoverRating || reviewRating) ? (
+                              <FaStar className="text-[#B88A5A] text-3xl" />
+                            ) : (
+                              <FaRegStar className="text-[#B88A5A] text-3xl opacity-40" />
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-nature-800 mb-2">Your Review</label>
+                      <textarea
+                        value={reviewContent}
+                        onChange={(e) => setReviewContent(e.target.value)}
+                        placeholder="Tell us what you think about this product..."
+                        className="w-full bg-nature-50 border border-nature-200 rounded-xl p-4 text-nature-900 focus:outline-none focus:ring-2 focus:ring-[#B88A5A] transition-all min-h-[120px]"
+                        required
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={reviewSubmitting || reviewSuccess}
+                      className="w-full bg-[#B88A5A] hover:bg-[#8E7A65] text-white font-medium py-3 rounded-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed mt-4 shadow-md hover:shadow-lg"
+                    >
+                      {reviewSubmitting ? 'Submitting...' : 'Submit Review'}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
