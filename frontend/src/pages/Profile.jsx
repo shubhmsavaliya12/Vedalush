@@ -18,6 +18,7 @@ import {
 } from 'react-icons/hi';
 import Navbar from '../components/ui/Navbar';
 import Footer from '../components/ui/Footer';
+import { PHONE_CODES, validatePhoneNumber, splitPhoneData } from '../utils/phoneCodes';
 
 const Profile = () => {
   const { user, setUser, logout, loading: authLoading } = useAuth();
@@ -29,7 +30,8 @@ const Profile = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editForm, setEditForm] = useState({
     name: '',
-    phone: '',
+    phoneCode: '+91',
+    phoneNumber: '',
     address: '',
     city: '',
     state: '',
@@ -53,7 +55,8 @@ const Profile = () => {
   const [editingAddressIndex, setEditingAddressIndex] = useState(-1);
   const [addressForm, setAddressForm] = useState({
     label: 'Home',
-    phone: '',
+    phoneCode: '+91',
+    phoneNumber: '',
     address: '',
     city: '',
     state: '',
@@ -73,9 +76,11 @@ const Profile = () => {
 
   useEffect(() => {
     if (user) {
+      const { code, number } = splitPhoneData(user.phone);
       setEditForm({
         name: user.name || '',
-        phone: user.phone || '',
+        phoneCode: code,
+        phoneNumber: number,
         address: user.address || '',
         city: user.city || '',
         state: user.state || '',
@@ -114,14 +119,22 @@ const Profile = () => {
     setUpdateError('');
 
     try {
+      const validationError = validatePhoneNumber(editForm.phoneCode, editForm.phoneNumber);
+      if (validationError !== true) {
+        setUpdateError(validationError);
+        setUpdating(false);
+        return;
+      }
+      const combinedPhone = `${editForm.phoneCode} ${editForm.phoneNumber}`.trim();
+
       let newAddrs = user.addresses ? [...user.addresses] : [];
       const defIdx = newAddrs.findIndex(a => a.isDefault);
       const idx = defIdx >= 0 ? defIdx : 0;
       if (newAddrs.length === 0) {
-        if (editForm.address || editForm.city || editForm.phone || editForm.state || editForm.pincode) {
+        if (editForm.address || editForm.city || editForm.phoneNumber || editForm.state || editForm.pincode) {
           newAddrs.push({
             label: 'Home',
-            phone: editForm.phone || '',
+            phone: combinedPhone,
             address: editForm.address || '',
             city: editForm.city || '',
             state: editForm.state || '',
@@ -133,7 +146,7 @@ const Profile = () => {
       } else {
         newAddrs[idx] = {
           ...newAddrs[idx],
-          phone: editForm.phone || '',
+          phone: combinedPhone,
           address: editForm.address || '',
           city: editForm.city || '',
           state: editForm.state || '',
@@ -142,11 +155,16 @@ const Profile = () => {
         };
       }
 
-      const API_URL = import.meta.env.VITE_API_URL || '';
-      const response = await axios.put(`${API_URL}/api/auth/profile`, {
+      const payload = {
         ...editForm,
+        phone: combinedPhone,
         addresses: newAddrs
-      }, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
+      };
+      delete payload.phoneCode;
+      delete payload.phoneNumber;
+
+      const API_URL = import.meta.env.VITE_API_URL || '';
+      const response = await axios.put(`${API_URL}/api/auth/profile`, payload, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
 
       if (response.status === 200) {
         setUser(response.data.user);
@@ -198,12 +216,20 @@ const Profile = () => {
     setAddressError('');
 
     try {
+      const validationError = validatePhoneNumber(addressForm.phoneCode, addressForm.phoneNumber);
+      if (validationError !== true) {
+        setAddressError(validationError);
+        setSavingAddress(false);
+        return;
+      }
+      const combinedPhone = `${addressForm.phoneCode} ${addressForm.phoneNumber}`.trim();
+
       const currentAddrs = user.addresses ? [...user.addresses] : [];
       let newAddrs;
       if (editingAddressIndex >= 0) {
-        newAddrs = currentAddrs.map((a, i) => i === editingAddressIndex ? { ...addressForm } : a);
+        newAddrs = currentAddrs.map((a, i) => i === editingAddressIndex ? { ...addressForm, phone: combinedPhone } : a);
       } else {
-        newAddrs = [...currentAddrs, { ...addressForm }];
+        newAddrs = [...currentAddrs, { ...addressForm, phone: combinedPhone }];
       }
 
       if (addressForm.isDefault) {
@@ -393,7 +419,8 @@ const Profile = () => {
                               <button
                                 onClick={() => {
                                   setEditingAddressIndex(idx);
-                                  setAddressForm({ ...addr });
+                                  const { code, number } = splitPhoneData(addr.phone);
+                                  setAddressForm({ ...addr, phoneCode: code, phoneNumber: number });
                                   setIsAddressModalOpen(true);
                                 }}
                                 className="text-nature-600 hover:text-nature-900 p-1.5 rounded-lg hover:bg-white transition-colors"
@@ -442,9 +469,11 @@ const Profile = () => {
                     <button
                       onClick={() => {
                         setEditingAddressIndex(-1);
+                        const { code, number } = splitPhoneData(user.phone || '');
                         setAddressForm({
                           label: 'Home',
-                          phone: user.phone || '',
+                          phoneCode: code,
+                          phoneNumber: number,
                           address: '',
                           city: '',
                           state: '',
@@ -471,9 +500,11 @@ const Profile = () => {
                     <button
                       onClick={() => {
                         setEditingAddressIndex(-1);
+                        const { code, number } = splitPhoneData(user.phone || '');
                         setAddressForm({
                           label: 'Home',
-                          phone: user.phone || '',
+                          phoneCode: code,
+                          phoneNumber: number,
                           address: '',
                           city: '',
                           state: '',
@@ -663,13 +694,24 @@ const Profile = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                       <div>
                         <label className="block text-xs font-medium text-nature-700 mb-1">Phone Number</label>
-                        <input
-                          type="tel"
-                          value={editForm.phone}
-                          onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
-                          placeholder="+91 9876543210"
-                          className="w-full bg-nature-50/60 border border-nature-200 rounded-xl px-3.5 py-2.5 text-nature-900 text-sm focus:outline-none focus:ring-2 focus:ring-nature-500 transition-shadow"
-                        />
+                        <div className="flex shadow-sm rounded-xl">
+                          <select
+                            value={editForm.phoneCode}
+                            onChange={(e) => setEditForm({ ...editForm, phoneCode: e.target.value })}
+                            className="w-[60px] bg-nature-50/60 border border-nature-200 border-r-0 rounded-l-xl px-2 py-2.5 text-nature-900 text-sm focus:outline-none focus:ring-1 focus:ring-nature-500 focus:z-10 transition-shadow cursor-pointer"
+                          >
+                            {PHONE_CODES.map(c => (
+                              <option key={c.code} value={c.code}>{c.code}</option>
+                            ))}
+                          </select>
+                          <input
+                            type="tel"
+                            value={editForm.phoneNumber}
+                            onChange={(e) => setEditForm({ ...editForm, phoneNumber: e.target.value })}
+                            placeholder="9876543210"
+                            className="flex-1 min-w-0 bg-nature-50/60 border border-nature-200 rounded-r-xl px-3.5 py-2.5 text-nature-900 text-sm focus:outline-none focus:ring-1 focus:ring-nature-500 focus:z-10 transition-shadow"
+                          />
+                        </div>
                       </div>
                       <div>
                         <label className="block text-xs font-medium text-nature-700 mb-1">Country</label>
@@ -681,7 +723,7 @@ const Profile = () => {
                           <option value="India">India</option>
                           <option value="United States">United States</option>
                           <option value="United Kingdom">United Kingdom</option>
-                          <option value="European Union">European Union</option>
+                          <option value="United Arab Emirates">United Arab Emirates (Dubai)</option>
                           <option value="Australia">Australia</option>
                           <option value="Canada">Canada</option>
                         </select>
@@ -918,14 +960,25 @@ const Profile = () => {
                       <label className="block text-xs font-bold uppercase tracking-wider text-nature-800 mb-1">
                         Phone Number <span className="text-red-500">*</span>
                       </label>
-                      <input
-                        type="tel"
-                        value={addressForm.phone}
-                        onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
-                        required
-                        placeholder="+91 9876543210"
-                        className="w-full bg-nature-50/60 border border-nature-200 rounded-xl px-4 py-2.5 text-nature-900 text-sm focus:outline-none focus:ring-2 focus:ring-nature-500 transition-shadow"
-                      />
+                      <div className="flex shadow-sm rounded-xl">
+                        <select
+                          value={addressForm.phoneCode}
+                          onChange={(e) => setAddressForm({ ...addressForm, phoneCode: e.target.value })}
+                          className="w-[90px] bg-nature-50/60 border border-nature-200 border-r-0 rounded-l-xl px-2 py-2.5 text-nature-900 text-sm focus:outline-none focus:ring-1 focus:ring-nature-500 focus:z-10 transition-shadow cursor-pointer"
+                        >
+                          {PHONE_CODES.map(c => (
+                            <option key={c.code} value={c.code}>{c.code}</option>
+                          ))}
+                        </select>
+                        <input
+                          type="tel"
+                          value={addressForm.phoneNumber}
+                          onChange={(e) => setAddressForm({ ...addressForm, phoneNumber: e.target.value })}
+                          required
+                          placeholder="9876543210"
+                          className="flex-1 min-w-0 bg-nature-50/60 border border-nature-200 rounded-r-xl px-4 py-2.5 text-nature-900 text-sm focus:outline-none focus:ring-1 focus:ring-nature-500 focus:z-10 transition-shadow"
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -989,7 +1042,7 @@ const Profile = () => {
                       <option value="India">India</option>
                       <option value="United States">United States</option>
                       <option value="United Kingdom">United Kingdom</option>
-                      <option value="European Union">European Union</option>
+                      <option value="United Arab Emirates">United Arab Emirates (Dubai)</option>
                       <option value="Australia">Australia</option>
                       <option value="Canada">Canada</option>
                     </select>

@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { HiOutlineArrowRight, HiOutlineX } from 'react-icons/hi';
 import { FaChevronDown, FaCheckCircle, FaTimes } from 'react-icons/fa';
+import { PHONE_CODES, validatePhoneNumber } from '../../utils/phoneCodes';
 import { useAuth } from '../../context/AuthContext';
 
 const DirectOrder = () => {
@@ -70,10 +72,13 @@ const DirectOrder = () => {
 
       const payload = {
         ...data,
+        phone: `${data.countryCode} ${data.phoneNumber}`,
         items: sanitizedItems,
         product: productSummary,
         quantity: totalQty
       };
+      delete payload.countryCode;
+      delete payload.phoneNumber;
 
       await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders`, payload, {
         headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } // Send auth headers instead of cookies
@@ -156,12 +161,28 @@ const DirectOrder = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm text-[#5D4E42] mb-2 font-serif font-bold">Phone</label>
-                  <input 
-                    {...register("phone", { required: true })} 
-                    className="w-full bg-white border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] transition-colors duration-250 text-base md:text-sm"
-                    placeholder="+1 234 567 8900"
-                  />
-                  {errors.phone && <span className="text-red-500 text-xs mt-1 block">Phone is required</span>}
+                  <div className="flex rounded-xl">
+                    <select
+                      {...register("countryCode")}
+                      defaultValue="+91"
+                      className="w-[60px] bg-white border border-[#E6DED2] border-r-0 rounded-l-xl px-2 py-3 text-[#5D4E42] focus:outline-none focus:border-[#B88A5A] focus:ring-1 focus:ring-[#B88A5A] focus:z-10 transition-colors duration-250 text-base md:text-sm cursor-pointer"
+                    >
+                      {PHONE_CODES.map(c => (
+                        <option key={c.code} value={c.code}>{c.code}</option>
+                      ))}
+                    </select>
+                    <input 
+                      {...register("phoneNumber", { 
+                        required: "Phone number is required",
+                        validate: (value, formValues) => validatePhoneNumber(formValues.countryCode, value)
+                      })} 
+                      className="flex-1 min-w-0 bg-white border border-[#E6DED2] rounded-r-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] focus:ring-1 focus:ring-[#B88A5A] focus:z-10 transition-colors duration-250 text-base md:text-sm"
+                      placeholder="9876543210"
+                    />
+                  </div>
+                  {(errors.phoneNumber || errors.countryCode) && (
+                    <span className="text-red-500 text-xs mt-1 block">{errors.phoneNumber?.message || 'Invalid phone'}</span>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm text-[#5D4E42] mb-2 font-serif font-bold">Country</label>
