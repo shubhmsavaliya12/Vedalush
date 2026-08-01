@@ -9,6 +9,7 @@ export const SUPPORTED_CURRENCIES = [
   { code: 'GBP', symbol: '£', name: 'British Pound', flag: '🇬🇧', locale: 'en-GB' },
   { code: 'AUD', symbol: 'A$', name: 'Australian Dollar', flag: '🇦🇺', locale: 'en-AU' },
   { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar', flag: '🇨🇦', locale: 'en-CA' },
+  { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham', flag: '🇦🇪', locale: 'ar-AE' },
 ];
 
 export const CurrencyProvider = ({ children }) => {
@@ -22,6 +23,7 @@ export const CurrencyProvider = ({ children }) => {
     GBP: 0.0094,
     AUD: 0.018,
     CAD: 0.016,
+    AED: 0.044,
   });
 
   const [loading, setLoading] = useState(true);
@@ -56,6 +58,7 @@ export const CurrencyProvider = ({ children }) => {
           else if (code === 'GB' || code === 'UK') detected = 'GBP';
           else if (code === 'AU') detected = 'AUD';
           else if (code === 'CA') detected = 'CAD';
+          else if (code === 'AE') detected = 'AED';
           else if (code === 'IN') detected = 'INR';
 
           setCurrency(detected);
