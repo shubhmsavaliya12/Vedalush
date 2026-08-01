@@ -170,7 +170,7 @@ const DirectOrder = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm text-[#5D4E42] mb-2 font-serif font-bold">Phone</label>
-                  <div className="flex rounded-xl">
+                  <div className="flex rounded-xl h-[50px]">
                     <Controller
                       name="countryCode"
                       control={control}
@@ -179,7 +179,8 @@ const DirectOrder = () => {
                           value={field.value}
                           onChange={field.onChange}
                           options={PHONE_CODES.map(c => ({ value: c.code, label: c.code }))}
-                          className="w-[75px] bg-white border border-[#E6DED2] border-r-0 rounded-l-xl rounded-r-none px-2 py-3 shadow-none z-10"
+                          wrapperClassName="h-full"
+                          className="w-[75px] h-full bg-white border border-[#E6DED2] border-r-0 rounded-l-xl rounded-r-none px-2 shadow-none z-10 !py-0"
                         />
                       )}
                     />
@@ -188,7 +189,7 @@ const DirectOrder = () => {
                         required: "Phone number is required",
                         validate: (value, formValues) => validatePhoneNumber(formValues.countryCode, value)
                       })}
-                      className="flex-1 min-w-0 bg-white border border-[#E6DED2] rounded-r-xl px-4 py-3 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] focus:ring-1 focus:ring-[#B88A5A] focus:z-10 transition-colors duration-250 text-base md:text-sm"
+                      className="flex-1 min-w-0 h-full bg-white border border-[#E6DED2] rounded-r-xl px-4 text-[#5D4E42] placeholder-[#9D948B] focus:outline-none focus:border-[#B88A5A] focus:ring-1 focus:ring-[#B88A5A] focus:z-10 transition-colors duration-250 text-base md:text-sm"
                       placeholder="9876543210"
                     />
                   </div>
