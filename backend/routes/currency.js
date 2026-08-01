@@ -11,10 +11,10 @@ const CACHE_DURATION = 3600 * 1000; // 1 hour in milliseconds
 const FALLBACK_RATES = {
   INR: 1,
   USD: 0.012,
-  EUR: 0.011,
   GBP: 0.0094,
   AUD: 0.018,
-  CAD: 0.016
+  CAD: 0.016,
+  AED: 0.044
 };
 
 router.get('/rates', async (req, res) => {
@@ -37,10 +37,10 @@ router.get('/rates', async (req, res) => {
       cachedRates = {
         INR: 1,
         USD: data.rates.USD || FALLBACK_RATES.USD,
-        EUR: data.rates.EUR || FALLBACK_RATES.EUR,
         GBP: data.rates.GBP || FALLBACK_RATES.GBP,
         AUD: data.rates.AUD || FALLBACK_RATES.AUD,
         CAD: data.rates.CAD || FALLBACK_RATES.CAD,
+        AED: data.rates.AED || FALLBACK_RATES.AED,
       };
       lastFetchTime = now;
     } else {
