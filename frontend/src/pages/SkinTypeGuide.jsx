@@ -411,7 +411,7 @@ const SkinTypeGuide = () => {
                   ))}
                 </div>
               ) : recommendedDynamicProducts.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-center">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2 justify-center">
                   {recommendedDynamicProducts.map((product, index) => {
                     const priceData = formatPrice(product.price, product.discountPrice, product.internationalPrices);
                     return (
@@ -440,14 +440,13 @@ const SkinTypeGuide = () => {
                             <p className="text-[#6F6A65] font-light text-xs line-clamp-2">{product.shortDesc}</p>
                           </div>
                           
-                          <div className="mt-4 pt-4 border-t border-[#E6DED2]/50 flex items-center justify-between">
+                          <div className="mt-4 pt-4 border-t border-[#E6DED2]/50 flex justify-center">
                             <div className="flex items-center gap-2">
                               <span className="text-lg font-bold text-[#5D4E42]">{priceData.discountFormatted || priceData.priceFormatted}</span>
                               {priceData.discountFormatted && (
                                 <span className="text-xs text-[#9D948B] line-through">{priceData.priceFormatted}</span>
                               )}
                             </div>
-                            <span className="text-[#5D4E42] bg-[#F8F4EC] px-3 py-1.5 rounded-full text-xs font-medium group-hover:bg-[#5D4E42] group-hover:text-white transition-colors">Shop</span>
                           </div>
                         </div>
                       </Link>
