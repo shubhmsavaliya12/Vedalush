@@ -470,7 +470,7 @@ const SkinTypeGuide = () => {
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#5D4E42]">Common Questions</h2>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-1">
               {faqs.map((faq, i) => (
                 <div key={i} className="bg-white rounded-2xl border border-[#E6DED2] shadow-sm overflow-hidden">
                   <button 
