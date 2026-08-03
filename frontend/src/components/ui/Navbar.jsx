@@ -366,7 +366,7 @@ const Navbar = () => {
               </nav>
 
               {/* Bottom Actions Section */}
-              <div className="border-[#E6DED2] flex flex-col">
+              <div className="border-[#E6DED2] flex flex-col space-y-4">
                 <div className="flex items-stretch -mx-6 border-y border-[#E6DED2]">
                   <a
                     href="/#order"
