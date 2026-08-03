@@ -366,12 +366,12 @@ const Navbar = () => {
               </nav>
 
               {/* Bottom Actions Section */}
-              <div className="pt-6 mt-4 border-t border-[#E6DED2] flex flex-col space-y-4">
-                <div className="flex items-center justify-between gap-2.5">
+              <div className="border-[#E6DED2] flex flex-col">
+                <div className="flex items-stretch -mx-6 border-y border-[#E6DED2]">
                   <a
                     href="/#order"
                     onClick={(e) => handleSectionClick(e, '/#order', true)}
-                    className="flex-1 text-center py-3 bg-[#B88A5A] text-white text-[11px] font-semibold uppercase tracking-[0.18em] rounded-full shadow-soft hover:bg-[#9F7348] transition-all duration-250 truncate px-2"
+                    className="flex-1 flex items-center justify-center text-center py-3 bg-[#B88A5A] text-white text-[11px] font-semibold uppercase tracking-[0.18em] hover:bg-[#9F7348] transition-all duration-250 truncate px-2 border-r border-[#E6DED2]"
                   >
                     Order Directly
                   </a>
@@ -380,7 +380,7 @@ const Navbar = () => {
                     <Link
                       to="/profile"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center gap-1.5 px-3.5 py-3 bg-[#FFFFFF] border border-[#E6DED2] rounded-full text-[#5D4E42] font-semibold text-[11px] uppercase tracking-wider hover:border-[#8E7A65] transition-all duration-250 shadow-soft shrink-0"
+                      className="flex-1 flex items-center justify-center gap-1.5 px-2 py-3 bg-[#FFFFFF] text-[#5D4E42] font-semibold text-[11px] uppercase tracking-wider hover:bg-[#F8F4EC] transition-all duration-250 shrink-0"
                     >
                       <HiOutlineUser size={15} className="text-[#8E7A65]" />
                       <span className="max-w-[70px] truncate">{user.name}</span>
@@ -389,7 +389,7 @@ const Navbar = () => {
                     <Link
                       to="/login"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center gap-1.5 px-3.5 py-3 bg-[#FFFFFF] border border-[#E6DED2] rounded-full text-[#5D4E42] font-semibold text-[11px] uppercase tracking-wider hover:border-[#8E7A65] transition-all duration-250 shadow-soft shrink-0"
+                      className="flex-1 flex items-center justify-center gap-1.5 px-2 py-3 bg-[#FFFFFF] text-[#5D4E42] font-semibold text-[11px] uppercase tracking-wider hover:bg-[#F8F4EC] transition-all duration-250 shrink-0"
                     >
                       <HiOutlineUser size={15} className="text-[#8E7A65]" />
                       <span>Login</span>
