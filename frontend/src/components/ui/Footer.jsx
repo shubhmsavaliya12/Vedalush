@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import LegalModal from './LegalModal';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +12,8 @@ const Footer = () => {
   const [error, setError] = useState('');
   const [openShop, setOpenShop] = useState(false);
   const [openAbout, setOpenAbout] = useState(false);
+  const [legalModalOpen, setLegalModalOpen] = useState(false);
+  const [legalModalType, setLegalModalType] = useState('terms');
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
@@ -165,13 +168,28 @@ const Footer = () => {
         <div className="border-t border-[#8E7A65]/40 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-[#9D948B] font-normal">
           <p>&copy; {new Date().getFullYear()} Vedalush. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-white transition-colors duration-250">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors duration-250">Terms of Service</a>
-            <a href="/admin/login" className="hover:text-white transition-colors duration-250">Admin Login</a>
+            <button 
+              onClick={() => { setLegalModalType('privacy'); setLegalModalOpen(true); }} 
+              className="hover:text-white transition-colors duration-250 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white rounded"
+            >
+              Privacy Policy
+            </button>
+            <button 
+              onClick={() => { setLegalModalType('terms'); setLegalModalOpen(true); }} 
+              className="hover:text-white transition-colors duration-250 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white rounded"
+            >
+              Terms of Service
+            </button>
           </div>
         </div>
 
       </div>
+
+      <LegalModal 
+        isOpen={legalModalOpen} 
+        onClose={() => setLegalModalOpen(false)} 
+        type={legalModalType} 
+      />
     </footer>
   );
 };
