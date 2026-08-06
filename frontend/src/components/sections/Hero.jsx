@@ -7,8 +7,10 @@ const Hero = () => {
       {/* Background Image Container: normal flow on mobile/tablet (h-auto), exact 1-screen height on desktop (lg+) */}
       <div className="relative w-full lg:h-[calc(100vh-6rem)] overflow-hidden flex items-center justify-center">
         <img
-          src="/images/IMG_20260727_235144.png"
+          src="/images/IMG_20260727_235144.webp"
           alt="Vedalush Background"
+          width="1920"
+          height="1080"
           className="w-full h-auto lg:h-full object-contain lg:object-cover object-center block"
           fetchpriority="high" decoding="async" />
         <div className="absolute inset-0 bg-[#2E2721]/65"></div>

@@ -7,6 +7,7 @@ import { useCurrency } from '../../context/CurrencyContext';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import { ProductCardSkeleton } from '../ui/Skeletons';
+import { getOptimizedCloudinaryUrl } from '../../utils/cloudinary';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
@@ -120,8 +121,10 @@ const FeaturedProducts = () => {
                       {product.images.map((img, i) => (
                         <SwiperSlide key={i}>
                           <img 
-                            src={img} 
-                            alt={`${product.name} - image ${i + 1}`} 
+                            src={getOptimizedCloudinaryUrl(img, 600)} 
+                            alt={`${product.name} - image ${i + 1}`}
+                            width="600"
+                            height="600"
                             className="w-full h-full object-cover"
                           loading="lazy" decoding="async" />
                         </SwiperSlide>
@@ -129,8 +132,10 @@ const FeaturedProducts = () => {
                     </Swiper>
                   ) : (
                     <img 
-                      src={product.images && product.images[0] ? product.images[0] : '/placeholder.jpg'} 
-                      alt={product.name} 
+                      src={product.images && product.images[0] ? getOptimizedCloudinaryUrl(product.images[0], 600) : '/placeholder.jpg'} 
+                      alt={product.name}
+                      width="600"
+                      height="600"
                       className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                     loading="lazy" decoding="async" />
                   )}

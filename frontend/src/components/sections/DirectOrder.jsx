@@ -7,6 +7,7 @@ import { FaChevronDown, FaCheckCircle, FaTimes } from 'react-icons/fa';
 import { PHONE_CODES, validatePhoneNumber, splitPhoneData } from '../../utils/phoneCodes';
 import { useAuth } from '../../context/AuthContext';
 import CustomSelect from '../ui/CustomSelect';
+import { getOptimizedCloudinaryUrl } from '../../utils/cloudinary';
 
 const DirectOrder = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch, control } = useForm({
@@ -131,6 +132,8 @@ const DirectOrder = () => {
               <img
                 src="/images/direct_order_soaps.png"
                 alt="Beautiful Soaps"
+                width="800"
+                height="600"
                 className="w-full h-full object-cover"
                 loading="lazy" decoding="async" />
             </div>
@@ -282,7 +285,7 @@ const DirectOrder = () => {
                                 }}
                                 className="px-3 py-2 hover:bg-[#F8F4EC] cursor-pointer text-[#5D4E42] transition-colors flex items-center gap-2.5 border-b border-[#E6DED2]/40 last:border-0 text-sm"
                               >
-                                {p.images?.[0] && <img src={p.images[0]} alt={p.name} className="w-8 h-8 rounded-lg object-cover shadow-sm flex-shrink-0" loading="lazy" decoding="async" />}
+                                {p.images?.[0] && <img src={getOptimizedCloudinaryUrl(p.images[0], 64)} alt={p.name} width="32" height="32" className="w-8 h-8 rounded-lg object-cover shadow-sm flex-shrink-0" loading="lazy" decoding="async" />}
                                 <span className="font-medium truncate">{p.name}</span>
                               </div>
                             ))}

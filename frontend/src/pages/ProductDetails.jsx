@@ -10,6 +10,7 @@ import { useAuth } from '../context/AuthContext';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import { ProductDetailsSkeleton } from '../components/ui/Skeletons';
+import { getOptimizedCloudinaryUrl } from '../utils/cloudinary';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
@@ -211,7 +212,7 @@ const ProductDetails = () => {
                       className={`w-16 h-16 sm:w-20 sm:h-20 md:w-full md:aspect-square flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-300 cursor-pointer ${activeIndex === i ? 'border-nature-700 opacity-100 shadow-md scale-95' : 'border-transparent opacity-60 hover:opacity-100'
                         }`}
                     >
-                      <img src={img} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                      <img src={getOptimizedCloudinaryUrl(img, 150)} alt={`Thumbnail ${i + 1}`} width="150" height="150" className="w-full h-full object-cover" loading="lazy" decoding="async" />
                     </button>
                   ))}
                 </div>
@@ -247,14 +248,16 @@ const ProductDetails = () => {
                   <SlideCounter total={product.images.length} />
                   {product.images.map((img, i) => (
                     <SwiperSlide key={i}>
-                      <img src={img} alt={`${product.name} view ${i + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                      <img src={getOptimizedCloudinaryUrl(img, 800)} alt={`${product.name} view ${i + 1}`} width="800" height="800" className="w-full h-full object-cover" loading="lazy" decoding="async" />
                     </SwiperSlide>
                   ))}
                 </Swiper>
               ) : (
                 <img
-                  src={product.images?.[0] || '/placeholder.jpg'}
+                  src={product.images?.[0] ? getOptimizedCloudinaryUrl(product.images[0], 800) : '/placeholder.jpg'}
                   alt={product.name}
+                  width="800"
+                  height="800"
                   className="w-full h-full object-cover"
                 loading="lazy" decoding="async" />
               )}

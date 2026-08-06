@@ -1,0 +1,11 @@
+# Vedalush Organic Soaps
+
+Vedalush is a premium artisanal organic soap platform. We craft 100% natural, chemical-free cold-pressed soaps.
+
+## Navigation
+- Products: /#products
+- Skin Type Guide: /skin-type
+- Reviews: /reviews
+
+## Order Direct
+Directly order our luxury soaps at /#order
