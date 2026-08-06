@@ -211,7 +211,7 @@ const Navbar = () => {
                   src="/vedalus.png" 
                   alt="Vedalush Logo" 
                   className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-transform duration-500 group-hover:scale-105" 
-                loading="lazy" decoding="async" />
+                  fetchpriority="high" decoding="async" />
               </Link>
             </div>
 
