@@ -12,7 +12,7 @@ const Hero = () => {
           width="1920"
           height="1080"
           className="w-full h-auto lg:h-full object-contain lg:object-cover object-center block"
-          fetchpriority="high" decoding="async" />
+          fetchPriority="high" decoding="async" />
         <div className="absolute inset-0 bg-[#2E2721]/65"></div>
 
         {/* Decorative Soft Warm Atmosphere */}

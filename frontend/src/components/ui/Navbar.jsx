@@ -213,7 +213,7 @@ const Navbar = () => {
                   width="200"
                   height="64"
                   className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-transform duration-500 group-hover:scale-105" 
-                  fetchpriority="high" decoding="async" />
+                  fetchPriority="high" decoding="async" />
               </Link>
             </div>
 
