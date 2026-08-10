@@ -130,7 +130,7 @@ const DirectOrder = () => {
             </p>
             <div className="hidden lg:block relative h-64 rounded-2xl overflow-hidden shadow-soft border border-[#E6DED2]">
               <img
-                src="/images/direct_order_soaps.png"
+                src="/images/direct_order_soaps.webp"
                 alt="Beautiful Soaps"
                 width="800"
                 height="600"
