@@ -43,12 +43,12 @@ const Hero = () => {
               transition={{ delay: 0.2, duration: 0.8 }}
               className="space-y-1 sm:space-y-2 lg:space-y-4"
             >
-              <span className="hidden md:inline-block px-2 sm:px-3.5 lg:px-5 py-0.5 sm:py-1 lg:py-2 bg-[#2E2721] text-[#F8F4EC] font-semibold tracking-widest uppercase text-[8px] sm:text-[10px] md:text-xs lg:text-sm rounded-full border border-[#E6DED2]/30 shadow-soft">
+              {/* <span className="hidden md:inline-block px-2 sm:px-3.5 lg:px-5 py-0.5 sm:py-1 lg:py-2 bg-[#2E2721] text-[#F8F4EC] font-semibold tracking-widest uppercase text-[8px] sm:text-[10px] md:text-xs lg:text-sm rounded-full border border-[#E6DED2]/30 shadow-soft">
                 100% Organic & Handcrafted
-              </span>
+              </span> */}
               <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-serif font-bold text-white leading-tight tracking-tight drop-shadow-md">
                 Purity in Every <br />
-                <span className="italic font-light text-[#C19A6B]">Lather.</span>
+                <span className="italic font-light text-[#C19A6B]" style={{ fontFamily: "'Great Vibes', cursive", fontWeight: 400 }}>Lather.</span>
               </h1>
             </motion.div>
 

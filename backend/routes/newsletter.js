@@ -9,7 +9,8 @@ router.post('/subscribe', async (req, res) => {
   try {
     const { email } = req.body;
 
-    if (!email || !email.includes('@') || !email.includes('.')) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
       return res.status(400).json({ message: 'Please provide a valid email address.' });
     }
 

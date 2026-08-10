@@ -9,6 +9,7 @@ import Testimonials from '../components/sections/Testimonials';
 import FAQ from '../components/sections/FAQ';
 import DirectOrder from '../components/sections/DirectOrder';
 import Contact from '../components/sections/Contact';
+import Subscribe from '../components/sections/Subscribe';
 import Footer from '../components/ui/Footer';
 
 const Home = () => {
@@ -32,6 +33,7 @@ const Home = () => {
         <Contact />
       </main>
 
+      <Subscribe />
       <Footer />
     </>
   );
