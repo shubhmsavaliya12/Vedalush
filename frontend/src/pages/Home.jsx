@@ -4,6 +4,7 @@ import Navbar from '../components/ui/Navbar';
 import Hero from '../components/sections/Hero';
 import FeaturedProducts from '../components/sections/FeaturedProducts';
 import Benefits from '../components/sections/Benefits';
+import Values from '../components/sections/Values';
 import Ingredients from '../components/sections/Ingredients';
 import Testimonials from '../components/sections/Testimonials';
 import FAQ from '../components/sections/FAQ';
@@ -26,6 +27,7 @@ const Home = () => {
         <Hero />
         <FeaturedProducts />
         <Benefits />
+        <Values />
         <Ingredients />
         <Testimonials />
         <FAQ />
