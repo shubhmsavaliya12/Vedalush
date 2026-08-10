@@ -4,6 +4,7 @@ import { HiMenu, HiX, HiOutlineUser } from 'react-icons/hi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCurrency } from '../../context/CurrencyContext';
+import AnnouncementBar from './AnnouncementBar';
 
 const leftLinks = [
   { name: 'Products', href: '/#products' },
@@ -95,6 +96,8 @@ const CurrencyDropdown = ({ currency, changeCurrency, supportedCurrencies, compa
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user } = useAuth();
   const { currency, changeCurrency, supportedCurrencies } = useCurrency();
@@ -103,11 +106,19 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      const currentScrollY = window.scrollY;
+      setScrolled(currentScrollY > 30);
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 120 && !mobileMenuOpen) {
+        setVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        setVisible(true);
+      }
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY, mobileMenuOpen]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -159,13 +170,19 @@ const Navbar = () => {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-250 ease-in-out ${
-          scrolled 
-            ? 'bg-[#FDFBF7] py-3 lg:py-3.5 border-b border-[#E6DED2] shadow-soft' 
-            : 'bg-[#F8F4EC] py-4 lg:py-5 border-b border-[#E6DED2]/60'
+      <div 
+        className={`fixed top-0 left-0 w-full z-50 flex flex-col transition-transform duration-300 ease-in-out ${
+          visible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
+        <AnnouncementBar />
+        <header
+          className={`w-full transition-all duration-250 ease-in-out ${
+            scrolled 
+              ? 'bg-[#FDFBF7] py-3 lg:py-3.5 border-b border-[#E6DED2] shadow-soft' 
+              : 'bg-[#F8F4EC] py-4 lg:py-5 border-b border-[#E6DED2]/60'
+          }`}
+        >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             
@@ -282,6 +299,7 @@ const Navbar = () => {
           </div>
         </div>
       </header>
+      </div>
 
       {/* Side Drawer Luxury Mobile Menu */}
       <AnimatePresence>
@@ -303,7 +321,7 @@ const Navbar = () => {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '-100%', opacity: 0.8 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-[82%] max-w-[340px] h-full bg-[#FDFBF7] shadow-soft-2xl flex flex-col justify-between pt-20 pb-8 px-6 overflow-y-auto z-50 border-r border-[#E6DED2]"
+              className="relative w-[82%] max-w-[340px] h-full bg-[#FDFBF7] shadow-soft-2xl flex flex-col justify-between pt-[120px] sm:pt-[130px] pb-8 px-6 overflow-y-auto z-50 border-r border-[#E6DED2]"
             >
               
               {/* Nav Links List */}
