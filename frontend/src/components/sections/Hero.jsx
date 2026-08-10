@@ -48,7 +48,7 @@ const Hero = () => {
               </span> */}
               <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-serif font-bold text-white leading-tight tracking-tight drop-shadow-md">
                 Purity in Every <br />
-                <span className="italic font-light text-[#C19A6B]" style={{ fontFamily: "'Great Vibes', cursive", fontWeight: 400 }}>Lather.</span>
+                <span className="italic font-light text-white" style={{ fontFamily: "'Great Vibes', cursive", fontWeight: 400 }}>Lather.</span>
               </h1>
             </motion.div>
 
