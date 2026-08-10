@@ -26,7 +26,7 @@ const AnnouncementBar = () => {
 
   return (
     <div className="bg-[#a79475] text-white text-xs py-2 w-full z-50 flex items-center justify-center relative overflow-hidden h-9">
-      <div className="flex items-center space-x-2 sm:space-x-10">
+      <div className="flex items-center space-x-2 sm:space-x-30">
         <button 
           onClick={handlePrev}
           className="text-white/70 hover:text-white transition-colors p-1 focus:outline-none z-10 hidden sm:block"
@@ -43,7 +43,7 @@ const AnnouncementBar = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.3 }}
-              className="absolute whitespace-nowrap font-medium tracking-wide flex items-center"
+              className="absolute whitespace-nowrap text-sm font-medium tracking-wide flex items-center mx-5"
             >
               {announcements[currentIndex]}
             </motion.div>
