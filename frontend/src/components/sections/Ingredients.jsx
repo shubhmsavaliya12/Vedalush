@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 const Ingredients = () => {
   const [ingredients, setIngredients] = useState([]);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     const fetchIngredients = async () => {
@@ -20,7 +22,7 @@ const Ingredients = () => {
   }, []);
 
   return (
-    <section id="ingredients" className="py-24 bg-nature-100">
+    <section id="ingredients" className="pb-10 bg-nature-100">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         <div className="text-center mb-16 space-y-4">
@@ -53,7 +55,7 @@ const Ingredients = () => {
         </div>
 
         <div className="space-y-5 sm:space-y-5 md:space-y-5">
-          {ingredients.map((item, index) => (
+          {(isExpanded ? ingredients : ingredients.slice(0, 4)).map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
@@ -85,6 +87,39 @@ const Ingredients = () => {
             </motion.div>
           ))}
         </div>
+
+        {ingredients.length > 4 && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mt-12 flex justify-center"
+          >
+            <button
+              onClick={() => {
+                setIsExpanded(!isExpanded);
+                if (isExpanded) {
+                  setTimeout(() => {
+                    const element = document.getElementById('ingredients');
+                    if (element) {
+                      const y = element.getBoundingClientRect().top + window.scrollY - 160;
+                      window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                  }, 50);
+                }
+              }}
+              className="group flex flex-col items-center justify-center text-nature-600 hover:text-nature-900 transition-colors duration-300 focus:outline-none"
+            >
+              <span className="text-sm tracking-widest uppercase font-semibold mb-5">
+                {isExpanded ? 'Show Less' : 'View All Ingredients'}
+              </span>
+                {isExpanded ? (
+                  <FaChevronUp className="w-4 h-4" />
+                ) : (
+                  <FaChevronDown className="w-4 h-4 animate-bounce" />
+                )}
+            </button>
+          </motion.div>
+        )}
 
       </div>
     </section>
