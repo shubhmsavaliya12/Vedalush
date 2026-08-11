@@ -13,7 +13,7 @@ const Hero = () => {
           height="1080"
           className="w-full h-auto lg:h-full object-contain lg:object-cover object-center block"
           fetchPriority="high" decoding="async" />
-        <div className="absolute inset-0 bg-[#2E2721]/65"></div>
+        <div className="absolute inset-0 bg-[#2E2721]/80"></div>
 
         {/* Decorative Soft Warm Atmosphere */}
         <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
