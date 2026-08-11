@@ -54,10 +54,15 @@ const Benefits = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15, duration: 0.6 }}
-              className="flex flex-col items-center text-center p-2 sm:p-6"
+              className="group flex flex-col items-center text-center p-2 sm:p-6"
             >
-              <div className="mb-3 sm:mb-6 p-3 sm:p-4 bg-[#F8F4EC] border border-[#E6DED2]/60 shadow-soft rounded-full flex items-center justify-center">
-                {benefit.icon}
+              <div className="mb-3 sm:mb-6 p-3 sm:p-4 bg-[#F8F4EC] border border-[#E6DED2]/60 shadow-soft rounded-full flex items-center justify-center cursor-pointer group-hover:bg-[#E6DED2] group-hover:shadow-soft-lg transition-all duration-300">
+                <motion.div 
+                  animate={{ scale: [1, 1.15, 1] }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "easeInOut", delay: index * 0.1 }}
+                >
+                  {benefit.icon}
+                </motion.div>
               </div>
               <h3 className="text-sm sm:text-xl md:text-2xl font-serif text-[#5D4E42] font-semibold">{benefit.title}</h3>
             </motion.div>
