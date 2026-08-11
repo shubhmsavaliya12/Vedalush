@@ -327,7 +327,7 @@ const Profile = () => {
       <div className="bg-nature-50 min-h-screen flex flex-col">
         <Navbar />
 
-        <main className="flex-grow max-w-5xl mx-auto px-4 sm:px-6 w-full pt-28 pb-20">
+        <main className="flex-grow max-w-5xl mx-auto px-4 sm:px-6 w-full pt-[160px] lg:pt-[180px] pb-20">
           {/* Combined Luxury Header Banner */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}

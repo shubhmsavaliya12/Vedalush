@@ -118,7 +118,7 @@ const Reviews = () => {
       <div className="bg-nature-50 min-h-screen flex flex-col">
         <Navbar />
 
-        <main className="flex-grow max-w-4xl mx-auto px-6 w-full pt-32 pb-20">
+        <main className="flex-grow max-w-4xl mx-auto px-6 w-full pt-[160px] lg:pt-[180px] pb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
