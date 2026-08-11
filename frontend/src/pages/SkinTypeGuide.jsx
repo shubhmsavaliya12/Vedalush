@@ -405,13 +405,13 @@ const SkinTypeGuide = () => {
               </div>
               
               {loadingProducts ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
+                <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-6 justify-center">
                   {[...Array(4)].map((_, i) => (
                     <ProductCardSkeleton key={i} />
                   ))}
                 </div>
               ) : recommendedDynamicProducts.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2 justify-center">
+                <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 xl:grid-cols-5 gap-3 justify-center">
                   {recommendedDynamicProducts.map((product, index) => {
                     const priceData = formatPrice(product.price, product.discountPrice, product.internationalPrices);
                     return (
@@ -421,9 +421,9 @@ const SkinTypeGuide = () => {
                     >
                       <Link 
                         to={`/product/${product._id}`}
-                        className="group bg-white rounded-xl overflow-hidden border border-[#E6DED2] hover:border-[#B88A5A]/50 flex flex-col h-full cursor-pointer block"
+                        className="group bg-white rounded-xl overflow-hidden border border-[#E6DED2] hover:border-[#B88A5A]/50 flex flex-row lg:flex-col h-full cursor-pointer block"
                       >
-                        <div className="relative aspect-square overflow-hidden flex items-center justify-center">
+                        <div className="relative w-[35%] sm:w-[30%] lg:w-full h-auto min-h-[120px] lg:aspect-square shrink-0 overflow-hidden flex items-center justify-center bg-[#FDFBF7]">
                             <img 
                               src={product.images && product.images[0] ? product.images[0] : '/placeholder.jpg'} 
                               alt={product.name} 
@@ -431,9 +431,9 @@ const SkinTypeGuide = () => {
                             loading="lazy" decoding="async" />
                         </div>
 
-                        <div className="p-5 flex flex-col flex-grow justify-between border-t border-[#E6DED2]/50">
+                        <div className="p-3 sm:p-5 flex flex-col flex-grow justify-between border-l lg:border-l-0 lg:border-t border-[#E6DED2]/50 w-full">
                           <div>
-                            <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center justify-between mb-1 sm:mb-2">
                                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#B88A5A]">{product.skinType || quizResult} Skin</span>
                             </div>
                             <h3 className="text-lg font-serif text-[#5D4E42] font-bold leading-tight group-hover:text-[#B88A5A] transition-colors duration-300 mb-2">{product.name}</h3>

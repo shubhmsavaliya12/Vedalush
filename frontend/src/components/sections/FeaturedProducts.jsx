@@ -55,7 +55,7 @@ const FeaturedProducts = () => {
             <div className="h-4 bg-[#E6DED2] rounded w-32 mx-auto animate-pulse"></div>
             <div className="h-10 bg-[#E6DED2] rounded w-64 mx-auto animate-pulse"></div>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-2 lg:gap-3">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {[...Array(6)].map((_, i) => (
               <ProductCardSkeleton key={i} />
             ))}
@@ -91,7 +91,7 @@ const FeaturedProducts = () => {
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-2 lg:gap-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 sm:gap-2 lg:gap-3">
           {products.map((product, index) => {
             const priceData = formatPrice(product.price, product.discountPrice, product.internationalPrices);
             return (
@@ -105,10 +105,10 @@ const FeaturedProducts = () => {
             >
               <Link 
                 to={`/product/${product._id}`}
-                className="group bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-soft-lg transform hover:-translate-y-1.5 transition-all duration-250 border border-[#E6DED2] flex flex-col h-full cursor-pointer block"
+                className="group bg-white rounded-xl overflow-hidden shadow-soft hover:shadow-soft-lg transform hover:-translate-y-1.5 transition-all duration-250 border border-[#E6DED2] flex flex-row lg:flex-col h-full cursor-pointer block"
               >
                 {/* Product Image Slider */}
-                <div className="relative h-44 sm:h-64 md:h-80 overflow-hidden bg-[#FDFBF7]">
+                <div className="relative w-[35%] sm:w-[30%] lg:w-full h-auto min-h-[140px] sm:min-h-[180px] lg:h-80 shrink-0 overflow-hidden bg-[#FDFBF7]">
                   {product.images && product.images.length > 1 ? (
                     <Swiper
                       modules={[Autoplay, EffectFade]}
@@ -145,9 +145,9 @@ const FeaturedProducts = () => {
                 </div>
 
                 {/* Product Details */}
-                <div className="p-3 sm:p-6 lg:p-8 flex flex-col flex-grow justify-between space-y-2 sm:space-y-4">
+                <div className="p-3 sm:p-5 lg:p-8 flex flex-col flex-grow justify-between space-y-1 sm:space-y-3 lg:space-y-4 w-full">
                   <div>
-                    <h3 className="text-sm sm:text-xl lg:text-2xl font-serif text-[#5D4E42] font-bold leading-snug group-hover:text-[#8E7A65] transition-colors duration-250">{product.name}</h3>
+                    <h3 className="text-base sm:text-xl lg:text-2xl font-serif text-[#5D4E42] font-bold leading-snug group-hover:text-[#8E7A65] transition-colors duration-250 line-clamp-2 lg:line-clamp-none">{product.name}</h3>
                     <p className="text-[#6F6A65] font-normal text-[11px] sm:text-sm leading-snug line-clamp-2 mt-1 sm:mt-2">{product.shortDesc}</p>
                     {product.rating > 0 && (
                       <div className="flex items-center gap-1 mt-2">
