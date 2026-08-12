@@ -70,19 +70,24 @@ const Chatbot = () => {
     <>
       {/* Floating Action Button */}
       {/* Floating Action Button */}
-      <motion.button
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[60] bg-[#5D4E42] text-white p-4 rounded-full shadow-lg hover:bg-[#8E7A65] transition-all duration-300 hover:scale-110 flex items-center justify-center"
-        aria-label="Toggle Chat"
-      >
-        {isOpen ? (
-          <HiX className="w-7 h-7" />
-        ) : (
-          <HiOutlineChatAlt2 className="w-7 h-7" />
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[60] flex items-center justify-center">
+        {!isOpen && (
+          <span className="absolute animate-[ping_1s_cubic-bezier(0,0,0.2,1)_infinite] inline-flex h-full w-full rounded-full bg-[#8E7A65] opacity-40"></span>
         )}
-      </motion.button>
+        <motion.button
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          onClick={() => setIsOpen(!isOpen)}
+          className="relative bg-[#5D4E42] text-white p-4 rounded-full shadow-lg hover:bg-[#8E7A65] transition-all duration-300 hover:scale-110 flex items-center justify-center"
+          aria-label="Toggle Chat"
+        >
+          {isOpen ? (
+            <HiX className="w-7 h-7" />
+          ) : (
+            <HiOutlineChatAlt2 className="w-7 h-7" />
+          )}
+        </motion.button>
+      </div>
 
       {/* Chat Window */}
       <AnimatePresence>
