@@ -97,7 +97,7 @@ const Chatbot = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 25 }}
-            className="fixed bottom-[84px] right-4 sm:bottom-[100px] sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] h-[600px] max-h-[85vh] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-[#E6DED2] origin-bottom-right"
+            className="fixed inset-0 z-[70] w-full h-[100dvh] sm:inset-auto sm:bottom-[100px] sm:right-6 sm:z-50 sm:w-[380px] sm:h-[600px] sm:max-h-[85vh] bg-white sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden sm:border sm:border-[#E6DED2] origin-bottom-right"
           >
             {/* Header */}
             <div className="bg-[#5D4E42] text-white p-4 flex justify-between items-center shadow-md z-10 shrink-0">
@@ -160,13 +160,13 @@ const Chatbot = () => {
             </div>
 
             {/* Input Area */}
-            <form onSubmit={handleSend} className="p-3 bg-white border-t border-[#E6DED2] flex items-center gap-2">
+            <form onSubmit={handleSend} className="p-3 bg-white border-t border-[#E6DED2] flex items-center gap-2 shrink-0">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about products or skin types..."
-                className="flex-1 bg-[#F8F4EC] border border-[#E6DED2] rounded-full px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#8E7A65] text-[#5D4E42] placeholder-[#5D4E42]/50"
+                className="flex-1 min-w-0 w-full bg-[#F8F4EC] border border-[#E6DED2] rounded-full px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#8E7A65] text-[#5D4E42] placeholder-[#5D4E42]/50"
                 disabled={isLoading}
               />
               <button
