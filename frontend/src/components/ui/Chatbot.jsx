@@ -78,7 +78,7 @@ const Chatbot = () => {
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           onClick={() => setIsOpen(!isOpen)}
-          className="relative bg-[#5D4E42] text-white p-4 rounded-full shadow-lg hover:bg-[#8E7A65] transition-all duration-300 hover:scale-110 flex items-center justify-center"
+          className="relative bg-[#5D4E42] text-white p-4 rounded-full transition-all duration-300 hover:scale-110 flex items-center justify-center"
           aria-label="Toggle Chat"
         >
           {isOpen ? (
