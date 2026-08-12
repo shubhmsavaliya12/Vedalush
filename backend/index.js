@@ -18,6 +18,7 @@ import analyticsRoutes from './routes/analytics.js';
 import currencyRoutes from './routes/currency.js';
 import ingredientRoutes from './routes/ingredients.js';
 import newsletterRoutes from './routes/newsletter.js';
+import chatRoutes from './routes/chat.js';
 
 dotenv.config();
 
@@ -76,6 +77,7 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/currency', currencyRoutes);
 app.use('/api/ingredients', ingredientRoutes);
 app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Health check
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));

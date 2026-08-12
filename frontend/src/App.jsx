@@ -5,6 +5,7 @@ import { CurrencyProvider } from './context/CurrencyContext';
 import { HelmetProvider } from 'react-helmet-async';
 import useVisitorTracking from './hooks/useVisitorTracking';
 import CookieConsent from './components/ui/CookieConsent';
+import Chatbot from './components/ui/Chatbot';
 
 // Lazy loaded pages for performance
 const Home = lazy(() => import('./pages/Home'));
@@ -32,6 +33,7 @@ function App() {
     <CurrencyProvider>
       <Router>
         <CookieConsent />
+        <Chatbot />
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
             <Route path="/" element={<Home />} />
