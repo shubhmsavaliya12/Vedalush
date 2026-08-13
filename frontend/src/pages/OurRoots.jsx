@@ -275,7 +275,7 @@ const OurRoots = () => {
         {/* 5. INGREDIENT EXPLORER */}
         <section id="ingredients" className="py-24 lg:py-32 bg-[#FDFBF7]">
           <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-            <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
               <div className="space-y-4">
                 <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#B88A5A]">Explore</span>
                 <h2 className="text-4xl md:text-5xl font-serif text-[#5D4E42]">Ingredients With a Story</h2>
