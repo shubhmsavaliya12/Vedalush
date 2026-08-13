@@ -3,10 +3,20 @@ import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import Product from '../models/Product.js';
+import rateLimit from 'express-rate-limit';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+// Rate limiter: Max 5 messages per minute per IP
+const chatLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 5, // Limit each IP to 5 requests per windowMs
+  message: { reply: "I'm receiving too many messages right now! Please wait a minute before sending another one. ⏳" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+router.post('/', chatLimiter, async (req, res) => {
   try {
     const { message } = req.body;
 
