@@ -173,7 +173,7 @@ const AdminDashboard = () => {
 
   const [ingredients, setIngredients] = useState([]);
   const [editingIngredient, setEditingIngredient] = useState(null);
-  const [ingredientForm, setIngredientForm] = useState({ name: '', desc: '', image: '', order: 0 });
+  const [ingredientForm, setIngredientForm] = useState({ name: '', desc: '', image: '', order: 0, origin: '', traditionalUse: '', collectionProcess: '', preparationProcess: '' });
   const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
 
   const [subscribers, setSubscribers] = useState([]);
@@ -456,7 +456,7 @@ const AdminDashboard = () => {
       }
       setIsIngredientModalOpen(false);
       setEditingIngredient(null);
-      setIngredientForm({ name: '', desc: '', image: '', order: 0 });
+      setIngredientForm({ name: '', desc: '', image: '', order: 0, origin: '', traditionalUse: '', collectionProcess: '', preparationProcess: '' });
       fetchIngredients();
     } catch (error) {
       console.error('Error saving ingredient:', error);
@@ -1083,7 +1083,7 @@ const AdminDashboard = () => {
         <button 
           onClick={() => {
             setEditingIngredient(null);
-            setIngredientForm({ name: '', desc: '', image: '', order: ingredients.length + 1 });
+            setIngredientForm({ name: '', desc: '', image: '', order: ingredients.length + 1, origin: '', traditionalUse: '', collectionProcess: '', preparationProcess: '' });
             setIsIngredientModalOpen(true);
           }}
           className="flex items-center space-x-2 bg-[#B88A5A] hover:bg-[#9F7348] text-white px-4 py-2.5 rounded-full transition-all duration-250 shadow-soft font-semibold text-sm"
@@ -1105,7 +1105,7 @@ const AdminDashboard = () => {
                 <button
                   onClick={() => {
                     setEditingIngredient(item._id);
-                    setIngredientForm({ name: item.name, desc: item.desc, image: item.image, order: item.order || 0 });
+                    setIngredientForm({ name: item.name, desc: item.desc, image: item.image, order: item.order || 0, origin: item.origin || '', traditionalUse: item.traditionalUse || '', collectionProcess: item.collectionProcess || '', preparationProcess: item.preparationProcess || '' });
                     setIsIngredientModalOpen(true);
                   }}
                   className="w-8 h-8 rounded-lg bg-[#5D4E42]/90 hover:bg-[#8E7A65] text-white flex items-center justify-center transition-colors shadow-soft"
@@ -1123,7 +1123,12 @@ const AdminDashboard = () => {
               </div>
             </div>
             <div className="p-5 flex flex-col flex-grow">
-              <h3 className="text-lg font-serif text-[#5D4E42] font-bold mb-1">{item.name}</h3>
+              <div className="flex justify-between items-start mb-1">
+                <h3 className="text-lg font-serif text-[#5D4E42] font-bold">{item.name}</h3>
+                {(!item.origin || !item.traditionalUse || !item.collectionProcess || !item.preparationProcess) && (
+                  <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider whitespace-nowrap ml-2">Needs Review</span>
+                )}
+              </div>
               <p className="text-sm text-[#6F6A65] leading-relaxed flex-grow">{item.desc}</p>
             </div>
           </div>
@@ -1531,7 +1536,7 @@ const AdminDashboard = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-[#FFFFFF] border border-[#E6DED2] p-8 rounded-2xl shadow-2xl w-full max-w-lg my-auto relative"
+              className="bg-[#FFFFFF] border border-[#E6DED2] p-8 rounded-2xl shadow-2xl w-full max-w-2xl my-auto relative"
             >
               <button 
                 onClick={() => setIsIngredientModalOpen(false)}
@@ -1566,6 +1571,49 @@ const AdminDashboard = () => {
                     onChange={e => setIngredientForm({ ...ingredientForm, desc: e.target.value })} 
                     className="w-full bg-[#F8F4EC] border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] focus:outline-none focus:border-[#B88A5A] transition-colors text-sm" 
                   />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-[#6F6A65] mb-1.5 font-semibold">Origin (Optional)</label>
+                    <textarea 
+                      rows={2} 
+                      placeholder="e.g. Sourced from the Western Ghats..." 
+                      value={ingredientForm.origin} 
+                      onChange={e => setIngredientForm({ ...ingredientForm, origin: e.target.value })} 
+                      className="w-full bg-[#F8F4EC] border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] focus:outline-none focus:border-[#B88A5A] transition-colors text-sm" 
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-[#6F6A65] mb-1.5 font-semibold">Traditional Use (Optional)</label>
+                    <textarea 
+                      rows={2} 
+                      placeholder="e.g. Traditionally valued for..." 
+                      value={ingredientForm.traditionalUse} 
+                      onChange={e => setIngredientForm({ ...ingredientForm, traditionalUse: e.target.value })} 
+                      className="w-full bg-[#F8F4EC] border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] focus:outline-none focus:border-[#B88A5A] transition-colors text-sm" 
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-[#6F6A65] mb-1.5 font-semibold">Collection Process (Optional)</label>
+                    <textarea 
+                      rows={2} 
+                      placeholder="e.g. Carefully hand-picked..." 
+                      value={ingredientForm.collectionProcess} 
+                      onChange={e => setIngredientForm({ ...ingredientForm, collectionProcess: e.target.value })} 
+                      className="w-full bg-[#F8F4EC] border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] focus:outline-none focus:border-[#B88A5A] transition-colors text-sm" 
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-[#6F6A65] mb-1.5 font-semibold">Preparation Process (Optional)</label>
+                    <textarea 
+                      rows={2} 
+                      placeholder="e.g. Cold-pressed to extract..." 
+                      value={ingredientForm.preparationProcess} 
+                      onChange={e => setIngredientForm({ ...ingredientForm, preparationProcess: e.target.value })} 
+                      className="w-full bg-[#F8F4EC] border border-[#E6DED2] rounded-xl px-4 py-3 text-[#5D4E42] focus:outline-none focus:border-[#B88A5A] transition-colors text-sm" 
+                    />
+                  </div>
                 </div>
 
                 <div>

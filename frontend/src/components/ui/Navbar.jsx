@@ -8,12 +8,14 @@ import AnnouncementBar from './AnnouncementBar';
 
 const leftLinks = [
   { name: 'Products', href: '/#products' },
+  { name: 'Our Roots', href: '/our-roots' },
   { name: 'Reviews', href: '/reviews' },
   { name: 'Skin Type', href: '/skin-type' },
 ];
 
 const mobileNavLinks = [
   { name: 'Products', href: '/#products', subtitle: 'Handcrafted natural soaps' },
+  { name: 'Our Roots', href: '/our-roots', subtitle: 'Rooted in ancient wisdom' },
   { name: 'Ingredients', href: '/#ingredients', subtitle: '100% organic botanicals' },
   { name: 'Skin Type Guide', href: '/skin-type', subtitle: 'Tailored for radiant skin' },
   { name: 'Customer Reviews', href: '/reviews', subtitle: 'Loved by skin enthusiasts' },

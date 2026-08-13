@@ -16,6 +16,7 @@ const Reviews = lazy(() => import('./pages/Reviews'));
 const Profile = lazy(() => import('./pages/Profile'));
 const SkinTypeGuide = lazy(() => import('./pages/SkinTypeGuide'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails'));
+const OurRoots = lazy(() => import('./pages/OurRoots'));
 
 // A simple loading fallback
 const LoadingFallback = () => (
@@ -44,6 +45,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/our-roots" element={<OurRoots />} />
           </Routes>
         </Suspense>
       </Router>

@@ -18,6 +18,22 @@ const IngredientSchema = new mongoose.Schema({
   order: {
     type: Number,
     default: 0,
+  },
+  origin: {
+    type: String,
+    trim: true,
+  },
+  traditionalUse: {
+    type: String,
+    trim: true,
+  },
+  collectionProcess: {
+    type: String,
+    trim: true,
+  },
+  preparationProcess: {
+    type: String,
+    trim: true,
   }
 }, { timestamps: true });
 
