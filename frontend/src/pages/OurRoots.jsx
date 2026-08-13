@@ -261,8 +261,8 @@ const OurRoots = () => {
                       {step.num}
                     </div>
                     <div>
-                      <h4 className="text-base font-semibold uppercase tracking-widest text-[#5D4E42] mb-1">{step.title}</h4>
-                      <p className="text-sm text-[#8E7A65] font-light max-w-[140px] leading-relaxed">{step.desc}</p>
+                      <h4 className="text-sm font-semibold uppercase tracking-widest text-[#5D4E42] mb-1">{step.title}</h4>
+                      <p className="text-sm text-[#8E7A65] font-light leading-relaxed">{step.desc}</p>
                     </div>
                   </motion.div>
                 ))}
