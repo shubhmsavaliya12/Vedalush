@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const Hero = () => {
   return (
-    <section id="hero" className="relative w-full bg-[#2E2721] overflow-hidden pt-[110px] sm:pt-[120px] lg:pt-[140px]">
+    <section id="hero" className="relative w-full bg-[#2E2721] overflow-hidden pt-[130px] lg:pt-[110px]">
       {/* Background Image Container: normal flow on mobile/tablet (h-auto), exact 1-screen height on desktop (lg+) */}
       <div className="relative w-full lg:h-[calc(100vh-6rem)] overflow-hidden flex items-center justify-center">
         <img

@@ -231,7 +231,7 @@ const Navbar = () => {
                   alt="Vedalush Logo"
                   width="200"
                   height="64"
-                  className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-transform duration-500 group-hover:scale-105" 
+                  className="h-16 md:h-18 w-auto object-contain transition-transform duration-500 group-hover:scale-105" 
                   fetchPriority="high" decoding="async" />
               </Link>
             </div>
@@ -323,7 +323,7 @@ const Navbar = () => {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '-100%', opacity: 0.8 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-[82%] max-w-[340px] h-full bg-[#FDFBF7] shadow-soft-2xl flex flex-col justify-between pt-[120px] sm:pt-[130px] pb-8 px-6 overflow-y-auto z-50 border-r border-[#E6DED2]"
+              className="relative w-[82%] max-w-[340px] h-full bg-[#FDFBF7] shadow-soft-2xl flex flex-col justify-between pt-[130px] pb-8 px-6 overflow-y-auto z-50 border-r border-[#E6DED2]"
             >
               
               {/* Nav Links List */}
