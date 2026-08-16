@@ -53,7 +53,7 @@ const Benefits = () => {
               <div className="order-1 sm:order-2 w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#FDFBF7] border border-[#E6DED2] flex items-center justify-center shrink-0 group-hover:bg-[#5D4E42] group-hover:border-[#5D4E42] transition-colors duration-500 shadow-sm group-hover:shadow-lg">
                 <PiPlantLight className="w-6 h-6 sm:w-10 h-10 text-[#8E7A65] group-hover:text-white transition-colors duration-500" />
               </div>
-              <h3 className="order-2 sm:order-1 text-[15px] sm:text-2xl font-serif text-[#5D4E42] font-semibold group-hover:text-[#B88A5A] transition-colors text-center sm:text-right">100% Natural</h3>
+              <h3 className="order-2 sm:order-1 text-[16px] sm:text-2xl font-serif text-[#5D4E42] font-semibold group-hover:text-[#B88A5A] transition-colors text-center sm:text-right">100% Natural</h3>
             </div>
 
             {/* Top Right */}
@@ -61,7 +61,7 @@ const Benefits = () => {
               <div className="order-1 w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#FDFBF7] border border-[#E6DED2] flex items-center justify-center shrink-0 group-hover:bg-[#5D4E42] group-hover:border-[#5D4E42] transition-colors duration-500 shadow-sm group-hover:shadow-lg">
                 <PiDropLight className="w-6 h-6 sm:w-10 h-10 text-[#8E7A65] group-hover:text-white transition-colors duration-500" />
               </div>
-              <h3 className="order-2 text-[15px] sm:text-2xl font-serif text-[#5D4E42] font-semibold group-hover:text-[#B88A5A] transition-colors text-center sm:text-left">Deep Hydration</h3>
+              <h3 className="order-2 text-[16px] sm:text-2xl font-serif text-[#5D4E42] font-semibold group-hover:text-[#B88A5A] transition-colors text-center sm:text-left">Deep Hydration</h3>
             </div>
 
             {/* Bottom Left */}
@@ -69,7 +69,7 @@ const Benefits = () => {
               <div className="order-1 sm:order-2 w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#FDFBF7] border border-[#E6DED2] flex items-center justify-center shrink-0 group-hover:bg-[#5D4E42] group-hover:border-[#5D4E42] transition-colors duration-500 shadow-sm group-hover:shadow-lg">
                 <PiHandHeartLight className="w-6 h-6 sm:w-10 h-10 text-[#8E7A65] group-hover:text-white transition-colors duration-500" />
               </div>
-              <h3 className="order-2 sm:order-1 text-[15px] sm:text-2xl font-serif text-[#5D4E42] font-semibold group-hover:text-[#B88A5A] transition-colors text-center sm:text-right">Handcrafted</h3>
+              <h3 className="order-2 sm:order-1 text-[16px] sm:text-2xl font-serif text-[#5D4E42] font-semibold group-hover:text-[#B88A5A] transition-colors text-center sm:text-right">Handcrafted</h3>
             </div>
 
             {/* Bottom Right */}
@@ -77,7 +77,7 @@ const Benefits = () => {
               <div className="order-1 w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#FDFBF7] border border-[#E6DED2] flex items-center justify-center shrink-0 group-hover:bg-[#5D4E42] group-hover:border-[#5D4E42] transition-colors duration-500 shadow-sm group-hover:shadow-lg">
                 <PiRabbitLight className="w-6 h-6 sm:w-10 h-10 text-[#8E7A65] group-hover:text-white transition-colors duration-500" />
               </div>
-              <h3 className="order-2 text-[15px] sm:text-2xl font-serif text-[#5D4E42] font-semibold group-hover:text-[#B88A5A] transition-colors text-center sm:text-left">Cruelty Free</h3>
+              <h3 className="order-2 text-[16px] sm:text-2xl font-serif text-[#5D4E42] font-semibold group-hover:text-[#B88A5A] transition-colors text-center sm:text-left">Cruelty Free</h3>
             </div>
 
           </div>
