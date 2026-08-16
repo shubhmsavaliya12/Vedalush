@@ -122,11 +122,6 @@ const SkinTypeGuide = () => {
     setQuizResult(null);
   };
 
-  const scrollToQuiz = (e) => {
-    e.preventDefault();
-    document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  };
-
   const scrollToTypes = (e) => {
     e.preventDefault();
     document.getElementById('types-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -152,103 +147,104 @@ const SkinTypeGuide = () => {
 
       <main className="min-h-screen bg-[#FDFBF7] text-[#5D4E42] font-sans selection:bg-[#B88A5A] selection:text-white">
         
-        {/* 1. HERO SECTION */}
-        <section className="relative min-h-[50vh] md:min-h-[70vh] flex flex-col items-center justify-center overflow-hidden pt-[160px] pb-12 lg:pt-[180px] md:pb-20 px-6 lg:px-8 text-center bg-gradient-to-b from-[#F8F4EC] to-[#FDFBF7]">
+        {/* 1 & 2. HERO / QUIZ SECTION COMBINED */}
+        <section className="relative min-h-[50vh] md:min-h-[70vh] flex flex-col items-center justify-center overflow-hidden pt-[160px] pb-12 lg:pt-[180px] md:pb-20 px-6 lg:px-8 bg-gradient-to-b from-[#F8F4EC] to-[#FDFBF7]">
           {/* Subtle luxury background elements */}
           <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none opacity-20">
              <div className="absolute top-10 left-10 w-[500px] h-[500px] border border-[#B88A5A]/30 rounded-full blur-sm"></div>
              <div className="absolute -bottom-20 -right-20 w-[600px] h-[600px] border border-[#B88A5A]/20 rounded-full blur-md"></div>
           </div>
           
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative z-10 max-w-3xl mx-auto space-y-6 md:space-y-8"
-          >
-            <span className="text-[#B88A5A] tracking-[0.2em] text-xs md:text-sm uppercase font-semibold block">Vedalush Expertise</span>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-[#5D4E42] leading-tight tracking-tight">
-              Know Your Skin Before <br className="hidden md:block" />
-              <span className="italic font-light text-[#8E7A65]">Choosing Your Soap</span>
-            </h1>
-            <p className="text-base md:text-xl text-[#6F6A65] font-light max-w-2xl mx-auto leading-relaxed px-4 md:px-0">
-              Healthy, radiant skin starts with understanding its unique needs. Discover your exact skin profile to find the perfect botanical formulation.
-            </p>
-            <div className="flex flex-row gap-4 sm:gap-5 justify-center mt-8 md:mt-10">
-              <a href="#quiz-section" onClick={scrollToQuiz} className="px-5 md:px-10 py-3 md:py-4 bg-[#5D4E42] text-xs md:text-sm text-white rounded-full text-center hover:bg-[#4A3E34] hover:shadow-xl transition-all duration-300 font-medium tracking-wide">
-                Start Skin Quiz
-              </a>
-              <a href="#types-section" onClick={scrollToTypes} className="px-5 md:px-10 py-3 md:py-4 bg-transparent border border-[#5D4E42]/30 text-xs md:text-sm text-[#5D4E42] rounded-full text-center hover:border-[#5D4E42] hover:bg-[#5D4E42]/5 transition-all duration-300 font-medium tracking-wide">
-                Explore Skin Types
-              </a>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* 2. QUICK SKIN QUIZ */}
-        <section id="quiz-section" className="border-t border-[#B88A5A]/30 py-5">
-          <div className="max-w-3xl mx-auto px-6 lg:px-8">
-            
-            <div className="min-h-[400px] flex flex-col justify-center relative overflow-hidden">              
-              <AnimatePresence mode="wait">
-                {!quizStarted && !quizResult && (
-                  <motion.div key="start" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -20 }} className="text-center relative z-10">
-                    <HiOutlineSparkles className="w-12 h-12 mx-auto text-[#B88A5A] mb-6 opacity-80" />
-                    <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#5D4E42] mb-4">Find Your Skin Type in 30 Seconds</h2>
-                    <p className="text-[#6F6A65] font-light mb-10 text-lg max-w-md mx-auto">
-                      Answer a few quick questions about how your skin feels and reacts daily to get your personalized assessment.
-                    </p>
-                    <button onClick={() => setQuizStarted(true)} className="px-10 py-4 bg-[#B88A5A] text-white rounded-full hover:bg-[#A3784A] transition-colors shadow-lg hover:shadow-xl font-medium tracking-wide">
-                      Start Quiz
+          <div className="relative z-10 max-w-3xl mx-auto w-full min-h-[400px] flex flex-col justify-center overflow-visible">
+            <AnimatePresence mode="wait">
+              {!quizStarted && !quizResult && (
+                <motion.div 
+                  key="hero"
+                  initial={{ opacity: 0, x: -50 }} 
+                  animate={{ opacity: 1, x: 0 }} 
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="text-center space-y-6 md:space-y-8"
+                >
+                  <span className="text-[#B88A5A] tracking-[0.2em] text-xs md:text-sm uppercase font-semibold block">Vedalush Expertise</span>
+                  <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-[#5D4E42] leading-tight tracking-tight">
+                    Know Your Skin Before <br className="hidden md:block" />
+                    <span className="italic font-light text-[#8E7A65]">Choosing Your Soap</span>
+                  </h1>
+                  <p className="text-base md:text-xl text-[#6F6A65] font-light max-w-2xl mx-auto leading-relaxed px-4 md:px-0">
+                    Healthy, radiant skin starts with understanding its unique needs. Discover your exact skin profile to find the perfect botanical formulation.
+                  </p>
+                  <div className="flex flex-row gap-4 sm:gap-5 justify-center mt-8 md:mt-10">
+                    <button onClick={(e) => { e.preventDefault(); setQuizStarted(true); }} className="px-5 md:px-10 py-3 md:py-4 bg-[#5D4E42] text-xs md:text-sm text-white rounded-full text-center hover:bg-[#4A3E34] hover:shadow-xl transition-all duration-300 font-medium tracking-wide">
+                      Start Skin Quiz
                     </button>
-                  </motion.div>
-                )}
+                    <a href="#types-section" onClick={scrollToTypes} className="px-5 md:px-10 py-3 md:py-4 bg-transparent border border-[#5D4E42]/30 text-xs md:text-sm text-[#5D4E42] rounded-full text-center hover:border-[#5D4E42] hover:bg-[#5D4E42]/5 transition-all duration-300 font-medium tracking-wide">
+                      Explore Skin Types
+                    </a>
+                  </div>
+                </motion.div>
+              )}
 
-                {quizStarted && !quizResult && (
-                  <motion.div key="question" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="w-full relative z-10">
-                    <div className="flex items-center justify-between mb-8">
-                      <div className="text-xs text-[#B88A5A] font-semibold tracking-widest uppercase">Question {currentQuestion + 1} of {quizQuestions.length}</div>
-                      <div className="flex gap-1">
-                        {quizQuestions.map((_, idx) => (
-                          <div key={idx} className={`h-1 rounded-full transition-all duration-300 ${idx <= currentQuestion ? 'w-6 bg-[#B88A5A]' : 'w-2 bg-[#E6DED2]'}`}></div>
-                        ))}
-                      </div>
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-serif text-[#5D4E42] mb-10 leading-snug">{quizQuestions[currentQuestion].q}</h3>
-                    <div className="space-y-4">
-                      {quizQuestions[currentQuestion].options.map((opt, i) => (
-                        <button 
-                          key={i} 
-                          onClick={() => handleAnswer(opt.type)}
-                          className="w-full text-left p-5 rounded-2xl border border-[#E6DED2] hover:border-[#B88A5A] hover:bg-[#F8F4EC] transition-all duration-200 text-[#5D4E42] text-lg font-light shadow-sm hover:shadow-md group flex items-center justify-between"
-                        >
-                          <span>{opt.text}</span>
-                          <div className="w-6 h-6 rounded-full border border-[#E6DED2] group-hover:border-[#B88A5A] flex items-center justify-center transition-colors">
-                            <div className="w-2 h-2 rounded-full bg-[#B88A5A] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                          </div>
-                        </button>
+              {quizStarted && !quizResult && (
+                <motion.div 
+                  key="question" 
+                  initial={{ opacity: 0, x: 50 }} 
+                  animate={{ opacity: 1, x: 0 }} 
+                  exit={{ opacity: 0, x: -50 }} 
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="w-full relative z-10"
+                >
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="text-xs text-[#B88A5A] font-semibold tracking-widest uppercase">Question {currentQuestion + 1} of {quizQuestions.length}</div>
+                    <div className="flex gap-1">
+                      {quizQuestions.map((_, idx) => (
+                        <div key={idx} className={`h-1 rounded-full transition-all duration-300 ${idx <= currentQuestion ? 'w-6 bg-[#B88A5A]' : 'w-2 bg-[#E6DED2]'}`}></div>
                       ))}
                     </div>
-                  </motion.div>
-                )}
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-serif text-[#5D4E42] mb-10 leading-snug">{quizQuestions[currentQuestion].q}</h3>
+                  <div className="space-y-4">
+                    {quizQuestions[currentQuestion].options.map((opt, i) => (
+                      <button 
+                        key={i} 
+                        onClick={() => handleAnswer(opt.type)}
+                        className="w-full text-left p-5 rounded-2xl border border-[#E6DED2] hover:border-[#B88A5A] hover:bg-[#F8F4EC] transition-all duration-200 text-[#5D4E42] text-lg font-light shadow-sm hover:shadow-md group flex items-center justify-between"
+                      >
+                        <span>{opt.text}</span>
+                        <div className="w-6 h-6 rounded-full border border-[#E6DED2] group-hover:border-[#B88A5A] flex items-center justify-center transition-colors">
+                          <div className="w-2 h-2 rounded-full bg-[#B88A5A] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
 
-                {quizResult && (
-                  <motion.div key="result" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center relative z-10">
-                    <h3 className="text-xs text-[#B88A5A] font-semibold tracking-widest uppercase mb-3">Your Analysis Complete</h3>
-                    <h2 className="text-4xl md:text-5xl font-serif text-[#5D4E42] mb-6 font-bold">{quizResult} Skin</h2>
-                    <p className="text-[#6F6A65] font-light mb-10 text-lg max-w-md mx-auto leading-relaxed">
-                      Your answers strongly indicate a {quizResult.toLowerCase()} skin profile. We have curated specific botanical formulations to balance and nourish your skin perfectly.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                      <button onClick={scrollToRecommendations} className="px-8 py-4 bg-[#5D4E42] text-white rounded-full hover:bg-[#4A3E34] transition-all font-medium shadow-md">
-                        View Recommended Soaps
-                      </button>
-                      <button onClick={resetQuiz} className="px-8 py-4 border border-[#E6DED2] text-[#6F6A65] rounded-full hover:bg-[#F8F4EC] transition-all font-medium">
-                        Retake Quiz
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+              {quizResult && (
+                <motion.div 
+                  key="result" 
+                  initial={{ opacity: 0, scale: 0.95 }} 
+                  animate={{ opacity: 1, scale: 1 }} 
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="text-center relative z-10"
+                >
+                  <h3 className="text-xs text-[#B88A5A] font-semibold tracking-widest uppercase mb-3">Your Analysis Complete</h3>
+                  <h2 className="text-4xl md:text-5xl font-serif text-[#5D4E42] mb-6 font-bold">{quizResult} Skin</h2>
+                  <p className="text-[#6F6A65] font-light mb-10 text-lg max-w-md mx-auto leading-relaxed">
+                    Your answers strongly indicate a {quizResult.toLowerCase()} skin profile. We have curated specific botanical formulations to balance and nourish your skin perfectly.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onClick={scrollToRecommendations} className="px-8 py-4 bg-[#5D4E42] text-white rounded-full hover:bg-[#4A3E34] transition-all font-medium shadow-md">
+                      View Recommended Soaps
+                    </button>
+                    <button onClick={resetQuiz} className="px-8 py-4 border border-[#E6DED2] text-[#6F6A65] rounded-full hover:bg-[#F8F4EC] transition-all font-medium">
+                      Retake Quiz
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </section>
 
