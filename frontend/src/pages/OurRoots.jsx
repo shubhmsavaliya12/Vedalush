@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
-import { HiX, HiOutlineArrowRight, HiOutlineChevronDown, HiOutlineChevronUp } from 'react-icons/hi';
+import { HiX, HiOutlineArrowRight, HiOutlineChevronDown, HiOutlineChevronUp, HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 import Navbar from '../components/ui/Navbar';
 import Footer from '../components/ui/Footer';
 
@@ -12,6 +12,38 @@ const OurRoots = () => {
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [activeVeda, setActiveVeda] = useState(0);
   const [showAllIngredients, setShowAllIngredients] = useState(false);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd || !selectedIngredient) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe || isRightSwipe) {
+      const currentIndex = ingredients.findIndex(i => i._id === selectedIngredient._id);
+      if (isLeftSwipe) {
+        const nextIndex = (currentIndex + 1) % ingredients.length;
+        setSelectedIngredient(ingredients[nextIndex]);
+      }
+      if (isRightSwipe) {
+        const prevIndex = (currentIndex - 1 + ingredients.length) % ingredients.length;
+        setSelectedIngredient(ingredients[prevIndex]);
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchIngredients = async () => {
@@ -360,16 +392,45 @@ const OurRoots = () => {
                 exit={{ x: '100%' }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                 className="fixed top-0 right-0 h-full w-full max-w-md bg-[#FDFBF7] shadow-2xl z-[101] overflow-y-auto border-l border-[#E6DED2] flex flex-col"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
               >
                 {/* Header */}
                 <div className="sticky top-0 bg-[#FDFBF7]/90 backdrop-blur-md px-6 py-4 flex justify-between items-center border-b border-[#E6DED2] z-10">
                   <span className="text-xs font-semibold tracking-widest uppercase text-[#8E7A65]">Ingredient Detail</span>
-                  <button 
-                    onClick={() => setSelectedIngredient(null)}
-                    className="p-2 text-[#5D4E42] hover:text-[#B88A5A] hover:bg-[#F8F4EC] rounded-full transition-colors"
-                  >
-                    <HiX size={20} />
-                  </button>
+                  <div className="flex items-center gap-1">
+                    <button 
+                      onClick={() => {
+                        const currentIndex = ingredients.findIndex(i => i._id === selectedIngredient._id);
+                        const prevIndex = (currentIndex - 1 + ingredients.length) % ingredients.length;
+                        setSelectedIngredient(ingredients[prevIndex]);
+                      }}
+                      className="p-2 text-[#5D4E42] hover:text-[#B88A5A] hover:bg-[#F8F4EC] rounded-full transition-colors"
+                      title="Previous Ingredient"
+                    >
+                      <HiOutlineChevronLeft size={20} />
+                    </button>
+                    <button 
+                      onClick={() => {
+                        const currentIndex = ingredients.findIndex(i => i._id === selectedIngredient._id);
+                        const nextIndex = (currentIndex + 1) % ingredients.length;
+                        setSelectedIngredient(ingredients[nextIndex]);
+                      }}
+                      className="p-2 text-[#5D4E42] hover:text-[#B88A5A] hover:bg-[#F8F4EC] rounded-full transition-colors"
+                      title="Next Ingredient"
+                    >
+                      <HiOutlineChevronRight size={20} />
+                    </button>
+                    <div className="w-px h-5 bg-[#E6DED2] mx-2"></div>
+                    <button 
+                      onClick={() => setSelectedIngredient(null)}
+                      className="p-2 text-[#5D4E42] hover:text-[#B88A5A] hover:bg-[#F8F4EC] rounded-full transition-colors"
+                      title="Close"
+                    >
+                      <HiX size={20} />
+                    </button>
+                  </div>
                 </div>
                 
                 {/* Body */}
