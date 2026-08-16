@@ -4,7 +4,7 @@ import { PiPlantLight, PiDropLight, PiHandHeartLight, PiRabbitLight } from 'reac
 
 const Benefits = () => {
   return (
-    <section id="benefits" className="py-20 md:py-32 bg-[#F8F4EC]">
+    <section id="benefits" className="py-20 bg-[#F8F4EC]">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         
         <div className="text-center mb-16 space-y-4">
