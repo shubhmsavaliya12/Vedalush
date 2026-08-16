@@ -75,6 +75,7 @@ const SkinTypeGuide = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [scores, setScores] = useState({ Normal: 0, Dry: 0, Oily: 0, Combination: 0, Sensitive: 0 });
   const [quizResult, setQuizResult] = useState(null);
+  const [activeMistake, setActiveMistake] = useState(null);
 
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(false);
@@ -248,41 +249,47 @@ const SkinTypeGuide = () => {
           </div>
         </section>
 
-        {/* 3. HOME TEST (Horizontal Cards) */}
-        <section className="py-24 bg-[#F8F4EC]">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <span className="text-[#B88A5A] tracking-widest text-xs uppercase font-semibold mb-2 block">Do It Yourself</span>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#5D4E42]">The Bare-Faced Test</h2>
-              <p className="text-[#6F6A65] font-light mt-4 max-w-xl mx-auto">
+        {/* 3. HOME TEST (Bento Grid) */}
+        <section className="py-24 md:py-32 bg-gradient-to-b from-[#FDFBF7] to-[#F8F4EC]">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+            <div className="text-center mb-16 md:mb-24">
+              <span className="text-[#B88A5A] tracking-[0.2em] text-xs uppercase font-semibold mb-3 block">Do It Yourself</span>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5D4E42] mb-6">The Bare-Faced Test</h2>
+              <p className="text-[#6F6A65] font-light text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
                 Prefer to test it manually? Follow these four simple steps at home to accurately determine your skin's natural behavior.
               </p>
             </div>
             
-            <div className="relative flex flex-col md:flex-row justify-between gap-6 md:gap-4 lg:gap-8">
-              {/* Connecting line (Desktop) */}
-              <div className="hidden md:block absolute top-[40%] left-[10%] right-[10%] h-[1px] bg-[#E6DED2] z-0"></div>
-              
-              {/* Connecting line (Mobile) */}
-              <div className="md:hidden absolute left-8 top-10 bottom-10 w-[1px] bg-[#E6DED2] z-0"></div>
-
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
               {[
-                { step: "01", title: "Wash", desc: "Cleanse your face with a gentle, non-stripping cleanser." },
-                { step: "02", title: "Wait", desc: "Wait 30 minutes without applying any serums or moisturizers." },
-                { step: "03", title: "Observe", desc: "Check for tightness, shine, or dry patches." },
-                { step: "04", title: "Compare", desc: "Match your observations with the skin types below." }
+                { step: "01", title: "Wash & Clear", desc: "Start fresh. Cleanse your face with a gentle, non-stripping cleanser to remove all impurities and surface oils." },
+                { step: "02", title: "The 30-Minute Wait", desc: "Patience is key. Wait 30 minutes without applying any serums, toners, or moisturizers to let your skin return to its natural state." },
+                { step: "03", title: "Mindful Observation", desc: "Pay close attention. Check your skin for tightness, excessive shine in the T-zone, or rough, dry patches." },
+                { step: "04", title: "Discover & Compare", desc: "Find your match. Compare your observations with our five distinct skin profiles below to find your true skin type." }
               ].map((item, i) => (
                 <motion.div 
-                  key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ delay: i * 0.15, duration: 0.6 }}
-                  className="relative z-10 flex md:flex-col items-center md:text-center gap-6 md:gap-0 bg-white md:bg-transparent p-6 md:p-0 rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-[#E6DED2] md:border-none flex-1"
+                  key={i} 
+                  initial={{ opacity: 0, y: 30 }} 
+                  whileInView={{ opacity: 1, y: 0 }} 
+                  viewport={{ once: true, margin: "-50px" }} 
+                  transition={{ delay: i * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                  className="group relative bg-white p-8 md:p-12 rounded-3xl border border-[#E6DED2] shadow-sm hover:shadow-2xl hover:-translate-y-1 hover:border-[#B88A5A]/30 transition-all duration-500 overflow-hidden flex flex-col justify-center min-h-[260px]"
                 >
-                  <div className="w-16 h-16 shrink-0 md:mb-6 rounded-full bg-white border border-[#E6DED2] shadow-sm flex items-center justify-center text-[#B88A5A] font-serif font-bold text-xl relative">
+                  {/* Large background watermark number */}
+                  <div className="absolute -bottom-8 -right-4 text-[140px] md:text-[180px] font-serif font-bold text-[#F8F4EC] group-hover:text-[#F3EDE2] transition-colors duration-500 leading-none select-none pointer-events-none z-0">
                     {item.step}
-                    <div className="absolute inset-1 rounded-full border border-[#B88A5A]/20"></div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-serif text-[#5D4E42] font-bold mb-2">{item.title}</h3>
-                    <p className="text-[#6F6A65] font-light text-sm md:max-w-[200px] mx-auto leading-relaxed">{item.desc}</p>
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-4 mb-5">
+                      <div className="w-12 h-12 shrink-0 rounded-full bg-[#FDFBF7] border border-[#E6DED2] group-hover:border-[#B88A5A] flex items-center justify-center text-[#B88A5A] font-serif text-2xl font-bold transition-colors duration-500">
+                        {item.step}
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-serif text-[#5D4E42] font-bold group-hover:text-[#B88A5A] transition-colors duration-500">{item.title}</h3>
+                    </div>
+                    <p className="text-[#6F6A65] font-light text-base md:text-lg leading-relaxed max-w-[95%]">
+                      {item.desc}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -291,7 +298,7 @@ const SkinTypeGuide = () => {
         </section>
 
         {/* 4. SKIN TYPES (Zigzag Layout) */}
-        <section id="types-section" className="py-24 bg-[#FDFBF7]">
+        <section id="types-section" className="py-20 bg-[#FDFBF7]">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="text-center mb-20">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#5D4E42]">The Five Skin Profiles</h2>
@@ -358,14 +365,14 @@ const SkinTypeGuide = () => {
         </section>
 
         {/* 5. COMMON MISTAKES */}
-        <section className="py-24 bg-[#F8F4EC]">
+        <section className="pt-20 pb-10 bg-[#F8F4EC]">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="text-center mb-16">
               <span className="text-[#B88A5A] tracking-widest text-xs uppercase font-semibold mb-2 block">Skincare Sins</span>
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#5D4E42]">Common Cleansing Mistakes</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
               {[
                 { title: "Washing Too Often", desc: "Strips natural oils, leading to barrier damage." },
                 { title: "Harsh Soaps", desc: "Commercial sulfates disrupt the skin's acidic mantle." },
@@ -374,14 +381,39 @@ const SkinTypeGuide = () => {
                 { title: "Fragrance Focus", desc: "Choosing based on scent rather than skin suitability." }
               ].map((mistake, i) => (
                 <motion.div 
-                  key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ delay: i * 0.1 }}
-                  className="bg-white p-6 rounded-2xl border border-[#E6DED2] shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center"
+                  key={i} 
+                  initial={{ opacity: 0, y: 30 }} 
+                  whileInView={{ opacity: 1, y: 0 }} 
+                  viewport={{ once: true, margin: "-50px" }} 
+                  transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={() => setActiveMistake(activeMistake === i ? null : i)}
+                  onMouseEnter={() => setActiveMistake(i)}
+                  onMouseLeave={() => setActiveMistake(null)}
+                  className={`relative bg-white overflow-hidden rounded-2xl border shadow-sm transition-all duration-500 h-[160px] lg:h-[220px] p-6 cursor-pointer lg:cursor-default ${activeMistake === i ? 'shadow-xl border-[#B88A5A]/40' : 'border-[#E6DED2]'}`}
                 >
-                  <div className="w-10 h-10 rounded-full bg-[#FDFBF7] border border-[#E6DED2] flex items-center justify-center mb-4 text-[#B88A5A]">
-                    <span className="text-xl font-serif italic font-bold">0{i+1}</span>
+                  {/* Background Accent */}
+                  <div className={`absolute inset-0 bg-gradient-to-t from-[#F8F4EC] to-transparent transition-opacity duration-500 z-0 ${activeMistake === i ? 'opacity-100' : 'opacity-0'}`}></div>
+                  
+                  {/* Large Number Watermark */}
+                  <div className={`absolute -top-4 -right-4 text-[100px] md:text-[120px] font-serif font-bold transition-colors duration-500 leading-none select-none pointer-events-none z-0 ${activeMistake === i ? 'text-[#F3EDE2]' : 'text-[#F8F4EC]'}`}>
+                    0{i+1}
                   </div>
-                  <p className="text-lg font-serif font-bold text-[#5D4E42] mb-2">{mistake.title}</p>
-                  <p className="text-sm text-[#6F6A65] font-light leading-relaxed">{mistake.desc}</p>
+
+                  <div className="relative z-10 h-full flex flex-col justify-end">
+                    {/* Icon that fades out / moves up on reveal */}
+                    <div className={`absolute top-0 left-0 w-10 h-10 rounded-full bg-[#FDFBF7] border border-[#E6DED2] text-[#B88A5A] flex items-center justify-center transition-all duration-500 ${activeMistake === i ? 'opacity-0 -translate-y-4' : 'opacity-100 translate-y-0'}`}>
+                      <span className="text-xl font-serif italic font-bold">!</span>
+                    </div>
+                    
+                    {/* Text Content */}
+                    <div className={`transform transition-all duration-500 ${activeMistake === i ? 'translate-y-0' : 'translate-y-8 lg:translate-y-12'}`}>
+                      <h3 className={`text-lg lg:text-xl font-serif font-bold mb-2 leading-tight transition-colors duration-500 ${activeMistake === i ? 'text-[#B88A5A]' : 'text-[#5D4E42]'}`}>{mistake.title}</h3>
+                      
+                      <p className={`text-sm text-[#6F6A65] font-light leading-relaxed transition-all duration-500 transform ${activeMistake === i ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                        {mistake.desc}
+                      </p>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -390,7 +422,7 @@ const SkinTypeGuide = () => {
 
         {/* 6. RECOMMENDED SOAPS */}
         {quizResult && (
-          <section id="recommended-soaps" className="py-24 bg-white">
+          <section id="recommended-soaps" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                 <span className="text-[#B88A5A] tracking-widest text-xs uppercase font-semibold mb-2 block">Curated For You</span>
@@ -460,54 +492,142 @@ const SkinTypeGuide = () => {
           </section>
         )}
 
-        {/* 7. FAQ */}
-        <section className="py-24 bg-[#F8F4EC]">
-          <div className="max-w-3xl mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#5D4E42]">Common Questions</h2>
-            </div>
-            <div className="space-y-1">
-              {faqs.map((faq, i) => (
-                <div key={i} className="bg-white rounded-2xl border border-[#E6DED2] shadow-sm overflow-hidden">
-                  <button 
-                    onClick={() => setActiveFaq(activeFaq === i ? null : i)}
-                    className="w-full text-left px-8 py-6 transition-colors flex justify-between items-center text-[#5D4E42] hover:bg-[#FDFBF7]"
-                  >
-                    <span className="font-serif font-bold text-lg">{faq.q}</span>
-                    <motion.div animate={{ rotate: activeFaq === i ? 180 : 0 }} transition={{ duration: 0.3, ease: "easeOut" }}>
-                      <FaChevronDown className="text-[#B88A5A]" />
+        {/* 7. FAQ (Editorial Split Layout) */}
+        <section className="py-20 md:py-32 bg-[#F8F4EC]">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+              
+              {/* Left Column: Heading & Answer Display */}
+              <div className="lg:w-5/12 flex flex-col justify-between sticky top-24">
+                <div className="mb-8 lg:mb-12">
+                  <span className="text-[#B88A5A] tracking-[0.2em] text-xs uppercase font-semibold mb-3 block">Got Doubts?</span>
+                  <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5D4E42] mb-4">Common Questions</h2>
+                  <p className="text-[#6F6A65] font-light text-lg">Everything you need to know about understanding your skin.</p>
+                </div>
+
+                {/* Desktop Answer Display */}
+                <div className="hidden lg:block bg-white rounded-3xl p-10 border border-[#E6DED2] shadow-sm relative min-h-[260px] flex-shrink-0">
+                  <div className="absolute top-4 right-6 text-8xl font-serif text-[#F8F4EC] pointer-events-none z-0 select-none">?</div>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeFaq ?? 'empty'}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="relative z-10"
+                    >
+                      {activeFaq !== null ? (
+                        <>
+                          <h4 className="text-xl font-serif font-bold text-[#5D4E42] mb-4 leading-tight">{faqs[activeFaq].q}</h4>
+                          <div className="w-12 h-[1px] bg-[#B88A5A] mb-4"></div>
+                          <p className="text-[#6F6A65] font-light leading-relaxed">{faqs[activeFaq].a}</p>
+                        </>
+                      ) : (
+                        <div className="h-full flex flex-col items-center justify-center text-center pt-12">
+                          <div className="w-12 h-12 rounded-full border border-[#E6DED2] flex items-center justify-center text-[#B88A5A] mb-4">
+                            <span className="font-serif italic font-bold">i</span>
+                          </div>
+                          <p className="text-[#6F6A65]/70 font-light italic">Select a question from the list to view its answer.</p>
+                        </div>
+                      )}
                     </motion.div>
-                  </button>
-                  <AnimatePresence>
-                    {activeFaq === i && (
-                      <motion.div 
-                        initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-                        className="bg-white px-8 overflow-hidden"
-                      >
-                        <p className="pb-6 pt-2 text-[#6F6A65] font-light text-base leading-relaxed border-t border-[#E6DED2]/30 mt-2">{faq.a}</p>
-                      </motion.div>
-                    )}
                   </AnimatePresence>
                 </div>
-              ))}
+              </div>
+
+              {/* Right Column: Question List */}
+              <div className="lg:w-7/12 flex flex-col justify-center w-full">
+                <div className="relative">
+                  {/* Vertical Line indicator */}
+                  <div className="hidden lg:block absolute left-[15px] top-6 bottom-6 w-[1px] bg-[#E6DED2] z-0"></div>
+                  
+                  {faqs.map((faq, i) => (
+                    <div key={i} className="relative z-10">
+                      <button 
+                        onClick={() => setActiveFaq(activeFaq === i ? null : i)}
+                        className={`w-full text-left py-6 group flex items-start gap-6 lg:border-none transition-all duration-300 ${i !== faqs.length - 1 ? 'border-b border-[#E6DED2]/60' : ''}`}
+                      >
+                        {/* Custom Bullet Indicator (Desktop only) */}
+                        <div className={`hidden lg:flex shrink-0 w-8 h-8 rounded-full border bg-[#F8F4EC] flex items-center justify-center mt-1 transition-all duration-500 ${activeFaq === i ? 'border-[#B88A5A] shadow-md scale-110' : 'border-[#E6DED2] group-hover:border-[#B88A5A]/50'}`}>
+                          <div className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${activeFaq === i ? 'bg-[#B88A5A] scale-100' : 'bg-transparent scale-0'}`}></div>
+                        </div>
+                        
+                        <div className="flex-1 pr-4 lg:pr-0">
+                           <h3 className={`text-xl lg:text-2xl font-serif font-bold leading-tight transition-colors duration-300 ${activeFaq === i ? 'text-[#B88A5A]' : 'text-[#5D4E42] group-hover:text-[#B88A5A]'}`}>
+                             {faq.q}
+                           </h3>
+                        </div>
+
+                        {/* Mobile Chevron */}
+                        <div className="lg:hidden shrink-0 mt-1">
+                          <motion.div animate={{ rotate: activeFaq === i ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                            <FaChevronDown className={`transition-colors ${activeFaq === i ? 'text-[#B88A5A]' : 'text-[#E6DED2]'}`} size={18} />
+                          </motion.div>
+                        </div>
+                      </button>
+
+                      {/* Mobile Accordion Answer */}
+                      <div className="lg:hidden">
+                        <AnimatePresence>
+                          {activeFaq === i && (
+                            <motion.div 
+                              initial={{ height: 0, opacity: 0 }} 
+                              animate={{ height: 'auto', opacity: 1 }} 
+                              exit={{ height: 0, opacity: 0 }}
+                              className="overflow-hidden"
+                            >
+                              <p className="pb-8 text-[#6F6A65] font-light leading-relaxed">{faq.a}</p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* 8. FINAL CTA */}
-        <section className="py-24 bg-white border-t border-[#E6DED2]">
-          <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#5D4E42] mb-6">Need Help Choosing?</h2>
-            <p className="text-[#6F6A65] font-light text-lg mb-10 max-w-lg mx-auto">
-              Our skin experts are happy to help you choose the right Vedalush soap for your unique skin concerns. Contact us for a personalized recommendation.
-            </p>
-            <div className="flex flex-row gap-5 justify-center">
-              <Link to="/#contact" className="px-8 py-3 bg-[#F8F4EC] text-xs text-[#5D4E42] border border-[#E6DED2] rounded-full font-medium hover:bg-white hover:border-[#5D4E42] transition-all duration-300">
-                Contact Us
-              </Link>
-              <a href="https://wa.me/919904765058" target="_blank" rel="noreferrer" className="px-8 py-3 bg-[#5D4E42] text-xs text-white rounded-full font-medium hover:bg-[#4A3E34] transition-all duration-300 shadow-md flex items-center justify-center gap-3">
-                <FaWhatsapp size={20} /> <span>WhatsApp Us</span>
-              </a>
+        {/* 8. FINAL CTA (Luxury Floating Banner) */}
+        <section className="py-16 md:py-24 bg-white px-4 lg:px-8">
+          <div className="max-w-6xl mx-auto relative rounded-[2rem] bg-[#5D4E42] overflow-hidden shadow-2xl">
+            {/* Background decorative elements */}
+            <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#8E7A65] rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-pulse"></div>
+            <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-[#4A3E34] rounded-full mix-blend-multiply filter blur-3xl opacity-60"></div>
+            
+            <div className="relative z-10 px-8 py-16 md:py-20 lg:py-24 md:px-12 lg:px-16 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
+              {/* Left Side: Copy */}
+              <div className="lg:w-1/2 text-center lg:text-left">
+                <span className="text-[#E6DED2] tracking-[0.2em] text-xs uppercase font-semibold mb-4 block">Personalized Guidance</span>
+                <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">Need Help Finding Your Match?</h2>
+                <p className="text-[#E6DED2]/80 font-light text-lg mb-0 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                  Our skin experts are happy to help you choose the right Vedalush soap for your unique skin concerns. We're just a message away.
+                </p>
+              </div>
+              
+              {/* Right Side: Glassmorphism Action Card */}
+              <div className="lg:w-5/12 w-full max-w-md bg-white/10 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-white/20 shadow-xl">
+                <h3 className="text-2xl font-serif text-white mb-8 text-center font-semibold">Get in Touch</h3>
+                <div className="flex flex-col gap-4">
+                  <a href="https://wa.me/919904765058" target="_blank" rel="noreferrer" className="group flex items-center justify-center gap-3 px-8 py-4 bg-[#B88A5A] text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-[#B88A5A]/40 transform hover:-translate-y-1 border border-[#B88A5A] hover:border-white/30">
+                    <FaWhatsapp size={22} className="group-hover:scale-110 transition-transform duration-300" /> 
+                    <span className="text-sm tracking-wider uppercase font-bold">WhatsApp Us</span>
+                  </a>
+                  
+                  <div className="relative flex items-center py-2">
+                    <div className="flex-grow border-t border-white/20"></div>
+                    <span className="flex-shrink-0 mx-4 text-white/50 text-xs uppercase tracking-widest">or</span>
+                    <div className="flex-grow border-t border-white/20"></div>
+                  </div>
+
+                  <Link to="/#contact" className="group flex items-center justify-center gap-3 px-8 py-4 bg-transparent text-white border border-white/40 rounded-full transition-all duration-300 hover:bg-white hover:text-[#5D4E42]">
+                    <span className="text-sm tracking-wider uppercase font-bold">Contact</span>
+                  </Link>
+                </div>
+                <p className="text-white/60 text-xs text-center mt-6 font-light tracking-wide">Typically replies within 24 hours</p>
+              </div>
             </div>
           </div>
         </section>
