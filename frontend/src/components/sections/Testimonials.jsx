@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
@@ -27,6 +27,13 @@ const ReviewCounter = ({ total }) => {
 const Testimonials = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const trustpilotRef = useRef(null);
+
+  useEffect(() => {
+    if (window.Trustpilot && trustpilotRef.current) {
+      window.Trustpilot.loadFromElement(trustpilotRef.current, true);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -129,10 +136,24 @@ const Testimonials = () => {
           <div className="text-center text-[#6F6A65] py-10">No reviews yet. Be the first to leave one!</div>
         )}
 
-        <div className="text-center mt-8">
-          <Link to="/reviews" className="inline-block px-8 py-3.5 bg-[#B88A5A] text-white font-semibold rounded-full hover:bg-[#9F7348] shadow-soft hover:shadow-soft-lg transform hover:-translate-y-0.5 transition-all duration-250">
+        <div className="text-center mt-8 flex flex-col items-center">
+          <Link to="/reviews" className="inline-block px-8 py-3.5 bg-[#B88A5A] text-white font-semibold rounded-full hover:bg-[#9F7348] shadow-soft hover:shadow-soft-lg transform hover:-translate-y-0.5 transition-all duration-250 mb-10">
             View All Reviews
           </Link>
+
+          {/* TrustBox widget - Review Collector */}
+          <div 
+            ref={trustpilotRef}
+            className="trustpilot-widget w-full max-w-[400px]" 
+            data-locale="en-US" 
+            data-template-id="56278e9abfbbba0bdcd568bc" 
+            data-businessunit-id="6a7f6a4c167853a114927484" 
+            data-style-height="52px" 
+            data-style-width="100%" 
+            data-token="261a1bb0-457c-4c55-bd5b-15e8a5d749a6"
+          >
+            <a href="https://www.trustpilot.com/review/vedalush.com" target="_blank" rel="noopener noreferrer">Trustpilot</a>
+          </div>
         </div>
       </div>
     </section>
