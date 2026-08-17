@@ -23,7 +23,7 @@ const mobileNavLinks = [
   { name: 'Contact Us', href: '/#contact', subtitle: 'We are here to help' },
 ];
 
-const CurrencyDropdown = ({ currency, changeCurrency, supportedCurrencies, compact = false }) => {
+const CurrencyDropdown = ({ currency, changeCurrency, supportedCurrencies, compact = false, openUpwards = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -61,11 +61,11 @@ const CurrencyDropdown = ({ currency, changeCurrency, supportedCurrencies, compa
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -5, scale: 0.95 }}
+            initial={{ opacity: 0, y: openUpwards ? 5 : -5, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -5, scale: 0.95 }}
+            exit={{ opacity: 0, y: openUpwards ? 5 : -5, scale: 0.95 }}
             transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="absolute right-0 top-full mt-2 w-28 bg-[#FFFFFF] border border-[#E6DED2] rounded-xl shadow-soft-lg py-1.5 z-[100] overflow-hidden"
+            className={`absolute right-0 ${openUpwards ? 'bottom-full mb-2' : 'top-full mt-2'} w-28 bg-[#FFFFFF] border border-[#E6DED2] rounded-xl shadow-soft-lg py-1.5 z-[100] overflow-hidden`}
           >
             {supportedCurrencies.map((c) => (
               <button
@@ -294,14 +294,8 @@ const Navbar = () => {
               </button>
             </nav>
 
-            {/* Mobile Right: Compact Currency & User Icon */}
+            {/* Mobile Right: Compact User Icon */}
             <div className="flex lg:hidden items-center space-x-2.5 flex-1 justify-end">
-              <CurrencyDropdown
-                currency={currency}
-                changeCurrency={changeCurrency}
-                supportedCurrencies={supportedCurrencies}
-                compact={true}
-              />
 
               {user ? (
                 <Link to="/profile" className="text-[#5D4E42] hover:text-[#B88A5A] transition-colors duration-250 p-1" title={user.name}>
@@ -419,6 +413,16 @@ const Navbar = () => {
 
               {/* Bottom Actions Section */}
               <div className="border-[#E6DED2] flex flex-col space-y-4">
+                <div className="flex items-center justify-between px-1">
+                  <span className="text-xs font-semibold text-[#9D948B] uppercase tracking-wider">Currency</span>
+                  <CurrencyDropdown
+                    currency={currency}
+                    changeCurrency={changeCurrency}
+                    supportedCurrencies={supportedCurrencies}
+                    openUpwards={true}
+                  />
+                </div>
+                
                 <div className="flex items-stretch -mx-6 border-y border-[#E6DED2]">
                   <a
                     href="/#order"
