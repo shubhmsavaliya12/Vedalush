@@ -2,10 +2,12 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CurrencyProvider } from './context/CurrencyContext';
+import { CartProvider } from './context/CartContext';
 import { HelmetProvider } from 'react-helmet-async';
 import useVisitorTracking from './hooks/useVisitorTracking';
 import CookieConsent from './components/ui/CookieConsent';
 import Chatbot from './components/ui/Chatbot';
+import CartDrawer from './components/ui/CartDrawer';
 
 // Lazy loaded pages for performance
 const Home = lazy(() => import('./pages/Home'));
@@ -32,9 +34,11 @@ function App() {
     <HelmetProvider>
     <AuthProvider>
     <CurrencyProvider>
+    <CartProvider>
       <Router>
         <CookieConsent />
         <Chatbot />
+        <CartDrawer />
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -49,6 +53,7 @@ function App() {
           </Routes>
         </Suspense>
       </Router>
+    </CartProvider>
     </CurrencyProvider>
     </AuthProvider>
     </HelmetProvider>

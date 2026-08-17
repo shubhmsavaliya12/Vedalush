@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaAmazon, FaShoppingCart, FaArrowLeft, FaCheckCircle, FaLeaf, FaBalanceScale, FaChevronLeft, FaChevronRight, FaChevronUp, FaChevronDown, FaStar, FaRegStar } from 'react-icons/fa';
 import { HiOutlineX } from 'react-icons/hi';
 import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import { ProductDetailsSkeleton } from '../components/ui/Skeletons';
@@ -43,6 +44,7 @@ const ProductDetails = () => {
   const [productReviews, setProductReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(true);
   const { user } = useAuth();
+  const { addItem } = useCart();
   
   // Review Modal State
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
@@ -340,6 +342,15 @@ const ProductDetails = () => {
 
             {/* Call To Action */}
             <div className="mt-auto space-y-4">
+              <button 
+                onClick={() => addItem(product)}
+                className="w-full relative overflow-hidden group bg-[#5D4E42] text-white py-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-[0.98]"
+              >
+                <span className="absolute inset-0 w-full h-full bg-[#B88A5A] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                <span className="relative z-10 font-semibold tracking-widest text-lg uppercase">Add to Cart</span>
+                <FaShoppingCart className="relative z-10 ml-2" />
+              </button>
+              
               {product.amazonLink && (
                 <a href={product.amazonLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full bg-[#FF9900] text-white py-4 rounded-xl hover:bg-[#E68A00] transition-colors shadow-soft text-lg font-medium">
                   <FaAmazon className="mr-3 text-2xl" /> Buy Now on Amazon

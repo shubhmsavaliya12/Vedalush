@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiMenu, HiX, HiOutlineUser } from 'react-icons/hi';
+import { HiMenu, HiX, HiOutlineUser, HiOutlineShoppingBag } from 'react-icons/hi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCurrency } from '../../context/CurrencyContext';
+import { useCart } from '../../context/CartContext';
 import AnnouncementBar from './AnnouncementBar';
 
 const leftLinks = [
@@ -103,6 +104,7 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user } = useAuth();
   const { currency, changeCurrency, supportedCurrencies } = useCurrency();
+  const { cartCount, toggleCart } = useCart();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -276,6 +278,20 @@ const Navbar = () => {
                   <span>Login</span>
                 </Link>
               )}
+
+              {/* Cart Toggle Desktop */}
+              <button
+                onClick={toggleCart}
+                className="relative flex items-center text-[#5D4E42] hover:text-[#B88A5A] transition-colors duration-250 py-1 cursor-pointer"
+                aria-label="Open Cart"
+              >
+                <HiOutlineShoppingBag size={25} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-2 bg-[#B88A5A] text-white text-[12px] font-semibold h-5 w-5 rounded-full flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
             </nav>
 
             {/* Mobile Right: Compact Currency & User Icon */}
@@ -296,6 +312,20 @@ const Navbar = () => {
                   <HiOutlineUser size={20} />
                 </Link>
               )}
+
+              {/* Cart Toggle Mobile */}
+              <button
+                onClick={toggleCart}
+                className="relative text-[#5D4E42] hover:text-[#B88A5A] transition-colors duration-250 p-1 mr-1 cursor-pointer"
+                aria-label="Open Cart"
+              >
+                <HiOutlineShoppingBag size={22} />
+                {cartCount > 0 && (
+                  <span className="absolute top-0 right-0 bg-[#B88A5A] text-white text-[12px] font-semibold h-4 w-4 rounded-full flex items-center justify-center translate-x-1/4 -translate-y-1/4">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
             </div>
 
           </div>
