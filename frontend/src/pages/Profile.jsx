@@ -124,9 +124,16 @@ const Profile = () => {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
+    if (updating) return;
     setUpdating(true);
     setUpdateMsg('');
     setUpdateError('');
+
+    if (editForm.name && !/^[A-Za-z\s\-']+$/.test(editForm.name)) {
+      setUpdateError("Name can only contain letters, spaces, hyphens, and apostrophes.");
+      setUpdating(false);
+      return;
+    }
 
     try {
       const validationError = validatePhoneNumber(editForm.phoneCode, editForm.phoneNumber);
@@ -194,6 +201,7 @@ const Profile = () => {
 
   const handleUpdateReview = async (e) => {
     e.preventDefault();
+    if (updatingReview) return;
     setUpdatingReview(true);
     setReviewMsg('');
     setReviewError('');
@@ -221,6 +229,7 @@ const Profile = () => {
 
   const handleSaveAddress = async (e) => {
     e.preventDefault();
+    if (savingAddress) return;
     setSavingAddress(true);
     setAddressMsg('');
     setAddressError('');

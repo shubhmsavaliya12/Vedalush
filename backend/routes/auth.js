@@ -226,7 +226,12 @@ router.put('/profile', verifyUserAuth, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (name !== undefined) user.name = name;
+    if (name !== undefined) {
+      if (!/^[A-Za-z\s\-']+$/.test(name)) {
+        return res.status(400).json({ message: 'Name can only contain letters, spaces, hyphens, and apostrophes.' });
+      }
+      user.name = name;
+    }
     if (phone !== undefined) user.phone = phone;
     if (address !== undefined) user.address = address;
     if (city !== undefined) user.city = city;
@@ -292,6 +297,14 @@ router.post('/signup-otp', async (req, res) => {
     const { name, email, password, country } = req.body;
     if (!name || !email || !password) {
       return res.status(400).json({ message: 'Please provide all required fields' });
+    }
+
+    if (!/^[A-Za-z\s\-']+$/.test(name)) {
+      return res.status(400).json({ message: 'Name can only contain letters, spaces, hyphens, and apostrophes.' });
+    }
+
+    if (!/^[\x20-\x7E]{8,}$/.test(password)) {
+      return res.status(400).json({ message: 'Password must be at least 8 characters and contain only standard characters.' });
     }
 
     const existingUser = await User.findOne({ email: email.trim().toLowerCase() });
@@ -434,8 +447,8 @@ router.post('/reset-password', async (req, res) => {
       return res.status(400).json({ message: 'Please provide all required fields' });
     }
 
-    if (newPassword.length < 6) {
-      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+    if (!/^[\x20-\x7E]{8,}$/.test(newPassword)) {
+      return res.status(400).json({ message: 'Password must be at least 8 characters and contain only standard characters.' });
     }
 
     const otpRecord = await Otp.findOne({ email: email.trim().toLowerCase(), otp: otp.trim(), type: 'forgot_password' });

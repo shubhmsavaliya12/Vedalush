@@ -42,8 +42,21 @@ const Login = () => {
 
   const handleAuthSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setError('');
     setSuccessMsg('');
+
+    if (!isLogin) {
+      if (!/^[A-Za-z\s\-']+$/.test(name)) {
+        setError("Name can only contain letters, spaces, hyphens, and apostrophes.");
+        return;
+      }
+      if (!/^[\x20-\x7E]{8,}$/.test(password)) {
+        setError("Password must be at least 8 characters and contain only standard characters.");
+        return;
+      }
+    }
+
     setLoading(true);
 
     const API_URL = import.meta.env.VITE_API_URL || '';
@@ -81,6 +94,7 @@ const Login = () => {
 
   const handleSignupVerify = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setError('');
     setSuccessMsg('');
     setLoading(true);
@@ -111,6 +125,7 @@ const Login = () => {
   };
 
   const handleResendSignupOtp = async () => {
+    if (loading) return;
     setError('');
     setSuccessMsg('');
     setLoading(true);
@@ -136,6 +151,7 @@ const Login = () => {
 
   const handleForgotEmailSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setError('');
     setSuccessMsg('');
     setLoading(true);
@@ -164,6 +180,7 @@ const Login = () => {
 
   const handleForgotOtpVerify = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setError('');
     setSuccessMsg('');
     setLoading(true);
@@ -192,11 +209,17 @@ const Login = () => {
 
   const handleResetPasswordSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setError('');
     setSuccessMsg('');
 
     if (newPassword !== confirmPassword) {
       return setError('Passwords do not match.');
+    }
+
+    if (!/^[\x20-\x7E]{8,}$/.test(newPassword)) {
+      setError("Password must be at least 8 characters and contain only standard characters.");
+      return;
     }
 
     setLoading(true);
