@@ -136,7 +136,7 @@ const Testimonials = () => {
           <div className="text-center text-[#6F6A65] py-10">No reviews yet. Be the first to leave one!</div>
         )}
 
-        <div className="text-center mt-8 flex flex-col items-center">
+        <div className="text-center mt-8 flex flex-col items-center gap-5">
           <Link to="/reviews" className="inline-block px-8 py-3.5 bg-[#B88A5A] text-white font-semibold rounded-full hover:bg-[#9F7348] shadow-soft hover:shadow-soft-lg transform hover:-translate-y-0.5 transition-all duration-250 mb-10">
             View All Reviews
           </Link>
