@@ -76,7 +76,7 @@ const Contact = () => {
 
             {/* Social Links */}
             <div className="pt-8 flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-[#5D4E42] text-white rounded-full flex items-center justify-center hover:bg-[#8E7A65] transition-colors duration-250 shadow-soft">
+              <a href="https://www.instagram.com/vedalush_?igsi=NmdjbWd2dGluNHcw" target='_blank' rel='noopener noreferrer' className="w-10 h-10 bg-[#5D4E42] text-white rounded-full flex items-center justify-center hover:bg-[#8E7A65] transition-colors duration-250 shadow-soft">
                 <FaInstagram />
               </a>
               <a href="#" className="w-10 h-10 bg-[#5D4E42] text-white rounded-full flex items-center justify-center hover:bg-[#8E7A65] transition-colors duration-250 shadow-soft">

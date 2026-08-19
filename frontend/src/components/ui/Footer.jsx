@@ -25,7 +25,7 @@ const Footer = () => {
               Luxurious, organic, handcrafted soaps tailored for radiant skin. Experience the purity of nature in every lather.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-[#9D948B] hover:text-white transition-colors duration-250">
+              <a href="https://www.instagram.com/vedalush_?igsi=NmdjbWd2dGluNHcw" target='_blank' rel='noopener noreferrer' className="text-[#9D948B] hover:text-white transition-colors duration-250">
                 <FaInstagram size={20} />
               </a>
               <a href="#" className="text-[#9D948B] hover:text-white transition-colors duration-250">
