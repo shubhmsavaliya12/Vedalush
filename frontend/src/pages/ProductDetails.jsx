@@ -311,15 +311,15 @@ const ProductDetails = () => {
               <div className="bg-white p-4 rounded-xl border border-nature-100 flex items-start gap-3">
                 <FaCheckCircle className="text-nature-500 mt-1 flex-shrink-0" />
                 <div>
-                  <h4 className="text-sm font-medium text-nature-900 mb-1">Skin Type</h4>
-                  <p className="text-xs text-nature-600 font-light">{product.skinType}</p>
+                  <h4 className="text-lg font-medium text-nature-900 mb-1">Skin Type</h4>
+                  <p className="text-sm text-nature-600 font-light">{product.skinType}</p>
                 </div>
               </div>
               <div className="bg-white p-4 rounded-xl border border-nature-100 flex items-start gap-3">
                 <FaBalanceScale className="text-nature-500 mt-1 flex-shrink-0" />
                 <div>
-                  <h4 className="text-sm font-medium text-nature-900 mb-1">Weight</h4>
-                  <p className="text-xs text-nature-600 font-light">{product.weight}</p>
+                  <h4 className="text-lg font-medium text-nature-900 mb-1">Weight</h4>
+                  <p className="text-sm text-nature-600 font-light">~{product.weight}</p>
                 </div>
               </div>
             </div>
