@@ -1,16 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-export const getCookieOptions = () => {
-  const isProd = process.env.NODE_ENV === 'production' || !!process.env.FRONTEND_URL;
-  return {
-    httpOnly: true,
-    secure: isProd,
-    sameSite: isProd ? 'none' : 'strict',
-    maxAge: 60 * 60 * 24 * 1000 // 1 day in ms
-  };
-};
 export const verifyAdminAuth = (req) => {
-  let token = req.cookies?.admin_token;
+  let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
     token = req.headers.authorization.split(' ')[1];
   }
@@ -27,7 +18,7 @@ export const verifyAdminAuth = (req) => {
 };
 
 export const verifyUserAuth = (req, res, next) => {
-  let token = req.cookies?.user_token;
+  let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
     token = req.headers.authorization.split(' ')[1];
   }

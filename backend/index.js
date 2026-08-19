@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
 import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
@@ -47,13 +46,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(compression()); // Compress all responses
 app.use(express.json());
-app.use(cookieParser());
 app.use(mongoSanitize()); // Prevent NoSQL Injection attacks globally
 app.use(helmet()); // Set security HTTP headers
 
+// Trust reverse proxy for correct IP rate-limiting in production
+app.set('trust proxy', 1);
+
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  max: process.env.NODE_ENV === 'production' ? 1000 : 5000, // Increase limit
   message: 'Too many requests from this IP, please try again after 15 minutes',
   standardHeaders: true,
   legacyHeaders: false,

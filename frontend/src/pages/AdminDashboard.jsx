@@ -178,13 +178,28 @@ const AdminDashboard = () => {
 
   const [subscribers, setSubscribers] = useState([]);
 
+  // CRM / Customer Management State
+  const [users, setUsers] = useState([]);
+  const [userSearchTerm, setUserSearchTerm] = useState('');
+  const [userCountryFilter, setUserCountryFilter] = useState('All');
+  const [selectedUser, setSelectedUser] = useState(null);
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
         await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/check`, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
         setIsAuthenticated(true);
       } catch (error) {
-        navigate('/admin/login');
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+          navigate('/admin/login');
+        } else if (error.response && error.response.status === 429) {
+          console.warn("Rate limited on auth check. Assuming authenticated to prevent bounce.");
+          // If we hit a rate limit, don't force them out. They probably still have a valid token.
+          setIsAuthenticated(true); 
+        } else {
+          console.error("Admin Auth Error:", error);
+          navigate('/admin/login');
+        }
       } finally {
         setIsLoadingAuth(false);
       }
@@ -199,8 +214,18 @@ const AdminDashboard = () => {
     if (activeTab === 'orders' || activeTab === 'dashboard') fetchOrders();
     if (activeTab === 'ingredients' || activeTab === 'dashboard') fetchIngredients();
     if (activeTab === 'subscribers') fetchSubscribers();
+    if (activeTab === 'users') fetchUsers();
     if (activeTab === 'dashboard') fetchAnalytics();
   }, [activeTab, isAuthenticated]);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/users`, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
+      setUsers(response.data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
   const fetchOrders = async () => {
     try {
@@ -986,6 +1011,174 @@ const AdminDashboard = () => {
     </motion.div>
   );
 
+  const filteredUsers = users.filter(u => {
+    const term = userSearchTerm.toLowerCase();
+    const matchesSearch = (u.name?.toLowerCase().includes(term)) || (u.email?.toLowerCase().includes(term)) || (u.phone?.includes(term));
+    const matchesCountry = userCountryFilter === 'All' || u.country === userCountryFilter;
+    return matchesSearch && matchesCountry;
+  });
+
+  const renderUsers = () => (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 relative">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <h2 className="text-2xl font-serif font-bold text-[#5D4E42]">Customer Management</h2>
+        
+        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          <input
+            type="text"
+            placeholder="Search name, email, or phone..."
+            value={userSearchTerm}
+            onChange={(e) => setUserSearchTerm(e.target.value)}
+            className="bg-[#FFFFFF] border border-[#E6DED2] rounded-xl px-4 py-2 text-[#5D4E42] focus:outline-none focus:border-[#B88A5A] shadow-soft min-w-[250px]"
+          />
+          <select
+            value={userCountryFilter}
+            onChange={(e) => setUserCountryFilter(e.target.value)}
+            className="bg-[#FFFFFF] border border-[#E6DED2] rounded-xl px-4 py-2 text-[#5D4E42] focus:outline-none focus:border-[#B88A5A] shadow-soft"
+          >
+            <option value="All">All Countries</option>
+            <option value="India">India</option>
+            <option value="United States">United States</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="Australia">Australia</option>
+            <option value="Canada">Canada</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="bg-[#FFFFFF] rounded-2xl border border-[#E6DED2] overflow-x-auto shadow-soft">
+        <table className="w-full text-left border-collapse min-w-[800px]">
+          <thead>
+            <tr className="bg-[#FDFBF7] border-b border-[#E6DED2]">
+              <th className="p-4 text-[#6F6A65] font-semibold text-sm">Customer</th>
+              <th className="p-4 text-[#6F6A65] font-semibold text-sm">Contact</th>
+              <th className="p-4 text-[#6F6A65] font-semibold text-sm">Location</th>
+              <th className="p-4 text-[#6F6A65] font-semibold text-sm">Total Orders</th>
+              <th className="p-4 text-[#6F6A65] font-semibold text-sm">Joined</th>
+              <th className="p-4 text-[#6F6A65] font-semibold text-sm text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.length > 0 ? (
+              filteredUsers.map((u) => (
+                <tr key={u._id} className="border-b border-[#E6DED2]/60 hover:bg-[#F8F4EC] transition-colors">
+                  <td className="p-4">
+                    <div className="flex items-center space-x-3 max-w-[160px] sm:max-w-[200px] md:max-w-none">
+                      <div className="w-10 h-10 shrink-0 rounded-full bg-[#E6DED2] flex items-center justify-center text-[#5D4E42] font-bold text-lg">
+                        {u.name ? u.name.charAt(0).toUpperCase() : '?'}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-semibold text-[#5D4E42] truncate" title={u.name || 'N/A'}>{u.name || 'N/A'}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-sm text-[#5D4E42]">{u.email}</p>
+                    {u.phone && <p className="text-xs text-[#6F6A65] mt-0.5">{u.phone}</p>}
+                  </td>
+                  <td className="p-4 text-sm text-[#5D4E42]">{u.country || 'N/A'}</td>
+                  <td className="p-4">
+                    <span className="inline-block bg-[#F8F4EC] text-[#8E7A65] px-2.5 py-1 rounded-md text-xs font-semibold border border-[#E6DED2]">
+                      0 Orders
+                    </span>
+                  </td>
+                  <td className="p-4 text-sm text-[#6F6A65]">
+                    {new Date(u.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="p-4 text-right">
+                    <button onClick={() => setSelectedUser(u)} className="p-2 text-[#6F6A65] hover:text-[#B88A5A] hover:bg-[#FDFBF7] rounded-lg transition-colors" title="View Details">
+                      <HiEye className="text-xl" />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="p-8 text-center text-[#6F6A65]">No customers found matching your criteria.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      
+      {/* Detail Modal */}
+      {selectedUser && (
+        <div className="fixed inset-0 bg-[#3D332B]/60 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-[#FFFFFF] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-[#E6DED2] shadow-soft-lg">
+            <div className="sticky top-0 bg-[#FFFFFF] p-6 border-b border-[#E6DED2] flex justify-between items-center z-10">
+              <h3 className="text-xl font-serif font-bold text-[#5D4E42]">Customer Profile</h3>
+              <button onClick={() => setSelectedUser(null)} className="text-[#9D948B] hover:text-[#5D4E42] transition-colors"><HiX className="text-2xl" /></button>
+            </div>
+            
+            <div className="p-6 space-y-6">
+              {/* Profile Card */}
+              <div className="flex items-center space-x-4 bg-[#F8F4EC] p-4 rounded-xl border border-[#E6DED2]">
+                <div className="w-16 h-16 rounded-full bg-[#B88A5A] flex items-center justify-center text-white font-bold text-2xl shadow-soft">
+                  {selectedUser.name ? selectedUser.name.charAt(0).toUpperCase() : '?'}
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-[#5D4E42]">{selectedUser.name || 'Guest User'}</h4>
+                  <p className="text-sm text-[#6F6A65]">{selectedUser.email}</p>
+                </div>
+              </div>
+
+              {/* Activity Metrics */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="border border-[#E6DED2] rounded-xl p-4 bg-[#FDFBF7]">
+                  <p className="text-xs font-semibold text-[#8E7A65] uppercase tracking-wider mb-1">Customer Status</p>
+                  <p className="text-lg font-bold text-[#5D4E42]">Pending Order System</p>
+                </div>
+                <div className="border border-[#E6DED2] rounded-xl p-4 bg-[#FDFBF7]">
+                  <p className="text-xs font-semibold text-[#8E7A65] uppercase tracking-wider mb-1">Total Lifetime Value</p>
+                  <p className="text-lg font-bold text-[#5D4E42]">-</p>
+                </div>
+              </div>
+
+              {/* Contact Info */}
+              <div>
+                <h4 className="text-md font-bold text-[#5D4E42] mb-3 border-b border-[#E6DED2] pb-2">Primary Contact</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-[#6F6A65]">
+                  <p><strong className="text-[#5D4E42]">Phone:</strong> {selectedUser.phone || 'N/A'}</p>
+                  <p><strong className="text-[#5D4E42]">Currency:</strong> {selectedUser.preferredCurrency || 'INR'}</p>
+                  <p><strong className="text-[#5D4E42]">Joined:</strong> {new Date(selectedUser.createdAt).toLocaleDateString()}</p>
+                </div>
+              </div>
+
+              {/* Addresses */}
+              <div>
+                <h4 className="text-md font-bold text-[#5D4E42] mb-3 border-b border-[#E6DED2] pb-2">Saved Addresses ({selectedUser.addresses?.length || 0})</h4>
+                {selectedUser.addresses && selectedUser.addresses.length > 0 ? (
+                  <div className="space-y-3">
+                    {selectedUser.addresses.map((addr, idx) => (
+                      <div key={idx} className="p-3 border border-[#E6DED2] rounded-xl bg-[#FFFFFF] relative">
+                        {addr.isDefault && <span className="absolute top-3 right-3 text-[10px] uppercase tracking-widest bg-[#B88A5A] text-white px-2 py-0.5 rounded-full font-bold">Default</span>}
+                        <p className="font-semibold text-[#5D4E42] text-sm mb-1">{addr.label}</p>
+                        <p className="text-xs text-[#6F6A65] leading-relaxed">
+                          {addr.address}<br />
+                          {addr.city}, {addr.state} {addr.pincode}<br />
+                          {addr.country}<br />
+                          Phone: {addr.phone || selectedUser.phone}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-[#6F6A65] italic">No addresses saved yet.</p>
+                )}
+              </div>
+            </div>
+            
+            <div className="p-4 border-t border-[#E6DED2] bg-[#FDFBF7] flex justify-end rounded-b-2xl">
+              <button onClick={() => setSelectedUser(null)} className="px-6 py-2 bg-[#E6DED2] hover:bg-[#D5C4A1] text-[#5D4E42] font-semibold rounded-lg transition-colors">
+                Close
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </motion.div>
+  );
+
   const renderSubscribers = () => (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
       <div className="flex justify-between items-center">
@@ -1217,7 +1410,15 @@ const AdminDashboard = () => {
               onClick={() => { setActiveTab('subscribers'); setIsMobileMenuOpen(false); }}
               className={`w-full flex items-center space-x-3 px-6 py-3.5 transition-all duration-200 cursor-pointer ${activeTab === 'subscribers' ? 'bg-[#8E7A65] text-white font-semibold shadow-sm' : 'text-[#6F6A65] hover:text-[#5D4E42] hover:bg-[#F8F4EC]'}`}
             >
-              <HiOutlineMail size={20} /> <span>Subscribers</span>
+              <HiOutlineMail className="text-xl" />
+              <span>Newsletter</span>
+            </button>
+            <button 
+              onClick={() => { setActiveTab('users'); setIsMobileMenuOpen(false); }}
+              className={`w-full flex items-center space-x-3 px-6 py-3.5 transition-all duration-200 cursor-pointer ${activeTab === 'users' ? 'bg-[#8E7A65] text-white font-semibold shadow-sm' : 'text-[#6F6A65] hover:text-[#5D4E42] hover:bg-[#F8F4EC]'}`}
+            >
+              <HiOutlineUsers className="text-xl" />
+              <span>Customers</span>
             </button>
           </nav>
         </div>
@@ -1239,6 +1440,7 @@ const AdminDashboard = () => {
           {activeTab === 'reviews' && <motion.div key="reviews">{renderReviews()}</motion.div>}
           {activeTab === 'ingredients' && <motion.div key="ingredients">{renderIngredients()}</motion.div>}
           {activeTab === 'subscribers' && <motion.div key="subscribers">{renderSubscribers()}</motion.div>}
+          {activeTab === 'users' && <motion.div key="users">{renderUsers()}</motion.div>}
         </AnimatePresence>
       </main>
 

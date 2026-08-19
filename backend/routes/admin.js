@@ -1,9 +1,10 @@
 import express from 'express';
 import Admin from '../models/Admin.js';
+import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import rateLimit from 'express-rate-limit';
-import { verifyAdminAuth, getCookieOptions } from '../utils/auth.js';
+import { verifyAdminAuth } from '../utils/auth.js';
 
 const router = express.Router();
 
@@ -91,7 +92,6 @@ router.post('/login', authLimiter, async (req, res) => {
       { expiresIn: '1d' }
     );
 
-    // Removed res.cookie
     res.status(200).json({ message: 'Login successful', token });
   } catch (error) {
     console.error('Login error:', error);
@@ -102,6 +102,21 @@ router.post('/login', authLimiter, async (req, res) => {
 router.post('/logout', (req, res) => {
   // Removed res.clearCookie
   res.status(200).json({ message: 'Logged out successfully' });
+});
+
+router.get('/users', async (req, res) => {
+  try {
+    const authResult = verifyAdminAuth(req);
+    if (!authResult.authenticated || authResult.user.role !== 'admin') {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const users = await User.find().select('-password').sort({ createdAt: -1 });
+    res.status(200).json(users);
+  } catch (error) {
+    console.error('Fetch users error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 export default router;

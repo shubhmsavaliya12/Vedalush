@@ -36,7 +36,7 @@ export const CartProvider = ({ children }) => {
       if (!user) return;
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/cart`, {
-          withCredentials: true
+          headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` }
         });
         
         const dbItems = response.data.items || [];
@@ -96,7 +96,7 @@ export const CartProvider = ({ children }) => {
         await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/cart/sync`, {
           items: payload
         }, {
-          withCredentials: true
+          headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` }
         });
       } catch (error) {
         console.error('Failed to sync cart to DB:', error);

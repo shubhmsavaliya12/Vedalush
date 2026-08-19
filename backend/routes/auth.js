@@ -4,7 +4,7 @@ import Otp from '../models/Otp.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import rateLimit from 'express-rate-limit';
-import { verifyUserAuth, getCookieOptions } from '../utils/auth.js';
+import { verifyUserAuth } from '../utils/auth.js';
 import { sendOtpEmail } from '../utils/email.js';
 
 const router = express.Router();
@@ -101,7 +101,7 @@ router.post('/signup', authLimiter, async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    // Removed res.cookie
+
 
     res.status(201).json({ message: 'User created successfully', user: { name: newUser.name, email: newUser.email }, token });
   } catch (error) {
@@ -140,7 +140,7 @@ router.post('/login', authLimiter, async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    // Removed res.cookie
+
 
     let modified = false;
     if ((!user.addresses || user.addresses.length === 0) && (user.address || user.city || user.state || user.pincode || user.phone)) {
