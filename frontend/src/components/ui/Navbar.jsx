@@ -539,7 +539,7 @@ const Navbar = () => {
                   )}
                 </div>
 
-                <div className="flex items-center justify-between text-[10px] text-[#9D948B] pt-1 px-1">
+                <div className="flex items-center justify-between text-[12px] text-[#9D948B] pt-1 px-1">
                   <span>&copy; {new Date().getFullYear()} Vedalush</span>
                   <span className="italic font-serif text-[#8E7A65]">Organic & Handcrafted</span>
                 </div>
