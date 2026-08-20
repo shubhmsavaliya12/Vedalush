@@ -324,7 +324,7 @@ const Navbar = () => {
                 >
                   <HiOutlineShoppingBag size={25} />
                   {cartCount > 0 && (
-                    <span className="absolute -top-1 -right-2 bg-[#B88A5A] text-white text-[12px] font-semibold h-5 w-5 rounded-full flex items-center justify-center">
+                    <span className="absolute -top-1 -right-2 bg-[#B88A5A] text-white text-[12px] font-semibold h-5 w-5 rounded-full flex items-center justify-center leading-none pt-[3px]">
                       {cartCount}
                     </span>
                   )}
@@ -352,7 +352,7 @@ const Navbar = () => {
                 >
                   <HiOutlineShoppingBag size={22} />
                   {cartCount > 0 && (
-                    <span className="absolute top-0 right-0 bg-[#B88A5A] text-white text-[12px] font-semibold h-4 w-4 rounded-full flex items-center justify-center translate-x-1/4 -translate-y-1/4">
+                    <span className="absolute top-0 right-0 bg-[#B88A5A] text-white text-[12px] font-semibold h-4 w-4 rounded-full flex items-center justify-center translate-x-1/4 -translate-y-1/4 leading-none pt-[1px]">
                       {cartCount}
                     </span>
                   )}

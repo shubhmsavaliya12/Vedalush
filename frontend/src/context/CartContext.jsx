@@ -41,32 +41,11 @@ export const CartProvider = ({ children }) => {
         
         const dbItems = response.data.items || [];
         
-        // Merge logic: Combine local items with DB items (Option A)
-        let mergedItems = [...dbItems];
-        
-        // If local cart has items, merge them into the DB cart
-        const localCartStr = localStorage.getItem('vedalush_cart');
-        if (localCartStr) {
-          const localCart = JSON.parse(localCartStr);
-          if (localCart.length > 0) {
-            localCart.forEach(localItem => {
-              const existingIdx = mergedItems.findIndex(dbItem => dbItem.product._id === localItem.product._id);
-              if (existingIdx >= 0) {
-                // If it exists in both, you can either take max, sum, or ignore. Let's just keep the max for safety, or sum them.
-                // Let's just override with local if the user just logged in and had local items, or just keep db items if they exist.
-                // Standard merge: increase quantity by local amount.
-                mergedItems[existingIdx].quantity += localItem.quantity;
-              } else {
-                mergedItems.push(localItem);
-              }
-            });
-            // Need to sync the merged result back to DB immediately
-            skipNextSyncRef.current = false; 
-          }
-        }
-        
+        // If local cart has items and user just logged in (or we just want to override)
+        // To avoid multiplication on refresh, we simply use the DB cart as the single source of truth for now.
+        // The front-end multiplication bug occurs because local storage was continuously merged with DB on every load.
         skipNextSyncRef.current = true; // Prevent the debounce from firing immediately after load
-        setCartItems(mergedItems);
+        setCartItems(dbItems);
       } catch (error) {
         console.error('Failed to fetch cart from DB:', error);
       } finally {
