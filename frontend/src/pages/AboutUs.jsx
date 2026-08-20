@@ -39,13 +39,6 @@ const AboutUs = () => {
             variants={fadeUp}
             className="max-w-4xl space-y-6"
           >
-            {/* <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#2E2721] leading-[1.15] tracking-tight">
-              Making natural luxury <br className="hidden md:block" />
-              for your <span className="italic font-light text-[#C19A6B]" style={{ fontFamily: "'Great Vibes', cursive", fontWeight: 400 }}>skin.</span>
-            </h1>
-            <p className="text-base md:text-lg lg:text-xl text-[#8E7A65] font-light max-w-2xl mx-auto leading-relaxed pt-4">
-              We believe that real beauty comes from nature. Our goal is to make your daily skincare routine a truly premium and natural experience.
-            </p> */}
             <h1 className="text-5xl md:text-6xl lg:text-6xl font-serif text-[#2E2721] font-semibold leading-[1.15] uppercase tracking-tight">
               Welcome to Vedalush
             </h1>
