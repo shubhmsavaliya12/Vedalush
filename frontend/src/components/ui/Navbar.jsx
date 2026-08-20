@@ -286,12 +286,9 @@ const Navbar = () => {
                     className="flex items-center space-x-1.5 text-[#5D4E42] hover:text-[#B88A5A] transition-colors duration-250 py-1"
                     title={user.name}
                   >
-                    <div className="w-7 h-7 rounded-full bg-[#E6DED2] border border-[#8E7A65]/30 flex items-center justify-center text-[#5D4E42] font-serif font-bold text-xs shadow-inner">
+                    <div className="w-8 h-8 rounded-full bg-[#E6DED2] border border-[#8E7A65]/30 flex items-center justify-center text-[#5D4E42] font-serif font-bold text-md shadow-inner">
                       {user.name.charAt(0).toUpperCase()}
                     </div>
-                    <span className="text-[11px] font-semibold uppercase tracking-widest hidden xl:inline-block max-w-[70px] truncate">
-                      {user.name}
-                    </span>
                   </Link>
                 ) : (
                   <Link
