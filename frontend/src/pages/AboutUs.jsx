@@ -33,12 +33,17 @@ const AboutUs = () => {
         
         {/* 1. HERO SECTION */}
         <section className="relative w-full mx-auto min-h-[50vh] lg:min-h-[60vh] flex flex-col items-center justify-center text-center px-6 lg:px-12 pt-24 pb-16 lg:pt-32 overflow-hidden">
-          {/* Mobile/Tablet Background */}
+          {/* Background Images */}
           <div className="absolute inset-0 z-0">
             <img 
               src="/images/about_hero_mobile.webp" 
-              alt="Vedalush Background" 
-              className="w-full h-full object-cover"
+              alt="Vedalush Background Mobile" 
+              className="w-full h-full object-cover lg:hidden"
+            />
+            <img 
+              src="/images/about_hero_desktop.webp" 
+              alt="Vedalush Background Desktop" 
+              className="hidden lg:block w-full h-full object-cover"
             />
             {/* Subtle overlay to ensure text remains readable */}
             <div className="absolute inset-0 bg-[#FDFBF7]/30"></div>

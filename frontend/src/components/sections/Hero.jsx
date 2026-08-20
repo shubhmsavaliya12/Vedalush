@@ -6,14 +6,22 @@ const Hero = () => {
     <section id="hero" className="relative w-full bg-[#2E2721] overflow-hidden">
       {/* Background Image Container: normal flow on mobile/tablet (h-auto), exact 1-screen height on desktop (lg+) */}
       <div className="relative w-full lg:h-[calc(100vh-9rem)] overflow-hidden flex items-center justify-center">
-        <img
+        {/* <img
           src="/images/IMG_20260727_235144.webp"
           alt="Vedalush Background"
           width="1920"
           height="1080"
           className="w-full h-auto lg:h-full object-contain lg:object-cover object-center block"
           fetchPriority="high" decoding="async" />
-        <div className="absolute inset-0 bg-[#2E2721]/80"></div>
+        <div className="absolute inset-0 bg-[#2E2721]/80"></div> */}
+        <img
+          src="/images/about_hero_desktop.webp"
+          alt="Vedalush Background"
+          width="1920"
+          height="1080"
+          className="w-full h-auto lg:h-full object-contain lg:object-cover object-center block"
+          fetchPriority="high" decoding="async" />
+        <div className="absolute inset-0 bg-[#2E2721]/50"></div>
 
         {/* Decorative Soft Warm Atmosphere */}
         <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
@@ -43,23 +51,23 @@ const Hero = () => {
               transition={{ delay: 0.2, duration: 0.8 }}
               className="space-y-1 sm:space-y-2 lg:space-y-4"
             >
-              {/* <span className="hidden md:inline-block px-2 sm:px-3.5 lg:px-5 py-0.5 sm:py-1 lg:py-2 bg-[#2E2721] text-[#F8F4EC] font-semibold tracking-widest uppercase text-[8px] sm:text-[10px] md:text-xs lg:text-sm rounded-full border border-[#E6DED2]/30 shadow-soft">
-                100% Organic & Handcrafted
-              </span> */}
-              <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-serif font-bold text-white leading-tight tracking-tight drop-shadow-md">
+              {/* <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-serif font-bold text-white leading-tight tracking-tight drop-shadow-md">
                 Purity in Every <br />
                 <span className="italic font-light text-white" style={{ fontFamily: "'Great Vibes', cursive", fontWeight: 400 }}>Lather.</span>
+              </h1> */}
+              <h1 className="uppercase text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-7xl font-bold text-white leading-tight">
+                Handcrafted Soaps <span className='block'></span> Naturally Made
               </h1>
             </motion.div>
 
-            <motion.p
+            {/* <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-[12px] sm:text-xs md:text-base lg:text-xl text-[#F8F4EC] font-normal max-w-xs sm:max-w-md lg:max-w-xl mx-auto leading-relaxed drop-shadow-sm px-2 sm:px-4"
+              className="text-[13px] sm:text-xs md:text-base lg:text-xl text-[#F8F4EC] font-normal max-w-xs sm:max-w-md lg:max-w-xl mx-auto leading-relaxed drop-shadow-sm px-2 sm:px-4"
             >
-              Experience the luxury of nature with our cold-pressed, chemical-free soaps. Nourish your skin, organically.
-            </motion.p>
+              Handcrafted soaps made with natural ingredients, gentle on your skin and made with care.
+            </motion.p> */}
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
