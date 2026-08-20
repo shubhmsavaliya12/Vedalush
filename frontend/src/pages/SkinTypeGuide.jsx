@@ -149,7 +149,7 @@ const SkinTypeGuide = () => {
       <main className="min-h-screen bg-[#FDFBF7] text-[#5D4E42] font-sans selection:bg-[#B88A5A] selection:text-white">
         
         {/* 1 & 2. HERO / QUIZ SECTION COMBINED */}
-        <section className="relative min-h-[50vh] md:min-h-[70vh] flex flex-col items-center justify-center overflow-hidden pt-[160px] pb-12 lg:pt-[180px] md:pb-20 px-6 lg:px-8 bg-gradient-to-b from-[#F8F4EC] to-[#FDFBF7]">
+        <section className="relative min-h-[50vh] md:min-h-[70vh] flex flex-col items-center justify-center overflow-hidden pt-12 md:pt-20 pb-12 md:pb-20 px-6 lg:px-8 bg-gradient-to-b from-[#F8F4EC] to-[#FDFBF7]">
           {/* Subtle luxury background elements */}
           <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none opacity-20">
              <div className="absolute top-10 left-10 w-[500px] h-[500px] border border-[#B88A5A]/30 rounded-full blur-sm"></div>

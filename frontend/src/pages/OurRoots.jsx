@@ -112,7 +112,7 @@ const OurRoots = () => {
 
       <Navbar />
 
-      <main className="min-h-screen bg-[#FDFBF7] pt-36 lg:pt-44 font-sans text-[#5D4E42]">
+      <main className="min-h-screen bg-[#FDFBF7] font-sans text-[#5D4E42] pt-10 lg:pt-0">
         
         {/* 1. EDITORIAL HERO */}
         <section className="relative px-6 lg:px-12 max-w-[1400px] mx-auto min-h-[75vh] flex items-center mb-24">

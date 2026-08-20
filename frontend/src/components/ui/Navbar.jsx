@@ -111,6 +111,20 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openMobileDropdown, setOpenMobileDropdown] = useState(null);
+  const [navbarHeight, setNavbarHeight] = useState(0);
+  const navbarRef = useRef(null);
+  
+  useEffect(() => {
+    if (!navbarRef.current) return;
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        setNavbarHeight(entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height);
+      }
+    });
+    observer.observe(navbarRef.current);
+    return () => observer.disconnect();
+  }, []);
+  
   const { user } = useAuth();
   const { currency, changeCurrency, supportedCurrencies } = useCurrency();
   const { cartCount, toggleCart } = useCart();
@@ -188,7 +202,9 @@ const Navbar = () => {
 
   return (
     <>
-      <div
+      <div style={{ height: `${navbarHeight}px` }} className="w-full shrink-0" aria-hidden="true" />
+      <div 
+        ref={navbarRef}
         className={`fixed top-0 left-0 w-full z-50 flex flex-col transition-transform duration-300 ease-in-out ${visible ? 'translate-y-0' : '-translate-y-full'
           }`}
       >
@@ -368,7 +384,8 @@ const Navbar = () => {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '-100%', opacity: 0.8 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-[82%] max-w-[340px] h-full bg-[#FDFBF7] shadow-soft-2xl flex flex-col justify-between pt-[130px] pb-8 px-6 overflow-y-auto z-50 border-r border-[#E6DED2]"
+              style={{ paddingTop: navbarHeight }}
+              className="relative w-[82%] max-w-[340px] h-full bg-[#FDFBF7] shadow-soft-2xl flex flex-col justify-between pb-8 px-6 overflow-y-auto z-50 border-r border-[#E6DED2]"
             >
 
               {/* Nav Links List */}
