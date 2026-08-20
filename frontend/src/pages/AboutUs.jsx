@@ -32,14 +32,25 @@ const AboutUs = () => {
       <main className="min-h-screen bg-[#FDFBF7] font-sans text-[#5D4E42]">
         
         {/* 1. HERO SECTION */}
-        <section className="relative px-6 lg:px-12 max-w-[1400px] mx-auto min-h-[50vh] lg:min-h-[60vh] flex flex-col items-center justify-center text-center pt-24 pb-16 lg:pt-32">
+        <section className="relative w-full mx-auto min-h-[50vh] lg:min-h-[60vh] flex flex-col items-center justify-center text-center px-6 lg:px-12 pt-24 pb-16 lg:pt-32 overflow-hidden">
+          {/* Mobile/Tablet Background */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="/images/about_hero_mobile.webp" 
+              alt="Vedalush Background" 
+              className="w-full h-full object-cover"
+            />
+            {/* Subtle overlay to ensure text remains readable */}
+            <div className="absolute inset-0 bg-[#FDFBF7]/30"></div>
+          </div>
+
           <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="max-w-4xl space-y-6"
+            className="relative z-10 max-w-4xl space-y-6 w-full"
           >
-            <h1 className="text-5xl md:text-6xl lg:text-6xl font-serif text-[#2E2721] font-semibold leading-[1.15] uppercase tracking-tight">
+            <h1 className="text-5xl md:text-7xl lg:text-7xl font-serif text-[#2E2721] font-semibold leading-[1.15] uppercase tracking-tight">
               Welcome to Vedalush
             </h1>
           </motion.div>
