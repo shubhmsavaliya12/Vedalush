@@ -64,10 +64,10 @@ const Footer = () => {
               className="overflow-hidden md:!h-auto md:!opacity-100 md:!mt-0 md:!overflow-visible"
             >
               <ul className="space-y-3.5">
-                <li><a href="#products" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Best Sellers</a></li>
-                <li><a href="#products" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">All Soaps</a></li>
-                <li><a href="#ingredients" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Ingredients</a></li>
-                <li><a href="#order" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Direct Order</a></li>
+                <li><a href="/#products" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Best Sellers</a></li>
+                <li><a href="/#products" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">All Soaps</a></li>
+                <li><a href="/#ingredients" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Ingredients</a></li>
+                <li><a href="/#order" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Direct Order</a></li>
               </ul>
             </motion.div>
           </div>
@@ -99,11 +99,11 @@ const Footer = () => {
               className="overflow-hidden md:!h-auto md:!opacity-100 md:!mt-0 md:!overflow-visible"
             >
               <ul className="space-y-3.5">
-                <li><a href="/#benefits" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Our Story</a></li>
+                <li><a href="/about-us" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Our Story</a></li>
                 <li><a href="/reviews" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Customer Reviews</a></li>
                 <li><a href="/skin-type" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Skin Type Guide</a></li>
                 <li><a href="/#faq" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">FAQ</a></li>
-                <li><a href="#contact" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Contact Us</a></li>
+                <li><a href="/#contact" className="text-[#E6DED2] hover:text-white text-sm font-normal transition-colors duration-250">Contact Us</a></li>
               </ul>
             </motion.div>
           </div>

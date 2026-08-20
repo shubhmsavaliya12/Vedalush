@@ -20,6 +20,7 @@ const SkinTypeGuide = lazy(() => import('./pages/SkinTypeGuide'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails'));
 const OurRoots = lazy(() => import('./pages/OurRoots'));
 const Checkout = lazy(() => import('./pages/Checkout'));
+const AboutUs = lazy(() => import('./pages/AboutUs'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // A simple loading fallback
@@ -53,6 +54,7 @@ function App() {
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/our-roots" element={<OurRoots />} />
+            <Route path="/about-us" element={<AboutUs />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
