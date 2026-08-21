@@ -77,13 +77,13 @@ const Hero = () => {
             >
               <a
                 href="#products"
-                className="px-10 py-4 bg-[#B88A5A] text-white rounded-full text-center hover:bg-[#9F7348] transition-all duration-250 shadow-soft hover:shadow-soft-lg transform hover:-translate-y-0.5 font-semibold tracking-wide text-base inline-block"
+                className="px-10 py-4 bg-[#2E2721] text-white rounded-full text-center hover:bg-[#9F7348] transition-all duration-250 shadow-soft hover:shadow-soft-lg transform hover:-translate-y-0.5 font-semibold tracking-wide text-base inline-block"
               >
                 Shop Collection
               </a>
               <a
                 href="#ingredients"
-                className="px-10 py-4 bg-[#2E2721] border border-[#E6DED2]/40 text-[#F8F4EC] rounded-full text-center hover:bg-[#8E7A65] hover:text-white transition-all duration-250 shadow-soft hover:shadow-soft-lg font-semibold tracking-wide text-base inline-block"
+                className="px-10 py-4 bg-[#B88A5A] text-white rounded-full text-center hover:bg-[#9F7348] transition-all duration-250 shadow-soft hover:shadow-soft-lg transform hover:-translate-y-0.5 font-semibold tracking-wide text-base inline-block"
               >
                 Discover Ingredients
               </a>
