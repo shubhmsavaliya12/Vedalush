@@ -168,8 +168,8 @@ const ProductDetails = () => {
 
       <Navbar />
 
-      <main className="flex-grow pt-32 pb-24 px-6 lg:px-8 max-w-7xl mx-auto w-full max-w-full min-w-0">
-        <Link to="/#products" className="inline-flex items-center text-nature-600 hover:text-nature-900 font-medium mb-10 transition-colors group">
+      <main className="flex-grow pb-24 px-6 lg:px-8 max-w-7xl mx-auto w-full max-w-full min-w-0">
+        <Link to="/#products" className="inline-flex items-center text-nature-600 hover:text-nature-900 font-medium mb-10 mt-5 transition-colors group">
           <FaArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform" />
           Back to all products
         </Link>

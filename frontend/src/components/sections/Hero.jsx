@@ -6,22 +6,22 @@ const Hero = () => {
     <section id="hero" className="relative w-full bg-[#2E2721] overflow-hidden">
       {/* Background Image Container: normal flow on mobile/tablet (h-auto), exact 1-screen height on desktop (lg+) */}
       <div className="relative w-full lg:h-[calc(100vh-9rem)] overflow-hidden flex items-center justify-center">
-        {/* <img
+        <img
           src="/images/IMG_20260727_235144.webp"
           alt="Vedalush Background"
           width="1920"
           height="1080"
           className="w-full h-auto lg:h-full object-contain lg:object-cover object-center block"
           fetchPriority="high" decoding="async" />
-        <div className="absolute inset-0 bg-[#2E2721]/80"></div> */}
-        <img
+        <div className="absolute inset-0 bg-[#2E2721]/80"></div>
+        {/* <img
           src="/images/about_hero_desktop.webp"
           alt="Vedalush Background"
           width="1920"
           height="1080"
           className="w-full h-auto lg:h-full object-contain lg:object-cover object-center block"
           fetchPriority="high" decoding="async" />
-        <div className="absolute inset-0 bg-[#2E2721]/50"></div>
+        <div className="absolute inset-0 bg-[#2E2721]/50"></div> */}
 
         {/* Decorative Soft Warm Atmosphere */}
         <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">

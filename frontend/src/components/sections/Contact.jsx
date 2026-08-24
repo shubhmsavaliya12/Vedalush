@@ -6,110 +6,63 @@ import { FaWhatsapp, FaInstagram, FaFacebookF } from 'react-icons/fa';
 const Contact = () => {
   return (
     <section id="contact" className="py-24 bg-[#F8F4EC]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col items-center text-center">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div className="mb-16 max-w-2xl">
+          <span className="text-[#8E7A65] font-semibold tracking-widest uppercase text-sm mb-4 block">
+            Get in Touch
+          </span>
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5D4E42] leading-tight mb-6">
+            We'd Love to Hear From You
+          </h2>
+          <p className="text-[#6F6A65] font-normal text-lg">
+            Whether you have a question about our ingredients, need help with an order, or just want to share your experience, our team is ready to assist you.
+          </p>
+        </div>
 
-          {/* Contact Details */}
-          <div className="space-y-8">
-            <div>
-              <span className="text-[#8E7A65] font-semibold tracking-widest uppercase text-sm mb-4 block">
-                Get in Touch
-              </span>
-              <h2 className="text-4xl font-serif font-bold text-[#5D4E42] leading-tight">
-                We'd Love to Hear From You
-              </h2>
+        <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-8 w-full max-w-5xl">
+          {/* Phone */}
+          <a href="tel:+919904765058" className="flex md:flex-col items-center md:bg-white md:px-6 md:py-10 md:rounded-2xl md:shadow-sm md:border border-[#E6DED2]/50 group cursor-pointer hover:-translate-y-1 md:hover:shadow-md transition-all duration-300 w-full md:w-1/3 text-left md:text-center">
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-white md:bg-[#FDFBF7] rounded-full flex items-center justify-center shadow-soft md:shadow-none border border-[#E6DED2] md:border-[#E6DED2]/50 mr-4 md:mr-0 md:mb-6 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+              <HiOutlinePhone className="w-5 h-5 md:w-6 md:h-6 text-[#8E7A65] group-hover:text-[#B88A5A] transition-colors" />
             </div>
-
-            <p className="text-[#6F6A65] font-normal max-w-md">
-              Whether you have a question about our ingredients, need help with an order, or just want to share your experience, our team is ready to assist you.
-            </p>
-
-            <div className="space-y-6 pt-4">
-              <a href="tel:+919904765058" className="flex items-center space-x-4 text-[#5D4E42] hover:text-[#8E7A65] transition-colors duration-250 group cursor-pointer">
-                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2] group-hover:scale-110 transition-transform duration-250">
-                  <HiOutlinePhone className="w-5 h-5 text-[#8E7A65] group-hover:text-[#B88A5A] transition-colors duration-250" />
-                </div>
-                <div>
-                  <p className="font-serif font-bold">Phone</p>
-                  <p className="font-normal text-[#6F6A65] group-hover:underline">+91 9904765058</p>
-                </div>
-              </a>
-
-              <a href="https://wa.me/919904765058" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-[#5D4E42] hover:text-[#8E7A65] transition-colors duration-250 group cursor-pointer">
-                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2] group-hover:scale-110 transition-transform duration-250">
-                  <FaWhatsapp className="w-5 h-5 text-[#8E7A65] group-hover:text-[#B88A5A] transition-colors duration-250" />
-                </div>
-                <div>
-                  <p className="font-serif font-bold">WhatsApp</p>
-                  <p className="font-normal text-[#6F6A65] group-hover:underline">+91 9904765058</p>
-                </div>
-              </a>
-
-              <a href="mailto:Hello@vedalush.com" className="flex items-center space-x-4 text-[#5D4E42] hover:text-[#8E7A65] transition-colors duration-250 group cursor-pointer">
-                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2] group-hover:scale-110 transition-transform duration-250">
-                  <HiOutlineMail className="w-5 h-5 text-[#8E7A65] group-hover:text-[#B88A5A] transition-colors duration-250" />
-                </div>
-                <div>
-                  <p className="font-serif font-bold">Email</p>
-                  <p className="font-normal text-[#6F6A65] group-hover:underline">Hello@vedalush.com</p>
-                </div>
-              </a>
-
-              <a
-                href="https://www.google.com/maps?q=23.0328009,72.4256979+(VILLA-184,+Manipur+Saptak,+Ghuma,+Manipur,+Gujarat+382115)&z=16&output=embed"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Click to open location in Google Maps"
-                className="flex items-center space-x-4 text-[#5D4E42] hover:text-[#8E7A65] transition-colors duration-250 group cursor-pointer">
-                <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-soft border border-[#E6DED2] group-hover:scale-110 transition-transform duration-250">
-                  <HiOutlineLocationMarker className="w-5 h-5 text-[#8E7A65] group-hover:text-[#B88A5A] transition-colors duration-250" />
-                </div>
-                <div>
-                  <p className="font-serif font-bold flex items-center gap-1.5">
-                    Studio
-                  </p>
-                  <p className="font-normal text-[#6F6A65] group-hover:underline">VILLA-184, Manipur Saptak, Ghuma, Gujarat 382115</p>
-                </div>
-              </a>
+            <div className="flex-1">
+              <p className="font-serif font-bold text-base md:text-xl md:mb-2 text-[#5D4E42]">Phone</p>
+              <p className="font-normal text-sm md:text-base text-[#6F6A65] group-hover:underline">+91 9904765058</p>
             </div>
+          </a>
 
-            {/* Social Links */}
-            <div className="pt-8 flex space-x-4">
-              <a href="https://www.instagram.com/vedalush_?igsi=NmdjbWd2dGluNHcw" target='_blank' rel='noopener noreferrer' className="w-10 h-10 bg-[#5D4E42] text-white rounded-full flex items-center justify-center hover:bg-[#8E7A65] transition-colors duration-250 shadow-soft">
-                <FaInstagram />
-              </a>
-              <a href="#" className="w-10 h-10 bg-[#5D4E42] text-white rounded-full flex items-center justify-center hover:bg-[#8E7A65] transition-colors duration-250 shadow-soft">
-                <FaFacebookF />
-              </a>
+          {/* WhatsApp */}
+          <a href="https://wa.me/919904765058" target="_blank" rel="noopener noreferrer" className="flex md:flex-col items-center md:bg-white md:px-6 md:py-10 md:rounded-2xl md:shadow-sm md:border border-[#E6DED2]/50 group cursor-pointer hover:-translate-y-1 md:hover:shadow-md transition-all duration-300 w-full md:w-1/3 text-left md:text-center">
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-white md:bg-[#FDFBF7] rounded-full flex items-center justify-center shadow-soft md:shadow-none border border-[#E6DED2] md:border-[#E6DED2]/50 mr-4 md:mr-0 md:mb-6 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+              <FaWhatsapp className="w-5 h-5 md:w-6 md:h-6 text-[#8E7A65] group-hover:text-[#B88A5A] transition-colors" />
             </div>
-          </div>
+            <div className="flex-1">
+              <p className="font-serif font-bold text-base md:text-xl md:mb-2 text-[#5D4E42]">WhatsApp</p>
+              <p className="font-normal text-sm md:text-base text-[#6F6A65] group-hover:underline">+91 9904765058</p>
+            </div>
+          </a>
 
-          {/* Live Interactive Google Map */}
-          <div className="h-96 md:h-full min-h-[450px] rounded-2xl relative group border border-[#E6DED2] shadow-soft overflow-hidden">
-            <iframe
-              title="Vedalush Studio Google Map"
-              src="https://www.google.com/maps?q=23.0328009,72.4256979+(VILLA-184,+Manipur+Saptak,+Ghuma,+Manipur,+Gujarat+382115)&z=16&output=embed"
-              width="100%"
-              height="100%"
-              style={{ border: 0, minHeight: '450px' }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-full h-full object-cover"
-            />
-            {/* Quick action floating button */}
-            <a
-              href="https://maps.app.goo.gl/UVMmWmdc2MtJXTGD7"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute top-4 right-4 z-10 bg-white hover:bg-[#FDFBF7] text-[#5D4E42] px-4 py-2.5 rounded-xl shadow-soft border border-[#E6DED2] flex items-center gap-2 text-xs font-semibold transition-all duration-250 hover:scale-105 hover:shadow-soft-lg"
-            >
-              <HiOutlineLocationMarker className="w-4 h-4 text-[#8E7A65]" />
-              <span>Open in Google Maps</span>
-            </a>
-          </div>
+          {/* Email */}
+          <a href="mailto:Hello@vedalush.com" className="flex md:flex-col items-center md:bg-white md:px-6 md:py-10 md:rounded-2xl md:shadow-sm md:border border-[#E6DED2]/50 group cursor-pointer hover:-translate-y-1 md:hover:shadow-md transition-all duration-300 w-full md:w-1/3 text-left md:text-center">
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-white md:bg-[#FDFBF7] rounded-full flex items-center justify-center shadow-soft md:shadow-none border border-[#E6DED2] md:border-[#E6DED2]/50 mr-4 md:mr-0 md:mb-6 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+              <HiOutlineMail className="w-5 h-5 md:w-6 md:h-6 text-[#8E7A65] group-hover:text-[#B88A5A] transition-colors" />
+            </div>
+            <div className="flex-1">
+              <p className="font-serif font-bold text-base md:text-xl md:mb-2 text-[#5D4E42]">Email</p>
+              <p className="font-normal text-sm md:text-base text-[#6F6A65] group-hover:underline">Hello@vedalush.com</p>
+            </div>
+          </a>
+        </div>
 
+        {/* Social Links */}
+        <div className="mt-16 flex space-x-4 items-center">
+          <a href="https://www.instagram.com/vedalush_?igsi=NmdjbWd2dGluNHcw" target='_blank' rel='noopener noreferrer' className="w-11 h-11 bg-[#5D4E42] text-white rounded-full flex items-center justify-center hover:bg-[#B88A5A] transition-colors duration-250 shadow-soft">
+            <FaInstagram className="w-5 h-5" />
+          </a>
+          <a href="#" className="w-11 h-11 bg-[#5D4E42] text-white rounded-full flex items-center justify-center hover:bg-[#B88A5A] transition-colors duration-250 shadow-soft">
+            <FaFacebookF className="w-5 h-5" />
+          </a>
         </div>
 
       </div>

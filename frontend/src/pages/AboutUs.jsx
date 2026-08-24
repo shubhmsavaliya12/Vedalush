@@ -160,11 +160,11 @@ const AboutUs = () => {
               "Nature has everything we need to heal and protect our skin naturally."
             </h2>
             
-            <div className="text-lg text-[#8E7A65] font-light space-y-4 max-w-2xl mx-auto">
+            {/* <div className="text-lg text-[#8E7A65] font-light space-y-4 max-w-2xl mx-auto">
               <p>
                 [ Placeholder text: You can add a short story about yourself here. Write about why you love natural skincare and how you started Vedalush. You can edit this later. ]
               </p>
-            </div>
+            </div> */}
             
             <div className="pt-4">
               <p className="text-[#2E2721] font-semibold uppercase text-sm">
