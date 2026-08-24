@@ -110,7 +110,7 @@ const Ingredients = () => {
               className="group flex flex-col items-center justify-center text-nature-600 hover:text-nature-900 transition-colors duration-300 focus:outline-none"
             >
               <span className="text-sm tracking-widest uppercase font-semibold mb-5">
-                {isExpanded ? 'Show Less' : 'View All Ingredients'}
+                {isExpanded ? 'Show Less' : 'Load more'}
               </span>
                 {isExpanded ? (
                   <FaChevronUp className="w-4 h-4" />

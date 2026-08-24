@@ -362,7 +362,7 @@ const OurRoots = () => {
                       {showAllIngredients ? (
                         <>Show Less <HiOutlineChevronUp size={18} /></>
                       ) : (
-                        <>Explore All Ingredients <HiOutlineChevronDown size={18} /></>
+                        <>Load More <HiOutlineChevronDown size={18} /></>
                       )}
                     </button>
                   </div>
