@@ -357,12 +357,18 @@ const OurRoots = () => {
                   <div className="mt-16 flex justify-center">
                     <button 
                       onClick={() => setShowAllIngredients(!showAllIngredients)}
-                      className="flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-[#5D4E42] border border-[#E6DED2] bg-white px-8 py-3 rounded-full hover:bg-[#F8F4EC] hover:border-[#B88A5A] transition-all duration-300 shadow-sm hover:shadow-md"
+                      className="flex flex-col items-center gap-2 text-sm font-semibold uppercase tracking-widest text-[#5D4E42]"
                     >
                       {showAllIngredients ? (
-                        <>Show Less <HiOutlineChevronUp size={18} /></>
+                        <>
+                          <p>Show Less</p>
+                          <HiOutlineChevronUp size={18} className='animate-bounce' />
+                        </>
                       ) : (
-                        <>Load More <HiOutlineChevronDown size={18} /></>
+                        <>
+                          <p>Load More</p>
+                          <HiOutlineChevronDown size={18} className='animate-bounce' />
+                        </>
                       )}
                     </button>
                   </div>
