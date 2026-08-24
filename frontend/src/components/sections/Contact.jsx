@@ -55,14 +55,29 @@ const Contact = () => {
           </a>
         </div>
 
-        {/* Social Links */}
-        <div className="mt-16 flex space-x-4 items-center">
-          <a href="https://www.instagram.com/vedalush_?igsi=NmdjbWd2dGluNHcw" target='_blank' rel='noopener noreferrer' className="w-11 h-11 bg-[#5D4E42] text-white rounded-full flex items-center justify-center hover:bg-[#B88A5A] transition-colors duration-250 shadow-soft">
-            <FaInstagram className="w-5 h-5" />
-          </a>
-          <a href="#" className="w-11 h-11 bg-[#5D4E42] text-white rounded-full flex items-center justify-center hover:bg-[#B88A5A] transition-colors duration-250 shadow-soft">
-            <FaFacebookF className="w-5 h-5" />
-          </a>
+        {/* Social Interactive Banner */}
+        <div className="mt-16 w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-[#E6DED2]/60 p-2 pl-4 sm:pl-8 flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden group hover:shadow-md transition-shadow duration-500">
+          {/* Subtle background glow/effect */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#B88A5A]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none group-hover:bg-[#B88A5A]/15 transition-colors duration-700"></div>
+          
+          <div className="flex-1 text-center sm:text-left z-10 pt-6 sm:pt-0">
+            <h3 className="font-serif text-xl md:text-2xl font-bold text-[#5D4E42]">Join Our Community</h3>
+            <p className="text-sm md:text-base text-[#8E7A65] mt-1.5 font-light">Follow us for natural skincare tips.</p>
+          </div>
+          
+          <div className="flex gap-3 md:gap-4 z-10 pb-6 sm:pb-0 sm:pr-2 w-full sm:w-auto justify-center">
+            <a href="https://www.instagram.com/vedalush_?igsi=NmdjbWd2dGluNHcw" target='_blank' rel='noopener noreferrer' 
+               className="flex items-center gap-2.5 bg-[#FDFBF7] hover:bg-[#5D4E42] text-[#5D4E42] hover:text-white border border-[#E6DED2] px-6 py-3.5 rounded-xl transition-all duration-300 shadow-soft hover:-translate-y-1 hover:shadow-md group/btn">
+              <FaInstagram className="w-5 h-5 text-[#C13584] group-hover/btn:text-white transition-colors" />
+              <span className="font-semibold text-sm tracking-wide">Instagram</span>
+            </a>
+            
+            <a href="#" 
+               className="flex items-center gap-2.5 bg-[#FDFBF7] hover:bg-[#5D4E42] text-[#5D4E42] hover:text-white border border-[#E6DED2] px-6 py-3.5 rounded-xl transition-all duration-300 shadow-soft hover:-translate-y-1 hover:shadow-md group/btn">
+              <FaFacebookF className="w-4 h-4 text-[#1877F2] group-hover/btn:text-white transition-colors" />
+              <span className="font-semibold text-sm tracking-wide">Facebook</span>
+            </a>
+          </div>
         </div>
 
       </div>
