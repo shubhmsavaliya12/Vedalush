@@ -143,36 +143,33 @@ const AboutUs = () => {
         </section>
 
         {/* 4. THE FOUNDER / ARTISAN SECTION */}
-        <section className="relative px-6 lg:px-12 max-w-[1000px] mx-auto py-20 lg:py-30 text-center">
+        <section className="relative px-6 lg:px-12 max-w-[1200px] mx-auto py-20 lg:py-32">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-8"
+            className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center"
           >
-            {/* Founder Avatar */}
-            <div className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full bg-[#E6DED2] flex items-center justify-center border-4 border-[#FDFBF7] shadow-lg overflow-hidden">
-               <img src="/images/founder.webp" alt="Founder of Vedalush" className="w-full h-full object-cover scale-110" />
+            {/* Left: Founder Image */}
+            <div className="relative aspect-[3/4] md:aspect-[4/5] w-full max-w-md mx-auto md:max-w-none rounded-2xl overflow-hidden shadow-lg">
+               <img src="/images/founder.webp" alt="Neha Savaliya - Founder of Vedalush" className="w-full h-full object-cover" />
             </div>
             
-            <h2 className="text-3xl lg:text-4xl font-serif font-semibold text-[#2E2721]">
-              "Nature has everything we need to heal and protect our skin naturally."
-            </h2>
-            
-            {/* <div className="text-lg text-[#8E7A65] font-light space-y-4 max-w-2xl mx-auto">
-              <p>
-                [ Placeholder text: You can add a short story about yourself here. Write about why you love natural skincare and how you started Vedalush. You can edit this later. ]
-              </p>
-            </div> */}
-            
-            <div className="pt-4">
-              <p className="text-[#2E2721] font-semibold uppercase text-sm">
-                Neha Savaliya
-              </p>
-              <p className="text-[#B88A5A] text-xs uppercase tracking-widest mt-1">
-                Founder & Main Creator
-              </p>
+            {/* Right: Text Content */}
+            <div className="space-y-8 text-center md:text-left">
+              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-serif font-semibold text-[#2E2721] leading-tight">
+                "Nature has everything we need to heal and protect our skin naturally."
+              </h2>
+              
+              <div className="pt-6 border-t border-[#E6DED2]/60 inline-block md:block w-full">
+                <p className="text-[#2E2721] font-semibold uppercase text-sm tracking-widest">
+                  Neha Savaliya
+                </p>
+                <p className="text-[#B88A5A] text-xs uppercase tracking-[0.2em] mt-2 font-medium">
+                  Founder & Main Creator
+                </p>
+              </div>
             </div>
           </motion.div>
         </section>
