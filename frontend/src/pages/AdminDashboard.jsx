@@ -8,6 +8,21 @@ import { FaStar, FaWhatsapp } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 
 
+const STATUS_OPTIONS = [
+  { value: 'pending_payment', label: 'PENDING PAYMENT' },
+  { value: 'confirmed', label: 'CONFIRMED' },
+  { value: 'processing', label: 'PROCESSING' },
+  { value: 'packed', label: 'PACKED' },
+  { value: 'shipped', label: 'SHIPPED' },
+  { value: 'out_for_delivery', label: 'OUT FOR DELIVERY' },
+  { value: 'delivered', label: 'DELIVERED' },
+  { value: 'cancelled', label: 'CANCELLED' },
+  { value: 'return_requested', label: 'RETURN REQ.' },
+  { value: 'returned', label: 'RETURNED' }
+];
+
+const FILTER_OPTIONS = [{ value: 'All', label: 'All Status' }, ...STATUS_OPTIONS];
+
 const CustomStatusDropdown = ({ value, options, onChange, type = "filter" }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -68,15 +83,17 @@ const CustomStatusDropdown = ({ value, options, onChange, type = "filter" }) => 
 
   const getStyleForValue = (val) => {
     if (type === "filter") return "text-[#5D4E42] font-semibold";
-    if (val === "completed") return "text-emerald-700 font-bold";
-    if (val === "contacted") return "text-blue-700 font-bold";
+    if (['delivered', 'confirmed'].includes(val)) return "text-emerald-700 font-bold";
+    if (['shipped', 'out_for_delivery'].includes(val)) return "text-blue-700 font-bold";
+    if (['cancelled', 'returned'].includes(val)) return "text-red-700 font-bold";
     return "text-amber-700 font-bold";
   };
 
   const getBgStyleForValue = (val) => {
     if (type === "filter") return "bg-transparent";
-    if (val === "completed") return "bg-emerald-100";
-    if (val === "contacted") return "bg-blue-100";
+    if (['delivered', 'confirmed'].includes(val)) return "bg-emerald-100";
+    if (['shipped', 'out_for_delivery'].includes(val)) return "bg-blue-100";
+    if (['cancelled', 'returned'].includes(val)) return "bg-red-100";
     return "bg-amber-100";
   };
 
@@ -258,14 +275,25 @@ const AdminDashboard = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}/status`, { status: newStatus }, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}/status`, { orderStatus: newStatus }, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
       // Update local state to reflect change instantly
       setOrders(orders.map(order => 
-        order._id === orderId ? { ...order, status: newStatus } : order
+        order._id === orderId ? { ...order, orderStatus: newStatus } : order
       ));
     } catch (error) {
       console.error('Error updating status:', error);
       alert('Failed to update status');
+    }
+  };
+
+  const handlePushToShiprocket = async (orderId) => {
+    try {
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}/status`, { pushToShiprocket: true }, { headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` } });
+      fetchOrders();
+      alert('Order pushed to Shiprocket successfully');
+    } catch (error) {
+      console.error('Error pushing to Shiprocket:', error);
+      alert('Failed to push to Shiprocket');
     }
   };
 
@@ -707,7 +735,7 @@ const AdminDashboard = () => {
 
   const renderOrders = () => {
     const filteredOrders = orders.filter(order => {
-      const matchesStatus = orderFilter === 'All' || order.status.toLowerCase() === orderFilter.toLowerCase();
+      const matchesStatus = orderFilter === 'All' || (order.orderStatus || 'pending_payment').toLowerCase() === orderFilter.toLowerCase();
       
       let matchesDate = true;
       if (dateFilter) {
@@ -737,12 +765,7 @@ const AdminDashboard = () => {
               value={orderFilter}
               onChange={setOrderFilter}
               type="filter"
-              options={[
-                { value: 'All', label: 'All Status' },
-                { value: 'pending', label: 'Pending' },
-                { value: 'contacted', label: 'Contacted' },
-                { value: 'completed', label: 'Completed' }
-              ]}
+              options={FILTER_OPTIONS}
             />
             {dateFilter && (
               <button 
@@ -783,14 +806,10 @@ const AdminDashboard = () => {
                   <td className="p-4 text-[#6F6A65]">{new Date(order.createdAt).toLocaleDateString()}</td>
                   <td className="p-4">
                     <CustomStatusDropdown 
-                      value={order.status}
+                      value={order.orderStatus || 'pending_payment'}
                       onChange={(newStatus) => handleStatusChange(order._id, newStatus)}
                       type="table"
-                      options={[
-                        { value: 'pending', label: 'PENDING' },
-                        { value: 'contacted', label: 'CONTACTED' },
-                        { value: 'completed', label: 'COMPLETED' }
-                      ]}
+                      options={STATUS_OPTIONS}
                     />
                   </td>
                   <td className="p-4 text-right">
@@ -841,14 +860,10 @@ const AdminDashboard = () => {
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-[#6F6A65]">Status:</span>
                 <CustomStatusDropdown 
-                  value={order.status}
+                  value={order.orderStatus || 'pending_payment'}
                   onChange={(newStatus) => handleStatusChange(order._id, newStatus)}
                   type="table"
-                  options={[
-                    { value: 'pending', label: 'PENDING' },
-                    { value: 'contacted', label: 'CONTACTED' },
-                    { value: 'completed', label: 'COMPLETED' }
-                  ]}
+                  options={STATUS_OPTIONS}
                 />
               </div>
             </div>
@@ -1674,8 +1689,18 @@ const AdminDashboard = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-bold text-[#5D4E42]">Shipping Details</h3>
                   <div className="space-y-2 text-sm">
-                    <p><span className="text-[#9D948B] block font-medium">Country</span> <span className="text-[#5D4E42] font-semibold">{selectedOrder.country}</span></p>
-                    <p><span className="text-[#9D948B] block font-medium">Full Address</span> <span className="text-[#5D4E42] font-semibold">{selectedOrder.address}</span></p>
+                    {selectedOrder.shippingAddress ? (
+                      <>
+                        <p><span className="text-[#9D948B] block font-medium">Full Address</span> <span className="text-[#5D4E42] font-semibold">{selectedOrder.shippingAddress.address}</span></p>
+                        <p><span className="text-[#9D948B] block font-medium">City / State</span> <span className="text-[#5D4E42] font-semibold">{selectedOrder.shippingAddress.city}, {selectedOrder.shippingAddress.state} {selectedOrder.shippingAddress.pincode}</span></p>
+                        <p><span className="text-[#9D948B] block font-medium">Country</span> <span className="text-[#5D4E42] font-semibold">{selectedOrder.shippingAddress.country}</span></p>
+                      </>
+                    ) : (
+                      <>
+                        <p><span className="text-[#9D948B] block font-medium">Country</span> <span className="text-[#5D4E42] font-semibold">{selectedOrder.country}</span></p>
+                        <p><span className="text-[#9D948B] block font-medium">Full Address</span> <span className="text-[#5D4E42] font-semibold">{selectedOrder.address}</span></p>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -1688,7 +1713,7 @@ const AdminDashboard = () => {
                         <div className="text-xs text-[#8E7A65] font-bold tracking-wider uppercase mb-1">Requested Products ({selectedOrder.items.length}):</div>
                         {selectedOrder.items.map((item, idx) => (
                           <div key={idx} className="flex justify-between items-center bg-[#FFFFFF] px-3 py-2 rounded-lg text-sm border border-[#E6DED2]/40 shadow-soft">
-                            <span className="text-[#5D4E42] font-bold">• {item.product}</span>
+                            <span className="text-[#5D4E42] font-bold">• {item.name || (typeof item.product === 'object' ? item.product.name : item.product)}</span>
                             <span className="text-white font-mono font-bold bg-[#8E7A65] px-2.5 py-0.5 rounded-full text-xs">Qty: {item.quantity}</span>
                           </div>
                         ))}
@@ -1706,21 +1731,36 @@ const AdminDashboard = () => {
                       </div>
                     )}
                   </div>
+
+                  {/* Shiprocket Section */}
+                  <div className="bg-[#F8F4EC] rounded-xl p-4 border border-[#E6DED2] space-y-3">
+                    <h4 className="font-bold text-[#5D4E42] text-sm">Shipping & Fulfillment (Shiprocket)</h4>
+                    {selectedOrder.shippingDetails?.shiprocketOrderId ? (
+                      <div className="text-sm space-y-1 text-[#6F6A65]">
+                        <p><span className="font-medium">Order ID:</span> {selectedOrder.shippingDetails.shiprocketOrderId}</p>
+                        <p><span className="font-medium">AWB Code:</span> {selectedOrder.shippingDetails.awbCode || 'Pending'}</p>
+                        <p><span className="font-medium">Courier:</span> {selectedOrder.shippingDetails.courierName || 'Pending'}</p>
+                      </div>
+                    ) : (
+                      <button 
+                        onClick={() => handlePushToShiprocket(selectedOrder._id)}
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs px-4 py-2 rounded-lg transition-colors shadow-soft"
+                      >
+                        Push to Shiprocket
+                      </button>
+                    )}
+                  </div>
                   
                   <div className="flex justify-between items-center pt-4">
                     <span className="text-[#8E7A65] font-medium text-sm">Submitted on: {new Date(selectedOrder.createdAt).toLocaleString()}</span>
                     <CustomStatusDropdown 
-                      value={selectedOrder.status}
+                      value={selectedOrder.orderStatus || 'pending_payment'}
                       onChange={(newStatus) => {
                         handleStatusChange(selectedOrder._id, newStatus);
-                        setSelectedOrder({...selectedOrder, status: newStatus});
+                        setSelectedOrder({...selectedOrder, orderStatus: newStatus});
                       }}
                       type="modal"
-                      options={[
-                        { value: 'pending', label: 'PENDING' },
-                        { value: 'contacted', label: 'CONTACTED' },
-                        { value: 'completed', label: 'COMPLETED' }
-                      ]}
+                      options={STATUS_OPTIONS}
                     />
                   </div>
                 </div>

@@ -354,3 +354,84 @@ export const sendOtpEmail = async (email, otp, type, userName = 'Valued User') =
   }
 };
 
+export const sendPaymentFailedEmail = async (orderData) => {
+  try {
+    if (!orderData || !isValidEmail(orderData.email)) return false;
+
+    const senderEmail = process.env.BREVO_SENDER_EMAIL || 'shubhm.savaliya@gmail.com';
+    const senderName = process.env.BREVO_SENDER_NAME || 'Vedalush Orders';
+    const apiKey = process.env.BREVO_API_KEY;
+
+    const safeName = escapeHtml(orderData.name || 'Valued Customer');
+    const safeOrderNum = escapeHtml(orderData.orderNumber || 'Unknown');
+
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; color: #5D4E42;">
+        <h2 style="color: #DC2626;">Payment Failed</h2>
+        <p>Hello ${safeName},</p>
+        <p>Unfortunately, the payment for your order (<strong>${safeOrderNum}</strong>) has failed.</p>
+        <p>Don't worry, your order is saved. You can try again from your profile.</p>
+        <p><a href="https://www.vedalush.com/profile" style="background-color: #B88A5A; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">Retry Payment</a></p>
+      </div>
+    `;
+
+    if (!apiKey || apiKey === 'your_brevo_api_key_here') {
+      console.log('--- [MOCK EMAIL: PAYMENT FAILED] ---');
+      return true;
+    }
+
+    const client = new BrevoClient({ apiKey });
+    await client.transactionalEmails.sendTransacEmail({
+      sender: { name: senderName, email: senderEmail },
+      to: [{ email: orderData.email.trim(), name: safeName }],
+      subject: `Payment Failed for Order ${safeOrderNum} | Vedalush`,
+      htmlContent
+    });
+    return true;
+  } catch (error) {
+    console.error('Error sending payment failed email:', error);
+    return false;
+  }
+};
+
+export const sendOrderStatusUpdateEmail = async (orderData, newStatus) => {
+  try {
+    if (!orderData || !isValidEmail(orderData.email)) return false;
+
+    const senderEmail = process.env.BREVO_SENDER_EMAIL || 'shubhm.savaliya@gmail.com';
+    const senderName = process.env.BREVO_SENDER_NAME || 'Vedalush Orders';
+    const apiKey = process.env.BREVO_API_KEY;
+
+    const safeName = escapeHtml(orderData.name || 'Valued Customer');
+    const safeOrderNum = escapeHtml(orderData.orderNumber || 'Unknown');
+    const safeStatus = escapeHtml(newStatus.replace(/_/g, ' ').toUpperCase());
+
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; color: #5D4E42;">
+        <h2 style="color: #B88A5A;">Order Update</h2>
+        <p>Hello ${safeName},</p>
+        <p>Your order (<strong>${safeOrderNum}</strong>) status has been updated to: <strong>${safeStatus}</strong>.</p>
+        ${orderData.shippingDetails?.trackingUrl ? `<p>Track your shipment here: <a href="${orderData.shippingDetails.trackingUrl}">${orderData.shippingDetails.awbCode}</a></p>` : ''}
+        <p>Thank you for choosing Vedalush!</p>
+      </div>
+    `;
+
+    if (!apiKey || apiKey === 'your_brevo_api_key_here') {
+      console.log(`--- [MOCK EMAIL: ORDER STATUS ${safeStatus}] ---`);
+      return true;
+    }
+
+    const client = new BrevoClient({ apiKey });
+    await client.transactionalEmails.sendTransacEmail({
+      sender: { name: senderName, email: senderEmail },
+      to: [{ email: orderData.email.trim(), name: safeName }],
+      subject: `Order Update: ${safeStatus} | Vedalush`,
+      htmlContent
+    });
+    return true;
+  } catch (error) {
+    console.error('Error sending status update email:', error);
+    return false;
+  }
+};
+

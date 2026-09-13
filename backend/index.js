@@ -19,6 +19,7 @@ import ingredientRoutes from './routes/ingredients.js';
 import newsletterRoutes from './routes/newsletter.js';
 import chatRoutes from './routes/chat.js';
 import cartRoutes from './routes/cart.js';
+import webhookRoutes from './routes/webhooks.js';
 
 dotenv.config();
 
@@ -81,6 +82,7 @@ app.use('/api/ingredients', ingredientRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/webhooks', webhookRoutes);
 
 // Health check
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));

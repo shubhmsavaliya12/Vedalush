@@ -14,7 +14,9 @@ import {
   HiOutlinePhone,
   HiOutlineLocationMarker,
   HiOutlineCheckCircle,
-  HiOutlineX
+  HiOutlineX,
+  HiOutlineShoppingBag,
+  HiOutlineRefresh
 } from 'react-icons/hi';
 import Navbar from '../components/ui/Navbar';
 import Footer from '../components/ui/Footer';
@@ -35,6 +37,8 @@ const Profile = () => {
   const navigate = useNavigate();
   const [reviews, setReviews] = useState([]);
   const [loadingReviews, setLoadingReviews] = useState(true);
+  const [orders, setOrders] = useState([]);
+  const [loadingOrders, setLoadingOrders] = useState(true);
 
   // Edit modal state
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -112,14 +116,76 @@ const Profile = () => {
       }
     };
 
+    const fetchMyOrders = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/me`, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
+        setOrders(response.data);
+      } catch (error) {
+        console.error('Error fetching personal orders:', error);
+      } finally {
+        setLoadingOrders(false);
+      }
+    };
+
     if (user) {
       fetchMyReviews();
+      fetchMyOrders();
     }
   }, [user]);
 
   const handleLogout = async () => {
     await logout();
     navigate('/');
+  };
+
+  const handleRequestReturn = async (orderId) => {
+    if (!window.confirm('Are you sure you want to request a return for this order?')) return;
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}/request-return`, {}, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
+      if (response.status === 200) {
+        setOrders(orders.map(o => o._id === orderId ? response.data : o));
+        alert('Return requested successfully.');
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || 'Failed to request return');
+    }
+  };
+
+  const handleRetryPayment = async (orderId) => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}/retry-payment`, {}, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
+      
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_mock',
+        amount: response.data.amount * 100,
+        currency: 'INR',
+        name: 'Vedalush',
+        order_id: response.data.razorpayOrderId,
+        handler: async function (paymentRes) {
+          try {
+            await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/verify-payment`, {
+              razorpay_order_id: paymentRes.razorpay_order_id,
+              razorpay_payment_id: paymentRes.razorpay_payment_id,
+              razorpay_signature: paymentRes.razorpay_signature,
+              orderId
+            }, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
+            
+            // Refetch orders
+            const ordersRes = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/me`, { headers: { Authorization: `Bearer ${localStorage.getItem('user_token')}` } });
+            setOrders(ordersRes.data);
+            alert('Payment successful!');
+          } catch (err) {
+            alert('Payment verification failed.');
+          }
+        },
+        theme: { color: '#B88A5A' }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      alert(error.response?.data?.message || 'Failed to initiate payment retry');
+    }
   };
 
   const handleUpdateProfile = async (e) => {
@@ -537,6 +603,104 @@ const Profile = () => {
                     >
                       + Add Your First Address
                     </button>
+                  </div>
+                )}
+              </div>
+
+              {/* My Orders Section */}
+              <div className="bg-white rounded border border-nature-200/80 p-6 sm:p-8 shadow-sm">
+                <div className="flex items-center justify-between border-b border-nature-200 pb-4 mb-6 gap-3">
+                  <div>
+                    <h3 className="text-2xl font-serif font-bold text-nature-900 flex items-center space-x-2">
+                      <HiOutlineShoppingBag className="text-nature-600 text-3xl" />
+                      <span>My Orders</span>
+                    </h3>
+                  </div>
+                </div>
+
+                {loadingOrders ? (
+                  <div className="space-y-4">
+                    {[...Array(2)].map((_, i) => (
+                      <div key={i} className="h-32 bg-nature-100 animate-pulse rounded-lg"></div>
+                    ))}
+                  </div>
+                ) : orders.length === 0 ? (
+                  <div className="py-10 text-center text-nature-600 flex flex-col items-center">
+                    <div className="w-16 h-16 bg-nature-100 rounded-full flex items-center justify-center text-nature-500 mb-4 text-2xl">
+                      <HiOutlineShoppingBag />
+                    </div>
+                    <h4 className="text-lg font-serif font-bold text-nature-900 mb-2">No Orders Yet</h4>
+                    <p className="text-sm max-w-sm mx-auto text-nature-600 mb-6">
+                      Looks like you haven't made any purchases yet.
+                    </p>
+                    <a
+                      href="/#products"
+                      className="bg-nature-900 text-white text-xs font-medium px-6 py-3 rounded-xl hover:bg-nature-800 transition-colors shadow-soft"
+                    >
+                      Start Shopping
+                    </a>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {orders.map((order) => (
+                      <div key={order._id} className="border border-nature-200 rounded-xl p-5 hover:shadow-soft transition-all">
+                        <div className="flex justify-between items-start mb-4 pb-4 border-b border-nature-100">
+                          <div>
+                            <span className="font-bold text-nature-900 block">Order #{order.orderNumber}</span>
+                            <span className="text-xs text-nature-500">{new Date(order.createdAt).toLocaleDateString()}</span>
+                          </div>
+                          <div className="text-right">
+                            <span className="font-bold text-nature-900 block">₹{order.pricing?.total || 0}</span>
+                            <span className={`text-xs font-bold uppercase tracking-wider px-2 py-1 rounded ${
+                              order.orderStatus === 'delivered' ? 'bg-green-100 text-green-700' :
+                              order.orderStatus === 'cancelled' ? 'bg-red-100 text-red-700' :
+                              'bg-amber-100 text-amber-700'
+                            }`}>
+                              {order.orderStatus.replace(/_/g, ' ')}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-3 mb-4">
+                          {order.items?.map((item, idx) => (
+                            <div key={idx} className="flex justify-between text-sm">
+                              <span className="text-nature-700">{item.name} <span className="text-nature-400">x{item.quantity}</span></span>
+                              <span className="font-medium text-nature-900">₹{item.price * item.quantity}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="flex flex-wrap gap-3 pt-4 border-t border-nature-100">
+                          {order.paymentStatus === 'failed' && (
+                            <button 
+                              onClick={() => handleRetryPayment(order._id)}
+                              className="text-xs bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2 rounded flex items-center space-x-1"
+                            >
+                              <HiOutlineRefresh /> <span>Retry Payment</span>
+                            </button>
+                          )}
+                          
+                          {order.orderStatus === 'delivered' && (
+                            <button 
+                              onClick={() => handleRequestReturn(order._id)}
+                              className="text-xs bg-nature-100 hover:bg-nature-200 text-nature-800 font-medium px-4 py-2 rounded"
+                            >
+                              Request Return
+                            </button>
+                          )}
+
+                          {order.shippingDetails?.trackingUrl && (
+                            <a 
+                              href={order.shippingDetails.trackingUrl}
+                              target="_blank" rel="noopener noreferrer"
+                              className="text-xs bg-nature-900 hover:bg-nature-800 text-white font-medium px-4 py-2 rounded"
+                            >
+                              Track Order
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
