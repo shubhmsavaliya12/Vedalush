@@ -263,7 +263,7 @@ const Login = () => {
         <div className="w-full max-w-md bg-white p-8 sm:p-10 rounded-3xl shadow-2xl relative z-10">
           <div className="text-center mb-8">
             <img 
-              src="/vedalus.png" 
+              src="/vedalus2.png" 
               alt="Vedalush Logo" 
               className="h-12 sm:h-16 w-auto mx-auto object-contain mb-4" 
             loading="lazy" decoding="async" />

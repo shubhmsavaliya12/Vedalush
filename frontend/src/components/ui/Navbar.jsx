@@ -277,7 +277,7 @@ const Navbar = () => {
               <div className="flex flex-col items-center justify-center shrink-0 px-2 sm:px-6 text-center">
                 <Link to="/" className="flex flex-col items-center group z-50">
                   <img
-                    src="/vedalus.png"
+                    src="/vedalus2.png"
                     alt="Vedalush Logo"
                     width="200"
                     height="64"

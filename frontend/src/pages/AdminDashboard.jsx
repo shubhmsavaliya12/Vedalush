@@ -1350,7 +1350,7 @@ const AdminDashboard = () => {
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between p-4 bg-[#FFFFFF] border-b border-[#E6DED2] sticky top-0 z-30 shadow-soft">
         <Link to="/" className="inline-block">
-          <img src="/vedalus.png" alt="Vedalush Logo" className="h-10 w-auto object-contain" loading="lazy" decoding="async" />
+          <img src="/vedalus2.png" alt="Vedalush Logo" className="h-10 w-auto object-contain" loading="lazy" decoding="async" />
         </Link>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-[#5D4E42] p-2">
           {isMobileMenuOpen ? <HiX size={24} /> : <HiMenu size={24} />}
@@ -1370,7 +1370,7 @@ const AdminDashboard = () => {
         <div className="w-full">
           <div className="px-6 mb-12 hidden md:block">
              <Link to="/" className="inline-block mb-1">
-               <img src="/vedalus.png" alt="Vedalush Logo" className="h-15 w-auto object-contain" loading="lazy" decoding="async" />
+               <img src="/vedalus2.png" alt="Vedalush Logo" className="h-15 w-auto object-contain" loading="lazy" decoding="async" />
              </Link>
              <p className="text-[#8E7A65] text-xs font-semibold mt-1 uppercase tracking-widest">Admin Portal</p>
           </div>

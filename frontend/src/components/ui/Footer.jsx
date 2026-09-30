@@ -19,7 +19,7 @@ const Footer = () => {
           {/* Brand Col */}
           <div className="space-y-6">
             <Link to="/" className="inline-block transition-transform duration-300 hover:scale-105">
-              <img src="/vedalus.png" alt="Vedalush Logo" className="h-14 sm:h-16 md:h-20 w-auto object-contain brightness-0 invert" loading="lazy" decoding="async" />
+              <img src="/vedalus2.png" alt="Vedalush Logo" className="h-14 sm:h-16 md:h-20 w-auto object-contain brightness-0 invert" loading="lazy" decoding="async" />
             </Link>
             <p className="text-[#E6DED2] font-normal text-sm leading-relaxed max-w-xs">
               Luxurious, organic, handcrafted soaps tailored for radiant skin. Experience the purity of nature in every lather.
